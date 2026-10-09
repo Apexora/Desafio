@@ -1,0 +1,1392 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Apexora · Sala de Desafíos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Hanken+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
+<script>document.documentElement.dataset.theme="dark";if(/[?&]embed/.test(location.search))document.documentElement.classList.add('embed')</script>
+<style>
+  
+:root{
+  --bg:#eeeaf5;--bg2:#e3ddf0;--surface:#fbf9ff;--surface2:#ece7f7;--line:#c9c1de;
+  --text:#1c1840;--muted:#5a5683;--acc:#e2ac3a;--on-acc:#241a04;--acc-text:#7a4d00;
+  --ape:#5b3fc4;--bad:#b3301f;--ember:#c4501f;
+  --display:'Unbounded','Trebuchet MS',system-ui,sans-serif;
+  --body:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e1123;--bg2:#141936;--surface:#1a2043;--surface2:#232a58;--line:#343d74;
+    --text:#eae9f6;--muted:#a0a6d0;--acc:#f2d28b;--on-acc:#2a1f05;--acc-text:#f2d28b;
+    --ape:#b39bff;--bad:#ff8a7a;--ember:#ff8f5e;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e1123;--bg2:#141936;--surface:#1a2043;--surface2:#232a58;--line:#343d74;
+  --text:#eae9f6;--muted:#a0a6d0;--acc:#f2d28b;--on-acc:#2a1f05;--acc-text:#f2d28b;
+  --ape:#b39bff;--bad:#ff8a7a;--ember:#ff8f5e;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.5}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--acc-text);outline-offset:2px;border-radius:6px}
+h1,h2,h3,p{margin:0}
+
+.app{display:grid;grid-template-columns:310px minmax(0,1fr);min-height:100%}
+.rail{background:var(--bg2);border-right:1px solid var(--line);padding:22px 16px;position:sticky;top:0;align-self:start;max-height:calc(100dvh - env(safe-area-inset-top,0px));overflow:auto}
+.rail h2{font-family:var(--display);font-weight:600;font-size:.8rem;letter-spacing:.02em;display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px}
+.rail h2 span{font-family:var(--body);font-weight:400;color:var(--muted);font-size:.85rem}
+.pl-list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.pl{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.pl.on{border-color:var(--acc-text);box-shadow:inset 5px 0 0 var(--acc)}
+.pl-main{all:unset;box-sizing:border-box;display:grid;grid-template-columns:1fr auto;gap:0 10px;align-items:center;width:100%;padding:11px 14px;cursor:pointer}
+.pl-main:focus-visible{outline:3px solid var(--acc-text);outline-offset:-3px}
+.pl-name{font-weight:700;overflow-wrap:anywhere}
+.pl-char{grid-column:1;color:var(--muted);font-size:.85rem;overflow-wrap:anywhere}
+.pl-pts{grid-row:1/3;grid-column:2;font-family:var(--display);font-weight:800;font-size:1.5rem;color:var(--acc-text);font-variant-numeric:tabular-nums}
+.pl-lead{font-size:.75rem;color:var(--acc-text);font-weight:700}
+.bump{animation:bump .7s ease}
+@keyframes bump{0%{transform:scale(1)}30%{transform:scale(1.35)}100%{transform:scale(1)}}
+.pl-tools{display:flex;gap:6px;padding:0 10px 10px}
+.mini{border:1px solid var(--line);background:var(--surface2);border-radius:8px;padding:4px 10px;font-size:.85rem;font-weight:700}
+.mini:hover{border-color:var(--acc-text)}
+.pl.all .pl-pts{display:none}
+.empty{color:var(--muted);font-size:.95rem;padding:6px 2px 14px}
+.add{margin-top:16px;display:grid;gap:8px;border-top:1px dashed var(--line);padding-top:16px}
+.add label{font-size:.8rem;color:var(--muted)}
+.fld{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:9px 11px}
+.fld:focus{outline:3px solid var(--acc-text);outline-offset:1px}
+
+.main{min-width:0;display:flex;flex-direction:column}
+.top{display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center;justify-content:space-between;padding:18px 34px;border-bottom:1px solid var(--line)}
+.brand{all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:1.15rem}
+.brand:focus-visible{outline:3px solid var(--acc-text);outline-offset:4px}
+.nav{display:flex;flex-wrap:wrap;gap:4px}
+.nav button{background:none;border:0;border-bottom:3px solid transparent;padding:6px 12px;font-weight:700;color:var(--muted)}
+.nav button:hover{color:var(--text)}
+.nav button[aria-current="page"]{color:var(--text);border-bottom-color:var(--acc)}
+.content{padding:34px;flex:1}
+.hints{padding:14px 34px;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
+kbd{background:var(--surface2);border:1px solid var(--line);border-radius:5px;padding:0 6px;font-family:inherit;font-weight:700;font-size:.8rem}
+
+.btn{border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:11px 20px;font-weight:700}
+.btn:hover:not(:disabled){border-color:var(--acc-text)}
+.btn.pri{background:var(--acc);color:var(--on-acc);border-color:var(--acc)}
+.btn.pri:hover:not(:disabled){filter:brightness(1.06)}
+.btn.ghost{background:none}
+.btn.danger{color:var(--bad);border-color:var(--bad);background:none}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,520px);gap:40px;align-items:center}
+.hero h1{font-family:var(--display);font-weight:800;font-size:clamp(2.2rem,4.6vw,4.2rem);line-height:1.05;letter-spacing:-.02em}
+.hero .lead{margin:20px 0 28px;font-size:1.2rem;color:var(--muted);max-width:34em}
+.ringwrap{position:relative;width:100%;aspect-ratio:1}
+.ringwrap svg{width:100%;height:100%;display:block;overflow:visible}
+.ringc{position:absolute;inset:27%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;pointer-events:none;gap:4px}
+.ringc h3{font-family:var(--display);font-weight:800;font-size:clamp(1.2rem,2.6vw,2rem)}
+.ringc p{color:var(--muted);font-size:.95rem;line-height:1.3}
+.dn{cursor:pointer;outline:none}
+.dn circle{fill:var(--surface);stroke:var(--line);stroke-width:2;transition:stroke .2s}
+.dn.ape circle{stroke:var(--ape)}.dn.xora circle{stroke:var(--acc-text)}
+.dn:hover circle,.dn:focus circle,.dn.sel circle{stroke:var(--text);stroke-width:3}
+.dn .ini{font-family:var(--display);font-weight:800;font-size:15px;fill:var(--text);text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.dn .lab{font-size:12px;font-weight:700;fill:var(--muted);text-anchor:middle;pointer-events:none}
+.bond{stroke:var(--line);stroke-width:2;fill:none}
+.bond.crack{stroke:var(--ember);stroke-width:2.5;stroke-linejoin:bevel}
+.crater{fill:none;stroke:var(--line);stroke-dasharray:2 7;stroke-linecap:round}
+.craterfill{fill:var(--surface)}
+
+/* retos */
+h1.page{font-family:var(--display);font-weight:800;font-size:clamp(1.7rem,3vw,2.6rem);letter-spacing:-.01em;margin-bottom:8px}
+.sub{color:var(--muted);margin-bottom:28px;max-width:40em}
+.modes{display:grid;border-top:1px solid var(--line)}
+.mode{all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 24px;align-items:center;padding:22px 8px;border-bottom:1px solid var(--line)}
+.mode:hover{background:var(--surface)}
+.mode:focus-visible{outline:3px solid var(--acc-text);outline-offset:-3px}
+.mode b{font-family:var(--display);font-weight:600;font-size:1.35rem}
+.mode span{color:var(--muted)}
+.mode em{grid-row:1/3;grid-column:2;font-style:normal;font-family:var(--display);font-weight:600;color:var(--acc-text);white-space:nowrap}
+
+/* play */
+.playhead{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center;justify-content:space-between;margin-bottom:22px}
+.turn{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:8px 20px 8px 10px}
+.turn i{width:34px;height:34px;border-radius:50%;background:var(--acc);color:var(--on-acc);display:grid;place-items:center;font-family:var(--display);font-weight:800;font-style:normal}
+.turn span{color:var(--muted);font-size:.85rem;display:block;line-height:1}
+.turn b{font-family:var(--display);font-weight:600;font-size:1.1rem}
+.stage{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:clamp(20px,3.4vw,44px)}
+.meta{display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--muted);font-weight:700;font-size:.95rem;margin-bottom:18px}
+.meta .gem{color:var(--acc-text);letter-spacing:.1em}
+.q{font-weight:700;font-size:clamp(1.5rem,2.5vw + .6rem,2.6rem);line-height:1.22;max-width:30em;margin-bottom:30px;text-wrap:balance}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.opts.two{max-width:760px}
+.opt{position:relative;overflow:hidden;text-align:left;display:flex;gap:14px;align-items:center;background:var(--bg2);border:2px solid var(--line);border-radius:14px;padding:18px 20px;font-size:clamp(1.05rem,1.2vw + .6rem,1.5rem);font-weight:600;min-height:76px}
+.opt>*{position:relative;z-index:1}
+.opt .lt{font-family:var(--display);font-weight:800;color:var(--acc-text);min-width:1.4em}
+.opt:hover:not(:disabled){border-color:var(--acc-text)}
+.opt.chosen{border-color:var(--acc-text);border-style:dashed}
+.opt .tag{margin-left:auto;font-size:.75rem;font-weight:700;color:var(--muted);text-align:right}
+.opt::before{content:"";position:absolute;inset:0;background:var(--acc);opacity:0;z-index:0}
+.opt.right{color:var(--on-acc);border-color:var(--acc)}
+.opt.right .lt,.opt.right .tag{color:var(--on-acc)}
+.opt.right::before{opacity:1;clip-path:polygon(0 0,100% 0,94% 22%,100% 46%,92% 70%,100% 100%,0 100%,0 50%);animation:crack .7s cubic-bezier(.6,0,.2,1)}
+@keyframes crack{from{clip-path:polygon(0 0,0 0,0 22%,0 46%,0 70%,0 100%,0 100%,0 50%)}}
+.opt.wrong{border-color:var(--bad);color:var(--bad)}
+.opt.wrong .lt{color:var(--bad)}
+.opt.dim{opacity:.45}
+.opt:disabled{cursor:default}
+.peek::after{content:"";position:absolute;right:10px;top:10px;width:8px;height:8px;border-radius:50%;background:var(--acc-text);opacity:.7;z-index:2}
+.ctrls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:28px}
+.timer{display:flex;align-items:center;gap:14px;margin-left:auto;min-width:200px}
+.tnum{font-family:var(--display);font-weight:800;font-size:2.2rem;min-width:2.2ch;text-align:right;font-variant-numeric:tabular-nums}
+.tnum.low{color:var(--bad)}
+.tbar{flex:1;height:10px;background:var(--bg2);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+.tbar i{display:block;height:100%;background:var(--acc);width:100%;transition:width 1s linear}
+.tbar i.low{background:var(--bad)}
+.result{margin-top:26px;border-top:1px dashed var(--line);padding-top:22px}
+.verdict{font-family:var(--display);font-weight:800;font-size:1.5rem;margin-bottom:8px}
+.verdict.ok{color:var(--acc-text)}.verdict.no{color:var(--bad)}
+.result p{max-width:44em;font-size:1.1rem}
+.cheat{margin-top:16px;font-size:.85rem;color:var(--muted);font-style:italic}
+.clues{list-style:none;counter-reset:c;margin:0 0 8px;padding:0;display:grid;gap:12px;max-width:44em}
+.clues li{counter-increment:c;display:grid;grid-template-columns:2.2em 1fr;gap:6px;font-size:clamp(1.15rem,1.4vw + .6rem,1.7rem);font-weight:600;line-height:1.3}
+.clues li::before{content:counter(c);font-family:var(--display);font-weight:800;color:var(--acc-text)}
+.answer{margin-top:20px;background:var(--bg2);border-radius:12px;padding:18px 22px;max-width:44em}
+.answer h3{font-family:var(--display);font-weight:800;font-size:1.8rem;margin-bottom:6px}
+.evs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.ev{background:var(--bg2);border:2px solid var(--line);border-radius:14px;padding:16px 20px;display:grid;grid-template-columns:auto 1fr;gap:4px 16px}
+.ev .lt{grid-row:1/3;font-family:var(--display);font-weight:800;font-size:1.8rem;color:var(--acc-text);align-self:center;min-width:1.2em}
+.ev b{font-size:1.25rem}.ev span{color:var(--muted)}
+.ev .yr{grid-column:2;font-family:var(--display);font-weight:800;color:var(--acc-text);font-size:1.1rem}
+.ev.done{border-color:var(--acc-text)}
+.twist{margin-top:20px;border-left:5px solid var(--ember);padding:10px 18px;background:var(--bg2);border-radius:0 12px 12px 0;font-size:1.25rem;font-weight:600}
+.place{display:inline-block;background:var(--surface2);border:1px solid var(--line);border-radius:99px;padding:2px 14px;font-weight:700;font-size:.9rem;color:var(--muted)}
+.rt{font-family:var(--display);font-weight:800;font-size:clamp(1.6rem,2.6vw,2.6rem);margin:14px 0}
+.scenetxt{font-size:clamp(1.15rem,1.4vw + .6rem,1.7rem);max-width:36em;line-height:1.4;font-weight:500}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.chip{border:1px solid var(--line);background:none;border-radius:99px;padding:4px 14px;font-size:.9rem;font-weight:700;color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--acc);border-color:var(--acc);color:var(--on-acc)}
+.banner{border:1px dashed var(--acc-text);border-radius:12px;padding:14px 18px;margin-bottom:22px;color:var(--muted)}
+
+/* dice */
+.dgrid{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:34px}
+.dctl{display:grid;gap:18px;align-content:start}
+.dctl label{font-weight:700;font-size:.9rem;color:var(--muted);display:block;margin-bottom:6px}
+.sides{display:flex;flex-wrap:wrap;gap:8px}
+.step{display:flex;align-items:center;gap:10px}
+.step b{font-family:var(--display);min-width:2.5ch;text-align:center;font-size:1.2rem}
+.dres{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:28px;text-align:center;min-height:300px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px}
+.dnum{font-family:var(--display);font-weight:800;font-size:clamp(4rem,11vw,9rem);line-height:1;font-variant-numeric:tabular-nums}
+.dnum.crit{color:var(--acc-text)}.dnum.fumble{color:var(--bad)}
+.dbrk{color:var(--muted);font-size:1.1rem}
+.dtag{font-family:var(--display);font-weight:800;font-size:1.3rem}
+.hist{margin:26px 0 0;padding:0;list-style:none;display:grid;gap:4px;color:var(--muted)}
+.hist b{color:var(--text)}
+
+/* shop */
+.shop{border-top:1px solid var(--line)}
+.rw{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:4px 22px;align-items:center;padding:18px 6px;border-bottom:1px solid var(--line)}
+.rw b{font-family:var(--display);font-weight:600;font-size:1.15rem}
+.rw span{color:var(--muted);grid-column:1}
+.cost{grid-row:1/3;grid-column:2;font-family:var(--display);font-weight:800;color:var(--acc-text);font-size:1.4rem;white-space:nowrap}
+.rw .btn,.rw .row{grid-row:1/3;grid-column:3}
+.balance{display:inline-flex;gap:10px;align-items:baseline;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px 18px;margin-bottom:24px}
+.balance b{font-family:var(--display);font-weight:800;font-size:1.6rem;color:var(--acc-text)}
+
+/* registro */
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:34px}
+.panel h2{font-family:var(--display);font-weight:600;font-size:1.1rem;margin-bottom:14px}
+.set{display:grid;gap:14px}
+.set label{display:grid;gap:4px;font-weight:700;font-size:.9rem}
+.set label.chk{grid-template-columns:auto 1fr;align-items:center;gap:10px}
+.set small{color:var(--muted);font-weight:400}
+.log{list-style:none;margin:0;padding:0;max-height:420px;overflow:auto;border-top:1px solid var(--line)}
+.log li{display:flex;gap:12px;justify-content:space-between;padding:9px 2px;border-bottom:1px solid var(--line);font-size:.95rem}
+.log time{color:var(--muted);font-size:.8rem;white-space:nowrap}
+.log .d{font-family:var(--display);font-weight:600;white-space:nowrap}
+.log .d.p{color:var(--acc-text)}.log .d.n{color:var(--bad)}
+textarea.fld{min-height:110px;font-family:ui-monospace,monospace;font-size:.8rem}
+
+dialog{background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:16px;padding:26px;max-width:min(460px,92vw);width:100%}
+dialog::backdrop{background:rgba(8,10,24,.62)}
+dialog h3{font-family:var(--display);font-weight:600;font-size:1.15rem;margin-bottom:14px}
+dialog .set{margin-bottom:18px}
+#toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--acc);color:var(--on-acc);font-weight:700;border-radius:99px;padding:10px 22px;opacity:0;pointer-events:none;transition:.25s;z-index:50;max-width:90vw;text-align:center}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+
+.bank .errs{color:var(--bad);margin:8px 0 6px;padding-left:20px}
+@media (max-width:1000px){
+  .app{grid-template-columns:1fr}
+  .rail{position:static;max-height:none;border-right:0;border-bottom:1px solid var(--line)}
+  .pl-list{display:flex;overflow-x:auto;padding-bottom:6px}
+  .pl{min-width:190px;flex:0 0 auto}
+  .hero,.dgrid,.cols{grid-template-columns:1fr}
+  .top,.content,.hints{padding-left:18px;padding-right:18px}
+}
+@media (max-width:640px){
+  .opts,.evs{grid-template-columns:1fr}
+  .rw{grid-template-columns:1fr auto}
+  .rw .btn,.rw .row{grid-column:1/3;grid-row:auto}
+  .cost{grid-row:1}
+  .timer{margin-left:0;width:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  .bump,.opt.right::before{animation:none}
+  .tbar i,#toast{transition:none}
+}
+.imgbox{display:inline-block;max-width:100%;overflow:hidden;border-radius:14px;line-height:0;background:var(--bg2)}
+.imgbox img{display:block;max-width:100%;max-height:60dvh;object-fit:contain;transition:filter .7s ease}
+@media (prefers-reduced-motion:reduce){.imgbox img{transition:none}}
+html.embed.embed{--bg:#0a1220;--bg2:#0e1a33;--surface:#101e38;--surface2:#16284a;--line:#e3bf7344;--text:#f3ead6;--muted:#a9b3cf;--acc:#e3bf73;--on-acc:#1a1208;--acc-text:#f7e6b0;--ape:#b39bff;--bad:#ff8a7a;--ember:#ff8f5e;--display:'Cinzel',Georgia,serif;--body:'Crimson Pro',Georgia,serif}
+html.embed body{background:transparent;font-size:18px}
+html.embed .brand{display:none}
+html.embed .top{padding:12px 24px}
+html.embed .btn,html.embed .pl,html.embed .panel{border-radius:14px}
+html.embed h1,html.embed h2{text-transform:uppercase;letter-spacing:.04em}
+</style>
+<style id="goty">
+:root,:root[data-theme="dark"]{--bg:#070914;--bg2:#0b0f24cc;--surface:#12183a99;--surface2:#1c2556aa;--line:#ffffff1f;--text:#f2f0ff;--muted:#a9afd8;--acc:#f6c453;--on-acc:#2a1c02;--acc-text:#ffd978;--ape:#b39bff;--bad:#ff6b7d;--ember:#ff8f5e;--glow:0 0 24px #f6c45366}
+body{background:#070914;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:-20%;z-index:0;pointer-events:none;background:radial-gradient(40% 35% at 20% 15%,#5b3fc477,transparent 70%),radial-gradient(35% 40% at 85% 25%,#f6c45344,transparent 70%),radial-gradient(45% 40% at 55% 95%,#1f6fd055,transparent 70%);animation:aur 22s ease-in-out infinite alternate}
+body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.07;background-image:repeating-linear-gradient(0deg,#fff 0 1px,transparent 1px 3px)}
+@keyframes aur{to{transform:translate(4%,3%) rotate(6deg) scale(1.1)}}
+#fx{position:fixed;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+.app,dialog,#toast{position:relative;z-index:2}
+.rail{background:#080b1ecc;backdrop-filter:blur(18px);border-right:1px solid #ffffff22}
+.pl{background:linear-gradient(135deg,#1a2250cc,#0e1332cc);border:1px solid #ffffff24;border-radius:14px;transition:transform .2s,box-shadow .2s}
+.pl:hover{transform:translateX(4px)}
+.pl.on{box-shadow:inset 5px 0 0 var(--acc),0 0 28px #f6c45340;border-color:var(--acc)}
+.pl-pts{text-shadow:0 0 14px #f6c45388}
+.top{background:#070a1c99;backdrop-filter:blur(14px);position:sticky;top:0;z-index:5;border-bottom:1px solid #ffffff1c}
+.brand{background:linear-gradient(90deg,#fff,var(--acc));-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand svg{color:var(--acc);filter:drop-shadow(0 0 8px var(--acc))}
+.nav button[aria-current="page"]{color:#fff;border-bottom-color:var(--acc);text-shadow:0 0 12px var(--acc)}
+.btn{background:#ffffff12;border:1px solid #ffffff2e;border-radius:12px;transition:transform .15s,box-shadow .2s,border-color .2s}
+.btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 24px #0006,0 0 18px #f6c45344}
+.btn:active:not(:disabled){transform:translateY(0) scale(.97)}
+.btn.pri{background:linear-gradient(135deg,#ffe08a,#f2a93a 60%,#e2802a);border:0;box-shadow:0 6px 26px #f2a93a66,inset 0 1px 0 #fff8;font-weight:800}
+.goty{display:inline-flex;gap:8px;align-items:center;margin-bottom:18px;padding:6px 16px;border-radius:99px;font:800 .72rem var(--display);letter-spacing:.18em;color:#2a1c02;background:linear-gradient(100deg,#ffe08a,#f2a93a,#ffe08a);background-size:200%;animation:sh 3s linear infinite;box-shadow:0 0 30px #f6c45377}
+@keyframes sh{to{background-position:-200% 0}}
+.hero h1{background:linear-gradient(100deg,#fff 20%,#ffd978 50%,#b39bff 80%);background-size:200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sh 8s linear infinite;filter:drop-shadow(0 4px 30px #5b3fc488)}
+.lead{color:#d6d8f4;font-size:1.15rem}
+.ringwrap{filter:drop-shadow(0 0 40px #5b3fc499);animation:flt 7s ease-in-out infinite}
+@keyframes flt{50%{transform:translateY(-12px)}}
+h1.page{background:linear-gradient(90deg,#fff,var(--acc));-webkit-background-clip:text;background-clip:text;color:transparent}
+.modes{grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;border:0}
+.mode{all:unset;box-sizing:border-box;cursor:pointer;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:8px;padding:24px 22px;min-height:210px;border-radius:20px;border:1px solid color-mix(in srgb,var(--c) 55%,transparent);background:linear-gradient(160deg,color-mix(in srgb,var(--c) 30%,#0b0f2a),#0b0f2a 75%);transition:transform .25s cubic-bezier(.2,.9,.3,1.4),box-shadow .25s;animation:rise .6s both}
+.mode:nth-child(2){animation-delay:.07s}.mode:nth-child(3){animation-delay:.14s}.mode:nth-child(4){animation-delay:.21s}.mode:nth-child(5){animation-delay:.28s}.mode:nth-child(6){animation-delay:.35s}
+@keyframes rise{from{opacity:0;transform:translateY(24px) scale(.95)}}
+.mode::after{content:"";position:absolute;top:-50%;left:-80%;width:50%;height:200%;background:linear-gradient(90deg,transparent,#ffffff30,transparent);transform:rotate(20deg);transition:left .7s}
+.mode:hover{transform:translateY(-8px) scale(1.03);box-shadow:0 18px 50px color-mix(in srgb,var(--c) 55%,transparent);background:linear-gradient(160deg,color-mix(in srgb,var(--c) 42%,#0b0f2a),#0b0f2a 80%)}
+.mode:hover::after{left:140%}
+.mode .ic{font-style:normal;font-size:2.8rem;filter:drop-shadow(0 0 14px var(--c))}
+.mode b{font-size:1.2rem;grid:auto}.mode span{grid:auto;color:#c9cdee;font-size:.92rem}
+.mode em{grid:auto;margin-top:auto;align-self:flex-start;padding:3px 12px;border-radius:99px;background:#0008;color:var(--c);font-size:.8rem;border:1px solid var(--c)}
+.stage{background:linear-gradient(160deg,#151c46dd,#0a0e2add);backdrop-filter:blur(16px);border:1px solid #ffffff2a;border-radius:24px;box-shadow:0 30px 80px #000a,0 0 60px #5b3fc433;animation:rise .5s both}
+.q{text-shadow:0 2px 20px #5b3fc488}
+.opt{background:linear-gradient(180deg,#232d6a,#161d4a);border:1px solid #ffffff30;border-radius:16px;box-shadow:0 5px 0 #070a22,0 10px 24px #0007;transition:transform .15s,box-shadow .15s,border-color .2s}
+.opt:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 8px 0 #070a22,0 14px 34px #f6c45340;border-color:var(--acc)}
+.opt:active:not(:disabled){transform:translateY(3px);box-shadow:0 1px 0 #070a22}
+.opt.chosen{border-color:var(--acc);box-shadow:0 0 0 2px var(--acc),0 0 30px #f6c45377}
+.opt.right{box-shadow:0 0 0 2px #fff,0 0 50px #f6c453aa;animation:pop .6s}
+.opt.wrong{animation:shk .45s;box-shadow:0 0 30px #ff6b7d66;background:linear-gradient(180deg,#4a1a2c,#2a0f1d)}
+@keyframes pop{40%{transform:scale(1.05)}}
+@keyframes shk{20%,60%{transform:translateX(-9px)}40%,80%{transform:translateX(9px)}}
+.tbar{height:12px;background:#0007;border-color:#ffffff30}.tbar i{background:linear-gradient(90deg,#ffe08a,#f2a93a);box-shadow:0 0 14px #f6c453}.tbar i.low{background:linear-gradient(90deg,#ff6b7d,#ff3d5a);box-shadow:0 0 14px #ff3d5a}
+.tnum.low{animation:pulse .6s infinite}@keyframes pulse{50%{transform:scale(1.18)}}
+.verdict{font-size:2rem;text-shadow:0 0 24px currentColor;animation:pop .6s}
+.answer,.ev,.dres,.panel,.balance{background:#ffffff0d;border-color:#ffffff25;backdrop-filter:blur(10px)}
+.dnum{text-shadow:0 0 40px #b39bff;animation:pop .5s}.dnum.crit{text-shadow:0 0 50px #f6c453,0 0 100px #f6c453;animation:crit 1s infinite alternate}
+@keyframes crit{to{transform:scale(1.08)}}
+.rw{transition:background .2s,padding .2s}.rw:hover{background:#ffffff0d}
+.fld{background:#0a0e2acc;border-color:#ffffff30}
+dialog{background:linear-gradient(160deg,#1a2250,#0b0f2a);border:1px solid var(--acc);box-shadow:0 0 80px #f6c45344;animation:rise .35s}
+#mus{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:9;width:48px;height:48px;border-radius:50%;border:1px solid var(--acc);background:#0b0f2add;font-size:1.3rem;box-shadow:0 0 20px #f6c45355}
+#mus.on{animation:pulse 2s infinite}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+.wr{display:grid;gap:7px;justify-content:center;margin:8px 0 22px}.wr div{display:flex;gap:7px}
+.wc{width:clamp(40px,10vw,60px);aspect-ratio:1;display:grid;place-items:center;font:800 1.6rem var(--display);border:2px solid #ffffff33;border-radius:12px;background:#0006;text-transform:uppercase}
+.wc.f{border-color:#fff8}.wc.ok{background:#2fbf71;border-color:#2fbf71;animation:pop .5s}.wc.pr{background:#e2ac3a;color:#241a04;border-color:#e2ac3a;animation:pop .5s}.wc.no{background:#262b55;color:#8c92c0;animation:pop .5s}
+.kb{display:grid;gap:6px;justify-items:center}.kb div{display:flex;gap:5px}
+.kb button{min-width:clamp(26px,6.5vw,44px);height:50px;padding:0 6px;border-radius:9px;border:0;background:#2b3470;font-weight:800}.kb button.ok{background:#2fbf71}.kb button.pr{background:#e2ac3a;color:#241a04}.kb button.no{background:#12152e;color:#6a70a0}
+.cxg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.gt{border:2px solid #ffffff30;border-radius:14px;padding:18px 6px;background:linear-gradient(180deg,#232d6a,#161d4a);font-weight:800;box-shadow:0 4px 0 #070a22;transition:transform .15s}
+.gt:hover{transform:translateY(-3px)}.gt.on{background:var(--acc);color:var(--on-acc);box-shadow:0 0 28px #f6c453aa;transform:translateY(2px)}
+.cxs{border-radius:14px;padding:14px 18px;margin-bottom:10px;color:#1a1204;font-weight:800;animation:rise .5s}.cxs small{display:block;font-weight:600;opacity:.8}
+.lives{letter-spacing:.3em;color:var(--bad);font-size:1.3rem;margin:14px 0}
+.lk{display:grid;grid-template-columns:1fr 1fr;gap:12px 40px}.lk .opt{padding:14px 16px}
+@media(max-width:640px){.cxg{gap:6px}.gt{font-size:.8rem;padding:14px 2px}.lk{gap:8px}}
+
+.opt{isolation:isolate}.opt::before{z-index:-1}
+.stage,.cxs{animation:none!important}
+.gin{max-width:260px}
+.evb{text-align:left;cursor:pointer;color:inherit;transition:transform .15s,border-color .2s}.evb:hover{transform:translateY(-3px);border-color:var(--acc)}
+.ev.slot{opacity:.45;border-style:dashed}.ev.bad{border-color:var(--bad)}.ev.bad .yr{color:var(--bad)}
+.t10{list-style:none;margin:16px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px}
+.t10 li{display:flex;gap:12px;align-items:center;padding:12px 16px;min-height:50px;border-radius:12px;background:#ffffff0d;border:1px solid #ffffff22;font-weight:700}
+.t10 li span{font-family:var(--display);color:var(--acc-text);min-width:1.6em}
+.t10 li.ok{background:linear-gradient(90deg,#2fbf7166,#2fbf7122);border-color:#2fbf71;animation:pop .5s}
+.t10 li.miss{border-color:var(--bad);color:var(--bad)}
+
+#hud{position:fixed;top:calc(78px + env(safe-area-inset-top,0px));right:14px;z-index:8;display:flex;flex-direction:column;gap:8px;align-items:flex-end;pointer-events:none}
+.hp{display:flex;gap:10px;align-items:center;padding:7px 14px;border-radius:99px;background:#0b0f2add;border:1px solid #ffffff2e;backdrop-filter:blur(10px);font-weight:700;font-size:.9rem;box-shadow:0 6px 24px #0007}
+.lvp b{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#ffe08a,#f2a93a);color:#2a1c02;font-family:var(--display)}
+.lvp small{display:block;color:var(--muted);font-size:.7rem;line-height:1}.lvp i{display:block;width:120px;height:6px;border-radius:9px;background:#ffffff22;margin-top:4px;overflow:hidden}
+.lvp u{display:block;height:100%;width:0;background:linear-gradient(90deg,#4fd1c5,#ffe08a);transition:width .6s;box-shadow:0 0 10px #ffe08a}
+.bn{position:fixed;left:50%;transform:translateX(-50%);z-index:60;padding:12px 24px;border-radius:16px;font-weight:800;background:linear-gradient(135deg,#2a1c6b,#12183a);border:1px solid var(--acc);box-shadow:0 0 40px #f6c45366;white-space:nowrap;max-width:92vw;overflow:hidden;text-overflow:ellipsis}
+.bn.bad{border-color:var(--bad);box-shadow:0 0 30px #ff6b7d55}.bn.ach{background:linear-gradient(135deg,#4a3205,#12183a)}
+.fl{position:fixed;z-index:55;font:800 2.6rem var(--display);color:var(--acc);text-shadow:0 0 24px #f6c453,0 3px 0 #000a;pointer-events:none}
+#chest{position:fixed;inset:0;z-index:70;display:grid;place-items:center;background:#05071acc;backdrop-filter:blur(8px)}
+.cbox{text-align:center;padding:36px 44px;border-radius:26px;background:linear-gradient(160deg,#1a2250,#0b0f2a);border:1px solid var(--acc);box-shadow:0 0 90px #f6c45355}
+.gift{font-size:6.5rem;cursor:pointer;filter:drop-shadow(0 0 30px #f6c453);display:inline-block}
+.prize{font:800 3rem var(--display)}
+.opt.gone{opacity:.15;pointer-events:none;text-decoration:line-through}
+@media(max-width:700px){#hud{top:auto;bottom:76px;right:10px;transform:scale(.88);transform-origin:bottom right}.fl{font-size:2rem}}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.3/confetti.browser.min.js"></script>
+</head>
+<body>
+<canvas id="fx" aria-hidden="true"></canvas>
+<div class="app">
+  <aside class="rail" id="rail" aria-label="Jugadores"></aside>
+  <div class="main" id="main"></div>
+</div>
+<dialog id="dlg"></dialog>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+const DEITIES=[
+ {n:"Ape",d:"Entropía y oscuridad",c:"ape"},{n:"Xora",d:"Orden y luz",c:"xora"},
+ {n:"Millot",d:"Creación"},{n:"Jilper",d:"Destrucción"},
+ {n:"Cumacur",d:"Infinidad"},{n:"Cabala",d:"Finito"},
+ {n:"Ganore",d:"La Nada"},{n:"Kiprika",d:"El Todo"},
+ {n:"Tapiem",d:"Gravedad"},{n:"Dacama",d:"Tiempo"}
+];
+const PJ_NAMES=["Zarick","Bane Ironhand","Karim Balteus","Vina Miceus","Seah de Pato","Tomah de la Luz de Xora","Andreas Light","Pin Kuku","Gobz Gobinson","Valmey Sialí","Seilá Anamé","Lael Anamé","Laki Unmei","Zene","Caelum"];
+
+// [categoría, nivel, pregunta, correcta, [3 incorrectas], explicación]
+const TRIVIA=[
+["Mitología",1,"¿Cómo se llama la entidad primordial de la que nacen las diez fuerzas del cosmos?","Espacio",["Ape","Dacama","Kiprika"],"Espacio, sin género, nació junto al universo y se desprendió de sí mismo para engendrar a sus hijos."],
+["Mitología",1,"¿Cuántos hijos engendró Espacio?","Diez",["Ocho","Doce","Siete"],"Ape, Xora, Millot, Jilper, Cumacur, Cabala, Ganore, Kiprika, Tapiem y Dacama."],
+["Mitología",1,"¿Qué dios representa la entropía y la oscuridad?","Ape",["Xora","Jilper","Ganore"],"Ape impulsa el caos y el declive. No es malvado: representa el final inevitable de todo."],
+["Mitología",1,"¿Qué dios representa el orden y la luz?","Xora",["Ape","Millot","Cabala"],"Xora es la arquitecta del cosmos: teje las leyes de la física y dio forma a las primeras estrellas."],
+["Mitología",1,"¿Qué evento destruyó la civilización original de Apexora?","El impacto de un cometa",["Una guerra entre naciones","La erupción del volcán Skaldrak","Una plaga de Bestias Dormidas"],"El cataclismo además desató la furia latente entre Ape y Xora."],
+["Mitología",2,"¿Qué dios encarna el Tiempo?","Dacama",["Tapiem","Cabala","Kiprika"],"Dacama asegura que la entropía de Ape se manifieste y que la creación de Millot siga una secuencia."],
+["Mitología",2,"¿Qué dios personifica la Gravedad?","Tapiem",["Dacama","Cumacur","Ganore"],"Tapiem es el tejedor invisible que une el cosmos y evita que todo se pierda en la nada."],
+["Mitología",2,"¿Qué par de dioses opera en un ciclo eterno de Creación y Destrucción?","Millot y Jilper",["Ape y Xora","Cumacur y Cabala","Ganore y Kiprika"],"Su danza perpetua renueva el universo."],
+["Mitología",2,"¿Qué dios es «La Nada», venerado por los ganoristas?","Ganore",["Kiprika","Espacio","Tapiem"],"Ganore es el silencio absoluto entre las estrellas, el vacío primordial del que surgió todo."],
+["Mitología",2,"¿Cómo se llama el libro sagrado de los ganoristas?","Ganús",["Gan-Apex","Nulum","El Códice de Suminé"],"Se lo describe como la nada que da sentido al todo."],
+["Mitología",2,"Kiprika es «El Todo». ¿Qué dios es su hermano gemelo?","Ganore",["Ape","Dacama","Millot"],"Ganore es quien más le reprocha usar cuerpos humanos para sus travesuras."],
+["Mitología",3,"¿Cómo llaman a Kiprika en el más allá?","Ki",["Kip","Rika","Pri"],"Adora tomar forma humanoide para hurgar en vidas mundanas y causar estragos."],
+["Mitología",3,"¿Qué piden los ganoristas al rezar?","El Gan, la paz interior compartida",["El regreso de Espacio","La inmortalidad","El Ganús perdido"],"Rezan pidiendo el Gan, una paz interior que se comparte con todos."],
+["Mitología",3,"¿Quién actúa como sacerdote de un ganorista?","Un astrónomo",["Un herrero","Un alquimista","Un juez"],"Sus acólitos practican en el observatorio: al mirar los vacíos del universo sienten encontrar a su dios."],
+["Mitología",3,"¿Dónde debe hallarse el Maestro del Gan cuando es elegido?","En Suminé",["En Inasuno","En Tharnok","En Luminarae"],"Se elige a mano alzada y debe poseer grandes conocimientos de astronomía."],
+["Mitología",3,"¿Qué dios ancla a Cumacur (Infinidad), definiendo los límites de sistemas solares y la vida de las estrellas?","Cabala",["Tapiem","Jilper","Dacama"],"Cabala es el Finito: da forma y significado a la inmensidad."],
+["Mitología",3,"Según se decía, ¿quién corrompió en secreto a la civilización original?","Ape",["Xora","Kiprika","Jilper"],"Xora, su protectora, albergaba un profundo resentimiento."],
+["Mitología",3,"¿Por qué veneran los humanos a Ape?","Por establecer límites",["Por darles la magia","Por prometerles la inmortalidad","Por crear las Bestias Dormidas"],"A Xora la veneran por brindar esperanza e impulso para florecer."],
+
+["Mundo",1,"¿Qué nación es una teocracia de torres flotantes que adora a Xora?","Luminarae Luxor",["Umbra","Lumis","Skaldrum"],"Su líder es la Reina Luminara IV."],
+["Mundo",1,"¿Qué nación es conocida como el Imperio del Martillo?","Umbra",["Skaldrum","Negatt","Boro"],"Una dictadura absoluta de ciudades-fortaleza."],
+["Mundo",1,"¿Qué inteligencia artificial gobierna Lumis?","Inargo",["Valeria","Tsuji","Morfo"],"Lumis es una tecnocracia: ciencia y razón, sin religión."],
+["Mundo",2,"¿A qué dios venera el reino de Skaldrum?","Ape",["Xora","Ganore","Kiprika"],"Skaldrum es un feudalismo extremo que adora a Ape, dios del dominio oscuro."],
+["Mundo",2,"¿Cómo funciona la economía de Sinfalía?","Sin dinero: se rige por dones, favores adeudados",["Con moneda de sal","Con trueque regulado por el Consejo de los Jóvenes","Con impuestos en energía"],"Los dones son favores de valor acordado entre las partes."],
+["Mundo",2,"¿Cuántos pueblos tiene Sinfalía?","Once",["Siete","Nueve","Trece"],"Desde Anamé hasta Suminé."],
+["Mundo",2,"¿Cuáles son las tres facciones de Sinfalía?","Moradores, Sobrios y Ganoristas",["Moradores, Marcados y Sobrios","Sobrios, Vínicos y Ganoristas","Ganoristas, Moradores y Zzamua"],"Se disputan el rumbo del país."],
+["Mundo",2,"¿Qué tribu invadió la localidad de Vasané-Nalú?","Tribu Zzamua",["Tribu Pato","Tribu Zudodh Ez","Tribu Skaldrak"],"Llegó desde La Urdimbre de Sylvaris, incentivada por la secta sobria Día del Juicio a los Ignorantes."],
+["Mundo",2,"¿Cómo se llama el templo en ruinas de Boro donde se adora a Xora?","Tharnok",["Myrelith","Suminé","Frostpeak"],"Un peregrino reportó que expulsó un pulso electromagnético muy potente."],
+["Mundo",2,"¿Cómo se llama la Soberana de Psybernia?","Valeria",["Luminara IV","Reggina Markvon","Martina"],"Nadie entra ni sale de Psybernia sin su permiso."],
+["Mundo",2,"¿Qué nación es «el recreo de Apexora»?","Pongí",["Disnjav","Boro","Ostraca"],"Ferias, juegos y un misterio detrás de la fachada festiva."],
+["Mundo",2,"¿Qué nación es «la tierra enferma», asociada a lo tóxico?","Disnjav",["Pongí","Boro","Negatt"],"Nadie sabe si es su aire, su agua o su tierra: conviene no quedarse mucho."],
+["Mundo",2,"¿Cómo se llama la orden que actúa desde las sombras al servicio de Luxor?","Orden de los Caballeros de Luxor (OCL)",["Orden de los Marcados","Sopharum","Vigorix"],"Su Consejo es anónimo y está por encima de todos."],
+["Mundo",2,"¿Quién demostró que un espíritu de bestia puede imponerse por la fuerza en un cuerpo humano?","Tsuji",["Alnasi","Raulo Casa III","Heiss"],"Así nacieron los Ocho de Negatt, sus propios hijos-experimento."],
+["Mundo",2,"Los Ska'O son mezcla de…","Orco y SkaNuj",["Humano y Lutech","Elfo Negatt y orco","Orco y humano"],"Los SkaNuj son humanos adaptados al frío extremo."],
+["Mundo",2,"¿Qué distingue a los Lutech?","Tecnología integrada",["Adaptación al frío extremo","Alteración por magia negra","Espíritus de bestia"],"Los elfos Negatt, en cambio, fueron alterados por magia negra."],
+["Mundo",2,"¿Quién es la reina de Luminarae Luxor?","Luminara IV",["Valeria","Martine","Evelyn"],"Gobierna una teocracia jerárquica."],
+["Mundo",3,"¿Quién fundó Sinfalía?","Los vínicos, nómadas llegados del oeste",["Los ganoristas de Suminé","El Consejo de los Jóvenes","La Tribu Zzamua"],"Huían de los conflictos que dejó el asteroide."],
+["Mundo",3,"¿Qué gobierno tiene el Presidio de Krahn?","Gerontocracia de silenciadores",["Necrocracia timocrática","Kakistocracia de clones","Tecnocracia de una IA"],"Custodia el estrecho con anclas de antimagia."],
+["Mundo",3,"¿Qué puede quemar la conexión espiritual de La Urdimbre de Sylvaris?","Las cenizas de Sinfalía",["El agua de saje","La antimagia de Krahn","Las Bestias Dormidas"],"Es el único veneno capaz de hacerlo."],
+["Mundo",3,"¿Qué nación es una kakistocracia de clones cíclicos?","Ostraca",["Sylvaris","Krahn","Pongí"],"Habita un desierto de coral y sal; sus líderes olvidan sus propias reglas."],
+["Mundo",3,"¿Qué pueblo de Sinfalía custodia el Gran Faro en acantilados hexagonales?","Vasané-Nalú",["Naluvia","Lunalú","Malina"],"Hoy está en manos de la Tribu Zzamua."],
+["Mundo",3,"¿A qué se dedica el pueblo sinfaliense de Fuana?","Forjas térmicas en zona volcánica",["Astilleros en playas de basalto","Viñedos curativos","Alquimia de la sal"],"Su escuela es la de Metalurgia y el Fuego."],
+["Mundo",3,"¿Cómo se llama la misión actual de la OCL contra Umbra?","Operación Negro",["Operación Luminaria","Operación Zzamua","Operación Xora"],"Busca desestabilizar Umbra para dejarla vulnerable a una invasión."],
+["Mundo",3,"¿Cómo se llama el programa de la OCL que adoctrina a infantes umbrianos?","Los Niños de la Luminaria",["Los Ocho de Negatt","Los Marcados","Los Nuevos Asientos"],"Parte de la Operación Negro."],
+["Mundo",3,"¿Qué se cree que se contacta en Boro con dispositivos electrónicos y métodos muy específicos?","La dimensión méltida",["La dimensión lukimora","El Gan","El Velo Carmesí"],"El agua de saje, dicen, conecta más a quien la consume."],
+["Mundo",3,"¿Quién lidera Negatt?","Raulo Casa III",["Tsuji","Santomachelo II","Puj"],"Negatt se gobierna por consejos oscuros."],
+
+["Historia",1,"¿En qué año se firmó el Pacto Skaldrak?","Año 0",["Año 51","Año 133","Año 290"],"Puso fin a tres millones de años de incivilización."],
+["Historia",2,"¿Qué ocurrió en el año 860?","La erupción del volcán Skaldrak",["La Gran Inmigración","La Noche de las Luciérnagas","La independencia de Boro"],"Redujo los recursos esenciales de todos los estados."],
+["Historia",2,"¿Qué nación recibió a los refugiados de la Gran Inmigración (año 290)?","Umbra",["Lumis","Skaldrum","Luminarae"],"Los refugiados venían de Psybernia y dejaron una mezcla cultural inédita."],
+["Historia",2,"¿Qué nación mostró su poderío en la Noche de las Luciérnagas?","Lumis",["Umbra","Negatt","Luminarae"],"Generó respeto y miedo en el año 673."],
+["Historia",2,"¿Qué construyeron las naciones occidentales en el año 133 para frenar a guerreros del oriente?","La Muralla Occidental",["El Presidio de Krahn","El Gran Faro","Las anclas de antimagia"],"Debieron unirse para evitar su paso."],
+["Historia",3,"¿Quién intentó dominar todo Apexora en la Guerra de la Retirada (año 412)?","Umbra",["Skaldrum","Negatt","Lumis"],"Hasta que nació el poder divino de Luminarae."],
+["Historia",3,"¿Cómo surgió Negatt en el año 547?","Tres academias luminaraenses experimentaron con magias prohibidas",["Refugiados de Psybernia fundaron la nación","Una Bestia Dormida despertó en su ciénaga","Una escisión de la OCL tomó territorio"],"Tras algunas batallas, se les permitió quedarse con su territorio."],
+["Historia",3,"¿Qué reclamó Boro en el año 333?","Su independencia",["Su anexión a Lumis","Un puerto franco en Umbra","El fin de la Muralla"],"Un gran movimiento al norte de Lumis dejó clara su postura."],
+
+["Personajes",1,"¿Cuál es el apodo de Karim Balteus?","El Bailarín del Estoque",["La Sombra Sabia","El pequeño genio","El Hijo de la Sombra"],"Su estilo de duelo es fluido, lleno de giros."],
+["Personajes",1,"¿Qué raza es Zarick?","Semi-orco",["Orca","Goblin","Humano modificado"],"Hijo de Evelyn von Grace y Khagzol «Zodd» Shazolg."],
+["Personajes",1,"¿Qué perdió Bane en un accidente, reemplazado luego por implantes cibernéticos?","Los antebrazos y la vista",["Las piernas","La voz y el oído","La memoria"],"Sus implantes brillan de un celeste vibrante."],
+["Personajes",1,"¿Quién es Fragua?","El transportista del grupo",["El herrero de Fuana","El guardia de la compuerta norte","El sanador del torneo"],"Hijo de un viejo amigo transportista de Caleus."],
+["Personajes",2,"¿Cuál es el arma de Vina Miceus?","El mandoble «Miel»",["El Bastón del Lago","La Ram Dao","El estoque ornamentado"],"Vina fue la primera en unirse al campamento de Caleus."],
+["Personajes",2,"¿Cómo se llama el arma familiar de Seah de Pato?","Bastón del Lago",["Mandoble Miel","Ram Dao","Ocarina de Frostpeak"],"Es el arma más valiosa de su pueblo."],
+["Personajes",2,"¿Quién condenó a Mit Caleus a la inmortalidad?","Solaris",["Puj","El general Kru","Oci"],"Para que recordara su error por siempre."],
+["Personajes",2,"¿Qué instrumento toca Pin Kuku?","La ocarina",["El violín","El arpa","La flauta"],"El violín es lo que toca Valmey Sialí."],
+["Personajes",2,"¿Cuál es la habilidad SEM de Laki Unmei?","Precognición",["Telepatía","Telequinesis","Invisibilidad"],"La heredó de su madre adoptiva, Martina."],
+["Personajes",2,"¿Qué oficio tiene Valmey Sialí en Inasuno?","Abogado defensor",["Herrero","Juez","Alquimista"],"Libró a Gobz de la acusación de espionaje."],
+["Personajes",2,"¿Qué alias usa Andreas Light en su misión contra Umbra?","León Skyrider",["Rose Skyfall","Mikael Light","Astra"],"Ejecuta la Operación Negro."],
+["Personajes",2,"¿A cuántos de sus 30 atacantes mató Karim Balteus?","29",["30","15","7"],"En el último encontró el cierre de su venganza."],
+["Personajes",2,"¿Qué bestia primordial apareció atrapada en el portal de la final del Torneo de Umbra?","Orx",["Azalange","Tsuji","Aldebaran"],"Oci, el inmortal de Skaldrum, quedó atrapado por la misma energía."],
+["Personajes",2,"¿Quién protegió a Zarick con su vida en el Torneo de Umbra?","Karim Balteus",["Bane","Vina","Caleus"],"Luminarae le erigió una estatua junto a la de Astra Skyfall."],
+["Personajes",2,"¿De qué pueblo de Luminarae Luxor es Tomah?","Myrelith",["Frostpeak","Liminae","Pato"],"Se hizo arquero para enorgullecer a su padre Tobeas."],
+["Personajes",3,"¿Cómo se llama la armadura robótica de la que depende Gobz Gobinson?","Armazón Basón V.032",["Morfo","Ram Dao","Inargo 7"],"Gobz mide apenas 1,12 m."],
+["Personajes",3,"¿Qué idioma habla Valeria con sus criaturas?","Lukimora",["Ganús","Umbrio","Zzamuo"],"Laki lo entendió perfectamente dentro de su visión."],
+["Personajes",3,"¿Cómo se llama el traje simbiótico de Andreas Light que copia habilidades y apariencia?","Morfo",["Armazón Basón","Exotraje de Aurora","Velo Carmesí"],"Funciona mediante una proyección lumínica."],
+["Personajes",3,"¿Quién sostuvo una sección de la grada para salvar al público en Umbra?","Vela, arquitecta de Lumis",["Astra Skyfall","Burun","Lyra Shadowthorn"],"Astra, mientras tanto, absorbía los pulsos con pequeños vórtices."],
+["Personajes",3,"¿Quién es el padre no biológico y líder de los Ocho de Negatt?","Alnasi",["Tsuji","Caelum","Fudo"],"Los cría y comanda en nombre de Tsuji."],
+["Personajes",3,"¿Cómo se llama el guerrero orco de Zudodh Ez, padre de Zarick?","Khagzol «Zodd» Shazolg",["Grakk","Drog","Moktar"],"Murió defendiendo la Caverna Mortuoria."]
+].map((r,i)=>({id:"t"+i,cat:r[0],lvl:r[1],q:r[2],right:r[3],wrong:r[4],exp:r[5]}));
+
+// [afirmación, verdadera?, nivel, explicación]
+const VOF=[
+["Espacio no tiene género.",true,1,"Espacio se creó al mismo tiempo que el universo y no tiene género."],
+["Xora es la fuerza de la entropía y la oscuridad.",false,1,"Esa es Ape. Xora es el orden y la luz."],
+["Sinfalía no usa dinero: todo se rige por dones.",true,1,"Los dones son favores adeudados de valor acordado entre las partes."],
+["Lumis está gobernada por una reina que adora a Xora.",false,1,"Lumis es una tecnocracia controlada por la IA Inargo. La Reina Luminara IV gobierna Luminarae Luxor."],
+["El Pacto Skaldrak puso fin a tres millones de años de incivilización.",true,2,"Ocurrió en el año 0."],
+["Umbra tiene a Xora como religión oficial.",false,1,"Umbra no tiene religión oficial: cree en el dominio del más fuerte."],
+["Kiprika y Ganore son hermanos gemelos.",true,2,"Ganore es quien más le reprocha sus travesuras."],
+["Bane Ironhand nació en Umbra.",false,2,"Nació en la ciudad de Liminae, cerca de Lumis."],
+["Karim Balteus mató a 29 de los 30 atacantes de la Orden.",true,1,"Y en el último encontró el cierre de su venganza."],
+["Gobz Gobinson es un experimento genético fallido de Psybernia.",true,2,"Escapó de las instalaciones y cruzó el desierto."],
+["Cualquiera puede entrar y salir de Psybernia libremente.",false,1,"Nadie entra ni sale sin el permiso de Valeria."],
+["En Boro se cree que se puede contactar la «dimensión méltida».",true,2,"Mediante dispositivos electrónicos y métodos muy específicos."],
+["La Orden de los Caballeros de Luxor actúa a plena luz del día.",false,2,"Actúa desde las sombras: sigilo e infiltración."],
+["Ostraca es una kakistocracia de clones cíclicos.",true,3,"Sus líderes olvidan sus propias reglas."],
+["Zarick es un humano de sangre pura.",false,1,"Es semi-orco."],
+["Mit Caleus es inmortal por decisión de su antiguo amigo Solaris.",true,2,"Lo condenó para que recordara su error por siempre."],
+["Skaldrum adora a Xora.",false,1,"Skaldrum venera a Ape."],
+["Los ganoristas recorren las calles en paz cada mes «Ganore».",true,3,"Llevan consigo el Ganús, su libro sagrado."],
+["La Tribu Zzamua proviene del Presidio de Krahn.",false,2,"Llegó desde La Urdimbre de Sylvaris."],
+["El Presidio de Krahn custodia el estrecho con anclas de antimagia.",true,3,"Busca la «Estática Total» para frenar a Psybernia."],
+["Pongí es la nación asociada a lo tóxico.",false,2,"Esa es Disnjav. Pongí es «el recreo de Apexora»."],
+["Tsuji es el padre biológico de los Ocho de Negatt.",true,2,"Y Alnasi es su padre no biológico y líder."],
+["El Torneo de Umbra se celebra cada diez años.",false,2,"Es un certamen anual."],
+["Luminarae erigió estatuas para Karim Balteus y Astra Skyfall.",true,3,"Están una al lado de la otra, frente al templo principal."],
+["Zene es hija de Karim Balteus.",false,2,"La hija de Karim es Calliope. Zene es la compañera de cautiverio de Laki en su visión."],
+["Cada pueblo de Sinfalía guarda un fragmento del asteroide fundacional.",true,3,"Lo depositaron allí los primeros vínicos como protección mágica."],
+["Andreas Light rechazó el asiento de Rose tras su misión.",true,3,"Argumentó que no era digno de tal honor."],
+["La Guerra de la Retirada la inició Luminarae para conquistar Umbra.",false,3,"Fue Umbra quien intentó dominar Apexora."],
+["Se conoce con precisión de dónde salió Pin Kuku.",false,1,"En Frostpeak nadie recuerda bien de dónde vino."],
+["Vina Miceus fue la primera en unirse al campamento de Caleus.",true,3,"Le bastó compartir un té con Caleus."],
+["Se dice que el agua de saje aleja a quien la bebe de la dimensión méltida.",false,3,"Se dice que conecta más a quien la consume."]
+].map((r,i)=>({id:"v"+i,q:r[0],t:r[1],lvl:r[2],exp:r[3]}));
+
+// [categoría, respuesta, [5 pistas de vaga a específica], reseña]
+const QUIEN=[
+["Personaje","Zarick",["Soy mestizo: ni humano puro ni orco de tribu.","Mi madre venía de una ciudad flotante; mi padre, de una tribu que custodiaba una caverna sagrada.","Crecí robando para comer en los márgenes de un distrito caótico de Umbra.","Me hice guía y superviviente en Arboris.","Un joven con brazos cibernéticos me debe la vida."],"Semi-orco, «Hijo de la Sombra», de los Guardianes de Apexora."],
+["Personaje","Karim Balteus",["Me abandonaron a los cuatro años.","Me crió una orden mercenaria que venera a Ape.","Mi estilo de duelo parece una danza.","Deserté y cacé a quienes masacraron a mi familia.","Caí defendiendo a un semi-orco en la arena de Umbra."],"El Bailarín del Estoque. Luminarae le erigió una estatua."],
+["Personaje","Mit Caleus",["Nací hace siglos en Umbra.","Golpeé a un amigo que me espiaba y juré destruir Luminarae.","Mi castigo: no poder morir jamás.","Fundé la facción Sopharum.","Recluto a guerreros de buen corazón: los Guardianes de Apexora."],"Líder de Sopharum, inmortal por decisión de Solaris."],
+["Personaje","Valeria",["Mi hogar está cerrado al mundo: allí, según yo, todos son primos.","Nadie entra ni sale sin mi permiso.","Hablo Lukimora con mis criaturas.","Considero una deshonra a quienes se fueron de mi hogar.","Me proclamo la Soberana de Psybernia."],"Matriarca del «modelo de humanidad perfecta»."],
+["Personaje","Andreas Light",["Me adoptó una orden desde niño.","Mi mejor amiga cayó por mi propia mano.","Mi traje copia habilidades y apariencia de mis objetivos.","Actúo bajo el alias León Skyrider.","Ejecuto la Operación Negro contra Umbra."],"Segundo asiento del tercer círculo de la OCL, con traje Morfo."],
+["Personaje","Gobz Gobinson",["Mido apenas 1,12 metros.","Escapé de unas instalaciones donde fui un experimento fallido.","Sobrevivo gracias a una armadura robótica.","Un abogado del puerto me libró de una acusación de espionaje.","Aprendí vidrio, alquimia y forja en Fuana. Me dicen «el pequeño genio»."],"Goblin, artificiero y artesano de Sinfalía."],
+["Personaje","Bane Ironhand",["Antes tuve otro apellido: Forrest.","Crecí en una granja solar y fui merodeador.","Una explosión casi me destroza los brazos y me dañó la vista.","Mis implantes brillan de un celeste vibrante.","Un semi-orco me cargó a cuestas para salvarme."],"Humano de 23 años, de los Guardianes de Apexora."],
+["Personaje","Laki Unmei",["Soy huérfano de las calles de un puerto.","Me criaron un herrero reformado y una mujer precognitiva.","Heredé el don de mi madre adoptiva.","Una visión me mostró una nave de Psybernia.","Una soberana pronunció mi apellido completo antes de que yo lo dijera."],"El hijo predestinado de Markivton."],
+["Personaje","Pin Kuku",["Nadie recuerda de dónde salí.","Cargo docenas de libros, algunos escritos por mí.","Toco la ocarina.","Recorrí las tribus de Apexora registrando sus costumbres.","Soy un prodigio arcano del campamento de Caleus."],"«El niño incomprendido»."],
+["Deidad","Ganore",["Soy hijo de Espacio.","Represento el silencio absoluto entre las estrellas.","Mis seguidores rezan pidiendo el Gan.","Mi hermano gemelo se disfraza de humano para hacer travesuras.","Soy «La Nada»."],"Dios de la Nada, guía y consejero de Sinfalía."],
+["Deidad","Kiprika",["Soy una de las diez fuerzas del cosmos.","Puedo estar en todos lados a la vez.","Me fascina tomar formas humanoides.","Mi hermano gemelo me reprende por mis travesuras.","En el más allá me llaman Ki. Soy «El Todo»."],"Sin moralidad ni empatía, ha metido en aprietos a más de uno."],
+["Deidad","Xora",["Soy una de las diez fuerzas del cosmos.","Soy la arquitecta del cosmos.","Tejí las leyes de la física.","Tengo una enemistad antigua con mi contrapunto.","Luminarae Luxor me adora."],"Orden y Luz."],
+["Nación","Sinfalía",["No uso dinero: mi economía son los favores adeudados.","Me fundaron nómadas llegados del oeste.","Aquí una cara larga asusta a los vecinos.","Tengo once pueblos y tres facciones.","Una de mis localidades, Vasané-Nalú, fue tomada por la Tribu Zzamua."],"La nación de la alegría obligada."],
+["Nación","Lumis",["Mis torres captan el sol.","Aquí no hay religión: solo ciencia y razón.","Conviven humanos, androides y robots.","Mi Noche de las Luciérnagas causó respeto y miedo.","Me gobierna una IA llamada Inargo."],"Ciudad de Sol y Cables."],
+["Nación","Negatt",["Nací de tres academias que experimentaban con magias prohibidas.","Mi estética es oscura, elegante y grotesca.","Aquí se pactan cosas a cambio de inmortalidad.","Un investigador llamado Tsuji vivió aquí.","Aquí crecieron los Ocho."],"La Sombra Sabia."],
+["Nación","Umbra",["Mi estética es brutalista, medieval con tintes militares.","Recibí refugiados de Psybernia en el año 290.","No tengo religión oficial.","Aquí se celebra un torneo anual de guerreros.","Soy el Imperio del Martillo."],"Dictadura absoluta de ciudades-fortaleza."]
+].map((r,i)=>({id:"q"+i,cat:r[0],a:r[1],clues:r[2],bio:r[3]}));
+
+const CRONO=[
+[0,"Pacto Skaldrak","Las naciones occidentales firman la paz tras tres millones de años de incivilización."],
+[51,"Arboris y las Tribus","Los nómadas de Arboris y las montañas Skaldrum acuerdan su unión."],
+[133,"La Muralla Occidental","Las naciones se unen para frenar a los guerreros del oriente."],
+[290,"Gran Inmigración","Umbra recibe un contingente de refugiados de Psybernia."],
+[333,"Independencia de Boro","Un movimiento al norte de Lumis exige independencia o paso bloqueado al comercio."],
+[412,"Guerra de la Retirada","Umbra intenta dominar Apexora hasta que nace el poder divino de Luminarae."],
+[547,"Surgir de Negatt","Tres academias luminaraenses experimentan con magias prohibidas."],
+[673,"Noche de las Luciérnagas","Lumis muestra su poderío en todos los cielos."],
+[860,"Erupción del Skaldrak","El volcán más masivo de Apexora reduce los recursos esenciales."],
+[912,"Apexora hoy","Comienzan las historias de los Guardianes de Apexora."]
+].map(r=>({y:r[0],t:r[1],d:r[2]}));
+
+// [título, lugar, escena]
+const ROL=[
+["Ojos en la ciudad","Umbra","Entras a la capital de Umbra, donde siempre hay alguien escuchando. Un guardia te detiene: dice que oyeron a alguien hablar mal del dictador. Convéncelo de que te deje seguir."],
+["La cara larga","Sinfalía","En un pueblo sinfaliense te ven con gesto sombrío y te citan ante la asamblea. Explica qué te pasa sin asustar a nadie."],
+["Un don por otro","Sinfalía","Necesitas un servicio urgente y no tienes dinero: aquí todo se rige por dones. Negocia el valor de un favor adeudado."],
+["Pulso en Tharnok","Boro","Junto al templo en ruinas, el puesto de turismo cierra a los gritos: el templo acaba de expulsar un pulso electromagnético. Actúa ante los peregrinos."],
+["Cena en Disnjav","Disnjav","Un local te invita a quedarte a cenar, pero conviene no pasar mucho tiempo en la tierra enferma. Recházalo sin ofender."],
+["La patrulla de Krahn","Krahn","Una patrulla te captura y sospecha que eres espía de Psybernia. Defiéndete ante ellos."],
+["Un dron te sigue","Lumis","Un dron de Lumis te pide identificarte y te sigue por la ciudad. Dale una explicación creíble."],
+["Un pacto en la penumbra","Negatt","Un consejo oscuro te ofrece inmortalidad a cambio de un favor. Negocia, o recházalo, en personaje."],
+["Rezar el Gan","Suminé","Un monje ganorista te invita a rezar pidiendo el Gan en un observatorio. Participa, o pon a prueba su paz."],
+["Feria en Pongí","Pongí","Una feria te reta a un juego de azar. Nadie sabe qué hay detrás de tanta fiesta: ¿qué haces?"],
+["La oferta encubierta","Luminarae Luxor","Alguien de aspecto amable te ofrece unirte a una orden que «protege a Luxor». Reacciona sin revelar lo que sospechas."],
+["Tribunal de Skaldrum","Skaldrum","Te llevan ante un tribunal del feudalismo más extremo. Presenta tu defensa."],
+["Tres clanes, un paso","Boro","Clanes y mafias se disputan tu paso entre estructuras colapsadas y luces rotas. Elige con quién hablar y qué prometes."],
+["Frontera cerrada","Psybernia","Un guardia te niega el paso: quienes lo intentan rara vez vuelven. Justifica por qué necesitas cruzar."]
+].map((r,i)=>({id:"r"+i,t:r[0],place:r[1],x:r[2]}));
+const TWISTS=["Cae ceniza del cielo gris.","Alguien reconoce tu rostro.","Un aliado inesperado interviene.","Se corta la luz de golpe.","Pierdes un objeto clave.","Una campana suena a lo lejos y todos callan.","Un niño lo ha visto todo.","Solo tienes un minuto."];
+
+const DEFAULT_REWARDS=[
+["Pista del Archivo","El DM revela un dato de lore relevante para la escena.",30],
+["Susurro de Ape","Una pregunta secreta al DM sobre la escena, respondida en privado.",40],
+["Momento de Dacama","Actúas primero en el próximo encuentro.",50],
+["Bendición de Xora","Repite una tirada y quédate con el mejor resultado.",60],
+["Aliento de Millot","Crea un detalle menor en la escena: un objeto, un PNJ de paso, un atajo.",70],
+["Don de Sinfalía","Un PNJ te debe un favor y lo cobrarás cuando quieras.",80],
+["Ventaja del pacto","Ventaja en una tirada a elección.",100],
+["Botín de los restos","Un objeto menor entregado por el DM.",120],
+["Reliquia del cometa","Un objeto especial: se define con el DM.",300]
+];
+
+/* ===== utilidades ===== */
+const $=(s,r=document)=>r.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const uid=()=>Math.random().toString(36).slice(2,9);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const TRIVIA_PTS=[0,10,20,30],VOF_PTS=[0,10,15,20];
+const MODES={
+ trivia:{name:"Trivia del Archivo",desc:"Una pregunta con cuatro respuestas: mitología, mundo, personajes e historia.",pts:"10 a 30"},
+ quien:{name:"¿Quién soy?",desc:"Las pistas se revelan de a una. Cuantas menos se usen, más se gana.",pts:"10 a 50"},
+ vof:{name:"Verdadero o falso",desc:"Una afirmación sobre Apexora. ¿Verdad o mentira?",pts:"10 a 20"},
+ crono:{name:"Cronología rota",desc:"Cuatro eventos desordenados. Ordénenlos del más antiguo al más reciente.",pts:"hasta 40"},
+ imagen:{name:"Adivina la imagen",desc:"Una imagen borrosa que se aclara de a poco. ¿Qué lugar o personaje es?",pts:"10 a 30"}
+};
+
+/* ===== estado ===== */
+const KEY="apexora-sala-v1";
+const defaults=()=>({currency:"Fragmentos",players:[],active:null,
+ rewards:DEFAULT_REWARDS.map(r=>({id:uid(),name:r[0],desc:r[1],cost:r[2]})),
+ log:[],custom:[],settings:{timer:30,autoNext:true,sound:true,cheat:false,onlyCustom:false},used:{}});
+function load(){try{const r=localStorage.getItem(KEY);if(r){const o=JSON.parse(r),d=defaults();return Object.assign(d,o,{settings:Object.assign(d.settings,o.settings||{})})}}catch(e){}return defaults()}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+let S=load();
+let view="home",C=null,tmr=null,pendingYes=null,ringSel=null,shopEdit=false,lastPts={};
+const F={cat:"Todas",lvl:0};
+let bankText="",bankMsg=null;
+const cust=t=>S.custom.filter(c=>c.type===t).map(c=>c.x);
+function poolOf(type,base){const c=cust(type);return S.settings.onlyCustom&&c.length?c:base.concat(c)}
+const D={sides:20,count:1,mod:0,dc:"",hist:[],res:null,rolling:false,pts:20};
+
+/* ===== sonido y avisos ===== */
+let AC=null;
+function beep(f,d){if(window.__beep)window.__beep(f,d)}
+let toastT=null;
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove("show"),2400)}
+
+/* ===== jugadores y puntos ===== */
+const cur=()=>S.currency||"Fragmentos";
+const P=id=>S.players.find(p=>p.id===id);
+function targets(){if(S.active==="all")return S.players.map(p=>p.id);return P(S.active)?[S.active]:[]}
+function targetLabel(){if(S.active==="all")return "todo el grupo";const p=P(S.active);return p?p.name:"…"}
+function applyDelta(map,text,kind="score"){
+ const applied={};
+ for(const p of S.players){if(map[p.id]){const n=Math.max(0,p.pts+map[p.id]);applied[p.id]=n-p.pts;p.pts=n}}
+ S.log.unshift({id:uid(),ts:Date.now(),kind,text,deltas:applied});S.log=S.log.slice(0,200);save();
+}
+function award(n,text){if(!S.players.length&&window.ensureP)ensureP();n=Math.round(n*(window.Prog?Prog.mult():1));
+ const t=targets();if(!t.length||!n){if(!t.length)toast("Elige a un jugador en el panel izquierdo");return false}
+ const m={};t.forEach(id=>m[id]=n);
+ applyDelta(m,`${targetLabel()}: ${text}`);beep(880,140);
+ toast(`+${n} ${cur().toLowerCase()} para ${targetLabel()}`);if(window.Prog)Prog.win(n);return true;
+}
+function nextPlayer(){
+ if(!S.players.length)return;
+ const i=S.players.findIndex(p=>p.id===S.active);
+ S.active=S.players[(i+1)%S.players.length].id;save();
+}
+
+/* ===== temporizador ===== */
+function stopTimer(){clearInterval(tmr);tmr=null;if(C)C.running=false}
+function timerStart(){
+ if(!C||!S.settings.timer)return;stopTimer();
+ C.remaining=S.settings.timer;C.running=true;C.timeUp=false;paintTimer();
+ tmr=setInterval(()=>{C.remaining--;
+  if(C.remaining<=0){stopTimer();C.remaining=0;C.timeUp=true;beep(200,600)}else if(C.remaining<=5)beep(660,80);
+  paintTimer()},1000);
+}
+function paintTimer(){
+ if(!C)return;const n=$("#tnum"),b=$("#tbar");if(!n||!b)return;
+ const tot=S.settings.timer||1,low=C.remaining<=5&&(C.running||C.timeUp);
+ n.textContent=C.remaining;n.classList.toggle("low",low);
+ b.style.width=Math.max(0,C.remaining/tot*100)+"%";b.classList.toggle("low",low);
+}
+function timerHTML(){
+ if(!S.settings.timer)return "";
+ return `<div class="timer" aria-label="Tiempo restante"><span class="tnum" id="tnum">${C.remaining}</span><div class="tbar"><i id="tbar"></i></div></div>`;
+}
+
+/* ===== retos ===== */
+function pick(mode,pool){
+ let used=S.used[mode]=S.used[mode]||[];
+ let av=pool.filter(x=>!used.includes(x.id));
+ if(!av.length){S.used[mode]=used=[];av=pool.slice()}
+ const it=av[Math.floor(Math.random()*av.length)];used.push(it.id);save();return it;
+}
+function newItem(mode){
+ if(mode==="trivia"){
+  const all=poolOf("trivia",TRIVIA);let pool=all.filter(t=>(F.cat==="Todas"||t.cat===F.cat)&&(!F.lvl||t.lvl===F.lvl));
+  if(!pool.length)pool=all;
+  const t=pick("trivia",pool),opts=shuffle([t.right,...t.wrong]);
+  return Object.assign({},t,{opts,ai:opts.indexOf(t.right)});
+ }
+ if(mode==="vof"){const v=pick("vof",poolOf("vof",VOF));return Object.assign({},v,{opts:["Verdadero","Falso"],ai:v.t?0:1})}
+ if(mode==="quien")return pick("quien",poolOf("quien",QUIEN));
+ if(mode==="rol")return pick("rol",poolOf("rol",ROL));
+ if(mode==="imagen")return IMGS.length?pick("imagen",IMGS):null;
+ if(mode==="crono"){
+  const cc=cust("crono"),cp=S.settings.onlyCustom&&cc.length>=4?cc:CRONO.concat(cc);
+  const evs=shuffle(cp).slice(0,4);
+  return {evs,order:evs.slice().sort((a,b)=>a.y-b.y)};
+ }
+}
+function startMode(mode){
+ if(window.GM&&GM.has(mode))return GM.start(mode);
+ stopTimer();view="play";
+ C={mode,resolved:false,revealed:false,chosen:null,running:false,remaining:S.settings.timer,timeUp:false,twist:null,clues:1};
+ C.item=newItem(mode);
+ C.pts=mode==="trivia"?TRIVIA_PTS[C.item.lvl]:mode==="vof"?VOF_PTS[C.item.lvl]:0;
+ render();window.scrollTo(0,0);
+}
+const cluePts=()=>60-10*C.clues;
+const shortQ=s=>s.length>60?s.slice(0,57)+"…":s;
+const LET="ABCD";
+
+function playHead(title){
+ const p=S.active==="all"?null:P(S.active);
+ const who=S.active==="all"?"Todo el grupo":p?p.name:"Sin jugador";
+ const ini=S.active==="all"?"★":p?esc(p.name.trim().charAt(0).toUpperCase()):"?";
+ return `<div class="playhead"><div class="row"><button class="btn ghost" data-act="nav" data-v="retos">‹ Retos</button><h1 class="page" style="margin:0">${esc(title)}</h1></div>
+ <div class="turn"><i>${ini}</i><div><span>Responde</span><b>${esc(who)}</b></div></div></div>
+ ${S.players.length?"":`<div class="banner">Añade a tus jugadores en el panel izquierdo para poder repartir puntos.</div>`}`;
+}
+function cheatLine(t){return S.settings.cheat&&!C.revealed?`<p class="cheat">Chuleta del DM: ${esc(t)}</p>`:""}
+function awardBtns(label,pts,recommended){
+ const dis=!targets().length?"disabled":"";
+ return `<div class="ctrls" style="margin-top:20px"><button class="btn ${recommended?"pri":""}" data-act="give" data-n="${pts}" data-t="${esc(label)}" ${dis}>Otorgar +${pts} a ${esc(targetLabel())}</button><button class="btn ${recommended?"":"pri"}" data-act="none">Sin puntos</button></div>`;
+}
+function nextBar(){return `<div class="ctrls" style="margin-top:20px"><button class="btn pri" data-act="nextq">Siguiente reto ›</button><span style="color:var(--muted)">Flecha derecha</span></div>`}
+
+function stageChoice(){
+ const it=C.item,v=C.mode==="vof";
+ const gems="◆".repeat(it.lvl)+"◇".repeat(3-it.lvl);
+ const correct=C.chosen!=null?C.chosen===it.ai:null;
+ let opts=it.opts.map((o,i)=>{
+  const cl=["opt"];if(C.chosen===i)cl.push("chosen");if(C.hide&&C.hide.includes(i))cl.push("gone");
+  if(C.revealed){if(i===it.ai&&correct===true)cl.push("right");else if(C.chosen===i)cl.push("wrong");else cl.push("dim")}
+  else if(S.settings.cheat&&i===it.ai)cl.push("peek");
+  const tag=C.chosen===i?(C.revealed?(i===it.ai?"Su respuesta ✓":"Su respuesta ✗"):"Su respuesta"):"";
+  return `<button class="${cl.join(" ")}" data-act="choose" data-i="${i}" ${C.revealed?"disabled":""} aria-pressed="${C.chosen===i}"><span class="lt">${v?(i?"F":"V"):LET[i]}</span><span>${esc(o)}</span><span class="tag">${tag}</span></button>`;
+ }).join("");
+ let res="";
+ if(C.revealed){
+  const vt=correct===null?"Respuesta revelada":correct?"✓ Correcto":"✗ Incorrecto";
+  res=`<div class="result"><div class="verdict ${correct===true?"ok":correct===false?"no":""}">${vt}</div><p>${correct===true?esc(it.exp):""}</p>${C.resolved?nextBar():awardBtns(shortQ(it.q),C.pts,correct!==false)}</div>`;
+ }
+ return `<div class="stage"><div class="meta">${v?"Verdadero o falso":esc(it.cat)}<span class="gem" aria-label="dificultad ${it.lvl} de 3">${gems}</span><span>${C.pts} ${cur().toLowerCase()}</span></div>
+ <h2 class="q">${esc(it.q)}</h2><div class="opts ${v?"two":""}">${opts}</div>
+ <div class="ctrls">${C.revealed?"":`${v?"":`<button class="btn" data-act="hint50" ${C.hinted?"disabled":""}>${C.hinted?"Pista usada":"Pista 50/50 · −50% pts"}</button>`}`}${timerHTML()}</div>
+ ${cheatLine(it.opts[it.ai])}${res}</div>`;
+}
+function stageQuien(){
+ const it=C.item,shown=it.clues.slice(0,C.clues);
+ let body=`<ol class="clues">${shown.map(c=>`<li>${esc(c)}</li>`).join("")}</ol>`;
+ let ctr="";
+ if(!C.revealed){
+  ctr=`<div class="ctrls"><button class="btn" data-act="clue" ${C.clues>=5?"disabled":""}>Otra pista</button>
+  <input class="fld gin" id="gi" placeholder="¿Quién soy?" autocomplete="off" aria-label="Tu respuesta"><button class="btn pri" data-act="guess">Responder (+${cluePts()})</button><button class="btn" data-act="giveup">Rendirme</button></div>`;
+ }else{
+  body+=`<div class="answer"><h3>${esc(it.a)}</h3><p>${esc(it.bio)}</p></div>${nextBar()}`;
+ }
+ return `<div class="stage"><div class="meta">${esc(it.cat)}<span>Pista ${C.clues} de 5</span><span>Vale ${cluePts()} ${cur().toLowerCase()}</span></div>${body}${ctr}${cheatLine(it.a)}</div>`;
+}
+function stageCrono(){
+ const it=C.item,list=C.revealed?it.order:it.evs;
+ const cards=list.map((e,i)=>{
+  const L=LET[it.evs.indexOf(e)];
+  return C.revealed
+   ?`<div class="ev done"><span class="lt">${i+1}</span><b>${esc(e.t)}</b><span class="yr">Año ${e.y}${e.y===912?" · presente":""}</span><span style="grid-column:2">${esc(e.d)}</span></div>`
+   :`<div class="ev"><span class="lt">${L}</span><b>${esc(e.t)}</b><span>${esc(e.d)}</span></div>`;
+ }).join("");
+ let res="";
+ if(C.revealed)res=`<div class="result">${C.resolved?nextBar():`<div class="verdict">Este es el orden correcto</div><div class="ctrls" style="margin-top:12px"><button class="btn pri" data-act="give" data-n="40" data-t="Cronología perfecta" ${targets().length?"":"disabled"}>Perfecto +40</button><button class="btn" data-act="give" data-n="20" data-t="Cronología casi perfecta" ${targets().length?"":"disabled"}>Casi +20</button><button class="btn" data-act="none">Sin puntos</button></div>`}</div>`;
+ return `<div class="stage"><div class="meta">Cronología rota<span>Del más antiguo al más reciente</span><span>hasta 40 ${cur().toLowerCase()}</span></div>
+ <h2 class="q">Ordenen estos cuatro eventos. Digan las letras en voz alta.</h2><div class="evs">${cards}</div>
+ <div class="ctrls">${C.revealed?"":`<button class="btn" data-act="start">Iniciar tiempo</button><button class="btn pri" data-act="reveal">Revelar orden</button>`}${timerHTML()}</div>
+ ${S.settings.cheat&&!C.revealed?`<p class="cheat">Chuleta del DM: ${it.order.map(e=>LET[it.evs.indexOf(e)]).join(" → ")}</p>`:""}${res}</div>`;
+}
+function stageRol(){
+ const it=C.item,dis=targets().length?"":"disabled";
+ const sc=C.resolved?nextBar():`<div class="result"><div class="verdict">¿Cuánto brilló la interpretación?</div><div class="ctrls" style="margin-top:12px">
+ <button class="btn" data-act="none">Sin brillo</button>
+ <button class="btn" data-act="give" data-n="10" data-t="Prueba de rol: ${esc(it.t)}" ${dis}>Convincente +10</button>
+ <button class="btn" data-act="give" data-n="20" data-t="Prueba de rol: ${esc(it.t)}" ${dis}>Memorable +20</button>
+ <button class="btn pri" data-act="give" data-n="30" data-t="Prueba de rol: ${esc(it.t)}" ${dis}>Legendario +30</button></div></div>`;
+ return `<div class="stage"><span class="place">${esc(it.place)}</span><h2 class="rt">${esc(it.t)}</h2><p class="scenetxt">${esc(it.x)}</p>
+ ${C.twist?`<div class="twist">Giro del destino: ${esc(C.twist)}</div>`:""}
+ <div class="ctrls"><button class="btn" data-act="twist">Giro del destino</button><button class="btn" data-act="start">Iniciar tiempo</button>${timerHTML()}</div>${sc}</div>`;
+}
+function viewPlay(){
+ const m=C.mode;let st="",filt="";if(window.GM&&GM.has(m))return playHead(MODES[m].name)+GM.view(m);
+ if(C.picking)return playHead(MODES[m].name)+levelPicker();
+ if(m==="trivia"){
+  const cats=["Todas",...new Set(poolOf("trivia",TRIVIA).map(t=>t.cat))];
+  filt=`<div class="filters" role="group" aria-label="Filtros de trivia">${cats.map(c=>`<button class="chip" data-act="fcat" data-v="${c}" aria-pressed="${F.cat===c}">${c}</button>`).join("")}<span style="width:14px"></span>${[[0,"Cualquier nivel"],[1,"Fácil"],[2,"Media"],[3,"Difícil"]].map(l=>`<button class="chip" data-act="flvl" data-v="${l[0]}" aria-pressed="${F.lvl===l[0]}">${l[1]}</button>`).join("")}</div>`;
+ }
+ st=m==="trivia"||m==="vof"?stageChoice():m==="quien"?stageQuien():m==="crono"?stageCrono():m==="imagen"?stageImagen():stageRol();
+ return playHead(MODES[m].name)+filt+st;
+}
+
+/* ===== vistas ===== */
+function ringSVG(){
+ const cx=200,cy=200,r=150;
+ const pts=DEITIES.map((d,i)=>{const a=(-90+i*36)*Math.PI/180;return Object.assign({},d,{x:cx+r*Math.cos(a),y:cy+r*Math.sin(a),a})});
+ let bonds="";
+ [[0,1],[2,3],[4,5],[6,7]].forEach(([a,b])=>{
+  const A=pts[a],B=pts[b];
+  if(a===0){
+   const dx=B.x-A.x,dy=B.y-A.y,L=Math.hypot(dx,dy),nx=-dy/L,ny=dx/L;
+   let p=`M${A.x.toFixed(1)} ${A.y.toFixed(1)}`;
+   [[.2,7],[.4,-7],[.6,7],[.8,-7]].forEach(([t,o])=>{p+=` L${(A.x+dx*t+nx*o).toFixed(1)} ${(A.y+dy*t+ny*o).toFixed(1)}`});
+   p+=` L${B.x.toFixed(1)} ${B.y.toFixed(1)}`;bonds+=`<path class="bond crack" d="${p}"/>`;
+  }else bonds+=`<line class="bond" x1="${A.x}" y1="${A.y}" x2="${B.x}" y2="${B.y}"/>`;
+ });
+ const nodes=pts.map((p,i)=>{
+  const lx=cx+(r+42)*Math.cos(p.a),ly=cy+(r+42)*Math.sin(p.a);
+  return `<g class="dn ${p.c||""}" tabindex="0" role="button" data-i="${i}" aria-label="${p.n}: ${p.d}"><circle cx="${p.x}" cy="${p.y}" r="24"/><text class="ini" x="${p.x}" y="${p.y}">${p.n[0]}</text><text class="lab" x="${lx}" y="${ly}" dominant-baseline="central">${p.n}</text></g>`;
+ }).join("");
+ return `<svg viewBox="-30 -30 460 460" role="group" aria-label="Los diez hijos de Espacio"><circle class="craterfill" cx="200" cy="200" r="100"/><circle class="crater" cx="200" cy="200" r="100"/><circle class="crater" cx="200" cy="200" r="74"/>${bonds}${nodes}</svg>`;
+}
+function ringCenter(i){
+ if(i==null)return `<h3>Espacio</h3><p>El padre primordial.<br>Toca a uno de sus diez hijos.</p>`;
+ const d=DEITIES[i];return `<h3>${d.n}</h3><p>${d.d}</p>`;
+}
+function viewHome(){
+ return `<section class="hero"><div><div class="goty">★ 9 JUEGOS · SOLO O EN GRUPO</div><h1>Sala de Desafíos</h1>
+ <p class="lead">Resuelve retos del lore de Apexora, acumula ${esc(cur().toLowerCase())} y canjéalos por ventajas en la mesa. Solo o en grupo.</p>
+ <div class="row"><button class="btn pri" data-act="surprise">Reto sorpresa</button><button class="btn" data-act="nav" data-v="retos">Elegir un reto</button><button class="btn" data-act="nav" data-v="tienda">Ir a la tienda</button></div></div>
+ <div class="ringwrap">${ringSVG()}<div class="ringc" id="ringc">${ringCenter(ringSel)}</div></div></section>`;
+}
+function viewRetos(){
+ return `<h1 class="page">Elige un reto</h1><p class="sub">Cada reto reparte ${esc(cur().toLowerCase())} al jugador activo. Si juegas solo, la sala crea un jugador por ti.</p>
+ <div class="modes">${Object.entries(MODES).map(([k,m])=>`<button class="mode" data-act="mode" data-m="${k}" style="--c:${({trivia:"#f6c453",quien:"#b39bff",vof:"#4fd1c5",crono:"#ff8f5e",rol:"#ff5d7a",imagen:"#5aa9ff",wordle:"#6ee7a0",conex:"#a3e635",impostor:"#e879f9",top10:"#7dd3fc"})[k]}"><i class="ic">${({trivia:"📜",quien:"🎭",vof:"⚖️",crono:"⏳",rol:"🗡️",imagen:"🔮",wordle:"🔤",conex:"🧩",impostor:"🕵️",top10:"🔟"})[k]}</i><b>${m.name}</b><span>${m.desc}</span><em>${m.pts}</em></button>`).join("")}</div>`;
+}
+function viewDados(){
+ const r=D.res;let out="";
+ if(r){
+  const crit=r.sides===20&&r.count===1&&r.rolls[0]===20,fum=r.sides===20&&r.count===1&&r.rolls[0]===1;
+  out=`<div class="dnum ${crit?"crit":fum?"fumble":""}" id="dnum">${r.total}</div>
+  <div class="dbrk">${r.count}d${r.sides}: ${r.rolls.join(" + ")}${r.mod?` ${r.mod>0?"+":"−"} ${Math.abs(r.mod)}`:""}</div>
+  ${crit?`<div class="dtag" style="color:var(--acc-text)">¡Crítico!</div>`:fum?`<div class="dtag" style="color:var(--bad)">Pifia</div>`:""}
+  ${r.dc!==""?`<div class="dtag" style="color:var(${r.ok?"--acc-text":"--bad"})">${r.ok?"Éxito":"Fallo"} contra CD ${r.dc}</div>`:""}
+  <div class="row" style="justify-content:center;margin-top:12px"><label style="font-weight:700">Puntos <input class="fld" style="width:80px" type="number" min="1" id="dpts" value="${D.pts}" data-set="dpts"></label><button class="btn ${r.ok?"pri":""}" data-act="dgive" ${targets().length?"":"disabled"}>Otorgar a ${esc(targetLabel())}</button></div>`;
+ }else out=`<div class="dnum" id="dnum" style="color:var(--line)">?</div><div class="dbrk">Elige un dado y tira.</div>`;
+ return `<h1 class="page">Dados</h1><p class="sub">Tiradas para pruebas de habilidad. Con una CD, el resultado marca éxito o fallo.</p>
+ <div class="dgrid"><div class="dctl">
+  <div><label>Dado</label><div class="sides">${[4,6,8,10,12,20,100].map(s=>`<button class="chip" data-act="dside" data-v="${s}" aria-pressed="${D.sides===s}">d${s}</button>`).join("")}</div></div>
+  <div class="row" style="gap:28px"><div><label>Cantidad</label><div class="step"><button class="mini" data-act="dcount" data-v="-1" aria-label="Menos dados">−</button><b>${D.count}</b><button class="mini" data-act="dcount" data-v="1" aria-label="Más dados">+</button></div></div>
+  <div><label>Modificador</label><div class="step"><button class="mini" data-act="dmod" data-v="-1" aria-label="Bajar modificador">−</button><b>${D.mod>0?"+":""}${D.mod}</b><button class="mini" data-act="dmod" data-v="1" aria-label="Subir modificador">+</button></div></div></div>
+  <div><label for="dc">CD (opcional)</label><input class="fld" id="dc" type="number" value="${esc(D.dc)}" data-set="dc" style="width:120px"></div>
+  <button class="btn pri" data-act="roll" ${D.rolling?"disabled":""}>Tirar (Espacio)</button></div>
+ <div><div class="dres" aria-live="polite">${out}</div>
+ ${D.hist.length?`<ul class="hist">${D.hist.slice(0,8).map(h=>`<li><b>${h.total}</b> · ${h.count}d${h.sides}${h.mod?(h.mod>0?"+":"−")+Math.abs(h.mod):""} [${h.rolls.join(", ")}]${h.dc!==""?` · CD ${h.dc} ${h.ok?"✓":"✗"}`:""}</li>`).join("")}</ul>`:""}</div></div>`;
+}
+function viewTienda(){
+ const p=S.active==="all"?null:P(S.active),bal=p?p.pts:null;
+ const rows=S.rewards.map(r=>{
+  let act;
+  if(shopEdit)act=`<div class="row"><button class="mini" data-act="editrw" data-id="${r.id}">Editar</button><button class="mini" data-act="delrw" data-id="${r.id}">Quitar</button></div>`;
+  else if(bal==null)act=`<button class="btn" disabled>Elige un jugador</button>`;
+  else if(bal<r.cost)act=`<button class="btn" disabled>Faltan ${r.cost-bal}</button>`;
+  else act=`<button class="btn pri" data-act="redeem" data-id="${r.id}">Canjear</button>`;
+  return `<div class="rw"><b>${esc(r.name)}</b><span>${esc(r.desc)}</span><div class="cost">${r.cost}</div>${act}</div>`;
+ }).join("");
+ const recent=S.log.filter(l=>l.kind==="redeem").slice(0,5);
+ return `<h1 class="page">Tienda</h1><p class="sub">Canjeen ${esc(cur().toLowerCase())} por ventajas en la mesa. El DM puede editar el catálogo.</p>
+ ${p?`<div class="balance"><span>${esc(p.name)} tiene</span><b>${p.pts}</b><span>${esc(cur().toLowerCase())}</span></div>`:`<div class="banner">Elige a un jugador en el panel izquierdo para canjear.</div>`}
+ <div class="shop">${rows||`<p class="empty" style="padding:20px 0">No hay recompensas. Añade la primera.</p>`}</div>
+ <div class="row" style="margin-top:20px"><button class="btn" data-act="shopedit">${shopEdit?"Terminar edición":"Editar tienda"}</button>${shopEdit?`<button class="btn pri" data-act="addrw">Añadir recompensa</button>`:""}</div>
+ ${recent.length?`<h2 class="panel" style="font-family:var(--display);font-size:1rem;margin:34px 0 10px">Canjes recientes</h2><ul class="log">${recent.map(l=>`<li><span>${esc(l.text)}</span><time>${new Date(l.ts).toLocaleTimeString("es",{hour:"2-digit",minute:"2-digit"})}</time></li>`).join("")}</ul>`:""}`;
+}
+function viewRegistro(){
+ const s=S.settings;
+ const items=S.log.slice(0,40).map(l=>{
+  const tot=Object.values(l.deltas||{}).reduce((a,b)=>a+b,0);
+  const n=Object.keys(l.deltas||{}).length;
+  const d=tot?`<span class="d ${tot>0?"p":"n"}">${tot>0?"+":"−"}${Math.abs(tot)}${n>1?" ("+n+")":""}</span>`:"";
+  return `<li><span>${esc(l.text)}<br><time>${new Date(l.ts).toLocaleTimeString("es",{hour:"2-digit",minute:"2-digit"})}</time></span>${d}</li>`;
+ }).join("");
+ return `<h1 class="page">Registro y ajustes</h1><p class="sub">Todo se guarda en este navegador. Si cambias de equipo, usa la copia de seguridad.</p>
+ <div class="cols"><div class="panel"><h2>Ajustes</h2><div class="set">
+  <label>Nombre de los puntos<input class="fld" data-setting="currency" value="${esc(S.currency)}"></label>
+  <label>Tiempo por reto, en segundos<input class="fld" type="number" min="0" max="300" data-setting="timer" value="${s.timer}"><small>Usa 0 para ocultar el temporizador.</small></label>
+  <label class="chk"><input type="checkbox" data-setting="autoNext" ${s.autoNext?"checked":""}><span>Pasar al siguiente jugador después de cada reto</span></label>
+  <label class="chk"><input type="checkbox" data-setting="sound" ${s.sound?"checked":""}><span>Sonidos de tiempo y puntos</span></label>
+  <label class="chk"><input type="checkbox" data-setting="cheat" ${s.cheat?"checked":""}><span>Chuleta del DM: muestra la respuesta en pequeño <small>(no la actives si compartes toda la pantalla)</small></span></label>
+ </div>
+ <h2 style="margin-top:30px">Copia de seguridad</h2><div class="set"><textarea class="fld" id="bk" aria-label="Copia de seguridad" placeholder="Pega aquí una copia para restaurarla"></textarea>
+ <div class="row"><button class="btn" data-act="export">Generar y copiar</button><button class="btn" data-act="import">Restaurar</button></div></div></div>
+ <div class="panel"><h2>Historial de puntos</h2>${items?`<ul class="log">${items}</ul>`:`<p class="empty">Todavía no hay movimientos.</p>`}
+ <div class="row" style="margin-top:16px"><button class="btn" data-act="undo" ${S.log.some(l=>Object.keys(l.deltas||{}).length)?"":"disabled"}>Deshacer el último movimiento</button></div>
+ <div class="row" style="margin-top:34px"><button class="btn danger" data-act="zero">Poner puntos a cero</button><button class="btn danger" data-act="wipe">Borrar todo</button></div></div></div>
+ ${bankHTML()}${imgHTML()}`;
+}
+
+/* ===== banco propio ===== */
+const BANK_LABEL={trivia:"Trivia",vof:"Verdadero o falso",quien:"¿Quién soy?",rol:"Prueba de rol",crono:"Cronología"};
+const BANK_HELP=`trivia | Categoría | nivel 1-3 | Pregunta | Correcta | Incorrecta 1 | Incorrecta 2 | Incorrecta 3 | Explicación
+vof | verdadero o falso | nivel 1-3 | Afirmación | Explicación
+quien | Categoría | Respuesta | Pista 1 | Pista 2 | Pista 3 | Pista 4 | Pista 5 | Reseña
+rol | Título | Lugar | Escena para actuar
+crono | Año | Título | Descripción`;
+const BANK_EXAMPLE=`trivia | Mundo | 2 | ¿Quién lidera Lumis? | Inargo | Valeria | Puj | Tsuji | Una IA gobierna Lumis.
+vof | falso | 1 | Umbra adora a Xora. | Umbra no tiene religión oficial.
+rol | El mercader nervioso | Boro | Un mercader te ofrece un mapa dudoso.
+crono | 913 | Un evento nuevo | Descripción breve.`;
+const BANK_PROMPT=`Convierte el siguiente contenido nuevo de Apexora en desafíos para mi plataforma de juegos. Devuelve solo líneas, una por desafío, con los campos separados por | y sin texto extra. Formatos:
+${BANK_HELP}
+Reglas: usa solo hechos del contenido que te pase, sin inventar lore. Nivel 1 es fácil y 3 es difícil. En "quien" las 5 pistas van de la más vaga a la más específica, escritas en primera persona. No uses el carácter | dentro de los textos. Contenido nuevo:
+`;
+function bankKey(c){return c.type+"|"+String(c.x.q||c.x.a||c.x.t||"")+(c.x.y??"")}
+function parseBank(txt){
+ const ok=[],err=[],bad=[];
+ txt.split(/\r?\n/).forEach((raw,i)=>{
+  const line=raw.trim();if(!line||line.startsWith("#"))return;
+  const f=line.split("|").map(x=>x.trim()),t=f[0].toLowerCase(),id="c"+uid();
+  const fail=m=>{err.push("Línea "+(i+1)+": "+m);bad.push(raw)};
+  const lv=n=>{const v=parseInt(n);return v>=1&&v<=3?v:null};
+  if(t==="trivia"){
+   if(f.length<8||f.slice(1,8).some(x=>!x))return fail("trivia necesita categoría, nivel, pregunta, la correcta y 3 incorrectas.");
+   const l=lv(f[2]);if(!l)return fail("el nivel debe ser 1, 2 o 3.");
+   ok.push({id,type:t,x:{id,cat:f[1],lvl:l,q:f[3],right:f[4],wrong:[f[5],f[6],f[7]],exp:f[8]||""}});
+  }else if(t==="vof"){
+   if(f.length<4||!f[3])return fail("vof necesita verdadero o falso, nivel y la afirmación.");
+   const v=f[1].toLowerCase(),tv=["verdadero","v","true","sí","si"].includes(v),fv=["falso","f","false","no"].includes(v);
+   if(!tv&&!fv)return fail("escribe «verdadero» o «falso» en el segundo campo.");
+   const l=lv(f[2]);if(!l)return fail("el nivel debe ser 1, 2 o 3.");
+   ok.push({id,type:t,x:{id,q:f[3],t:tv,lvl:l,exp:f[4]||""}});
+  }else if(t==="quien"){
+   if(f.length<8||f.slice(1,8).some(x=>!x))return fail("quien necesita categoría, respuesta y exactamente 5 pistas.");
+   ok.push({id,type:t,x:{id,cat:f[1],a:f[2],clues:f.slice(3,8),bio:f[8]||""}});
+  }else if(t==="rol"){
+   if(f.length<4||f.slice(1,4).some(x=>!x))return fail("rol necesita título, lugar y escena.");
+   ok.push({id,type:t,x:{id,t:f[1],place:f[2],x:f[3]}});
+  }else if(t==="crono"){
+   const y=parseInt(f[1]);if(f.length<3||isNaN(y)||!f[2])return fail("crono necesita año (número), título y descripción.");
+   ok.push({id,type:t,x:{id,y,t:f[2],d:f[3]||""}});
+  }else fail("tipo «"+f[0]+"» no reconocido. Usa trivia, vof, quien, rol o crono.");
+ });
+ return {ok,err,bad};
+}
+function bankLabel(c){const x=c.x;return c.type==="quien"?"¿Quién soy? "+x.a:c.type==="rol"?x.t:c.type==="crono"?"Año "+x.y+": "+x.t:x.q}
+function bankHTML(){
+ const m=bankMsg;
+ const msg=m?`<div role="status" style="margin-top:14px"><b>${m.added?`Se añadieron ${m.added} desafío${m.added>1?"s":""}.`:"No se añadió ningún desafío."}</b>${m.dup?` ${m.dup} ya estaba${m.dup>1?"n":""}.`:""}${m.err.length?`<ul class="errs">${m.err.map(e=>`<li>${esc(e)}</li>`).join("")}</ul><small style="color:var(--muted)">Las líneas con error siguen en el cuadro para que las corrijas.</small>`:""}</div>`:"";
+ const cnt=Object.keys(BANK_LABEL).map(k=>`${cust(k).length} ${BANK_LABEL[k].toLowerCase()}`).join(" · ");
+ const items=S.custom.map(c=>`<li><span><small style="color:var(--muted)">${BANK_LABEL[c.type]}</small><br>${esc(bankLabel(c))}</span><button class="mini" data-act="bankdel" data-id="${c.id}" aria-label="Quitar">Quitar</button></li>`).join("");
+ return `<section class="panel bank" style="margin-top:44px"><h2>Banco propio</h2>
+ <p class="sub" style="margin-bottom:22px">Suma desafíos nuevos cuando la web crezca. Se mezclan con los que ya trae la plataforma y se guardan en este navegador.</p>
+ <div class="cols"><div>
+  <label style="font-weight:700;font-size:.9rem" for="bankTxt">Pega los desafíos, uno por línea</label>
+  <textarea class="fld" id="bankTxt" data-set="bank" style="min-height:190px;margin-top:6px" placeholder="${esc(BANK_EXAMPLE)}">${esc(bankText)}</textarea>
+  <div class="row" style="margin-top:12px"><button class="btn pri" data-act="bankadd">Añadir al banco</button><button class="btn" data-act="copyprompt">Copiar instrucciones para Claude</button></div>
+  ${msg}
+  <details style="margin-top:18px"><summary style="cursor:pointer;font-weight:700">Formato de cada línea</summary>
+   <pre class="fld" style="white-space:pre-wrap;font-size:.8rem;margin-top:10px">${esc(BANK_HELP)}</pre>
+   <p style="color:var(--muted);font-size:.9rem;margin-top:8px">Separa los campos con | . Nivel 1 es fácil y 3 difícil. Las líneas que empiezan con # se ignoran. En «¿Quién soy?» son exactamente 5 pistas.</p></details>
+  <label class="chk" style="display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;margin-top:18px;font-weight:700;font-size:.9rem"><input type="checkbox" data-setting="onlyCustom" ${S.settings.onlyCustom?"checked":""}><span>Usar solo el banco propio en cada reto que tenga contenido propio</span></label>
+ </div>
+ <div><p style="margin-bottom:10px;color:var(--muted)">${S.custom.length?esc(cnt):"El banco está vacío."}</p>
+ ${items?`<ul class="log">${items}</ul><div class="row" style="margin-top:14px"><button class="btn danger" data-act="bankclear">Vaciar el banco</button></div>`:""}</div></div></section>`;
+}
+/* ===== Almacenamiento de imágenes (IndexedDB) ===== */
+let IMGS=[];
+function idb(){return new Promise((res,rej)=>{
+ try{const r=indexedDB.open("apexora-img",1);
+  r.onupgradeneeded=()=>r.result.createObjectStore("images",{keyPath:"id"});
+  r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);
+ }catch(e){rej(e)}})}
+function idbRun(mode,fn){return idb().then(db=>new Promise((res,rej)=>{
+ const tx=db.transaction("images",mode),st=tx.objectStore("images"),rq=fn(st);
+ tx.oncomplete=()=>res(rq&&rq.result);tx.onerror=()=>rej(tx.error);tx.onabort=()=>rej(tx.error);
+}))}
+const idbAll=()=>idbRun("readonly",s=>s.getAll());
+const idbPut=m=>idbRun("readwrite",s=>s.put(m));
+const idbDel=id=>idbRun("readwrite",s=>s.delete(id));
+async function imgInit(){
+ try{
+  const legacy=Array.isArray(S.images)?S.images:[];
+  for(const m of legacy)await idbPut(m);
+  if("images" in S){delete S.images;save()}
+  IMGS=await idbAll();
+ }catch(e){toast("No se pudieron cargar las imágenes guardadas")}
+ render();
+}
+/* ===== Adivina la imagen ===== */
+const IMG_PTS=[30,20,10],IMG_BLUR=[26,12,0];
+let imgDraft={src:"",answer:"",cat:"Lugar"};
+function stageImagen(){
+ const it=C.item;
+ if(!it)return `<div class="stage"><p class="scenetxt">Todavía no hay imágenes. Súbelas en <b>Registro</b>, sección «Imágenes».</p><div class="ctrls"><button class="btn pri" data-act="nav" data-v="registro">Ir a Registro</button></div></div>`;
+ const step=C.step||0,pts=IMG_PTS[step],blur=C.revealed?0:IMG_BLUR[step];
+ let ctr="";
+ if(!C.revealed)ctr=`<div class="ctrls"><button class="btn" data-act="imgstep" ${step>=2?"disabled":""}>Aclarar imagen</button><input class="fld gin" id="gi" placeholder="¿Qué es?" autocomplete="off" aria-label="Tu respuesta"><button class="btn pri" data-act="imgguess">Responder (+${pts})</button><button class="btn" data-act="giveup">Rendirme</button></div>`;
+ else ctr=`<div class="answer"><h3>${esc(it.answer)}</h3><p>${esc(it.cat)}</p></div>${nextBar()}`;
+ return `<div class="stage"><div class="meta">${esc(it.cat)}<span>Nitidez ${step+1} de 3</span><span>Vale ${pts} ${cur().toLowerCase()}</span></div>
+ <h2 class="q">${it.cat==="Personaje"?"¿Quién es?":"¿Qué lugar es?"}</h2>
+ <div class="imgbox"><img src="${it.src}" alt="${C.revealed?esc(it.answer):"Imagen por adivinar"}" style="filter:blur(${blur}px)"></div>${ctr}${cheatLine(it.answer)}</div>`;
+}
+function imgHTML(){
+ const d=imgDraft;
+ const list=IMGS.map(m=>`<li><span style="display:flex;gap:12px;align-items:center"><img src="${m.src}" alt="" width="56" height="56" style="object-fit:cover;border-radius:8px"><span><small style="color:var(--muted)">${esc(m.cat)}</small><br>${esc(m.answer)}</span></span><button class="mini" data-act="imgdel" data-id="${m.id}">Quitar</button></li>`).join("");
+ return `<section class="panel" style="margin-top:44px"><h2>Imágenes para «Adivina la imagen»</h2>
+ <p class="sub" style="margin-bottom:22px">Sube una imagen, escribe qué es y añádela. Se reducen para ocupar poco espacio y se guardan en este navegador.</p>
+ <div class="cols"><div class="set">
+  <label>Imagen<input class="fld" type="file" accept="image/*" data-img="file"></label>
+  ${d.src?`<img src="${d.src}" alt="Vista previa" style="max-width:100%;max-height:220px;border-radius:10px;object-fit:contain">`:""}
+  <label>¿Qué es? (lugar o personaje)<input class="fld" data-img="ans" value="${esc(d.answer)}" maxlength="60"></label>
+  <label>Tipo<select class="fld" data-img="cat"><option ${d.cat==="Lugar"?"selected":""}>Lugar</option><option ${d.cat==="Personaje"?"selected":""}>Personaje</option></select></label>
+  <div class="row"><button class="btn pri" data-act="imgadd">Añadir imagen</button></div>
+ </div><div>${list?`<ul class="log">${list}</ul>`:`<p class="empty">Todavía no hay imágenes.</p>`}</div></div></section>`;
+}
+function readImage(file){
+ const fr=new FileReader();
+ fr.onload=()=>{const im=new Image();
+  im.onload=()=>{const M=900,k=Math.min(1,M/Math.max(im.width,im.height));
+   const c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);
+   const g=c.getContext("2d");g.fillStyle="#fff";g.fillRect(0,0,c.width,c.height);g.drawImage(im,0,0,c.width,c.height);
+   imgDraft.src=c.toDataURL("image/jpeg",.8);render()};
+  im.onerror=()=>toast("No se pudo leer la imagen");
+  im.src=fr.result};
+ fr.readAsDataURL(file);
+}
+document.addEventListener("change",e=>{const t=e.target;
+ if(t.dataset.img==="file"&&t.files&&t.files[0])readImage(t.files[0]);
+ if(t.dataset.img==="cat")imgDraft.cat=t.value;
+});
+document.addEventListener("input",e=>{if(e.target.dataset.img==="ans")imgDraft.answer=e.target.value});
+function levelPicker(){
+ const L=[[1,"Fácil","10"],[2,"Media","20"],[3,"Difícil","30"],[0,"Cualquier nivel","10 a 30"]];
+ const n=v=>poolOf("trivia",TRIVIA).filter(t=>!v||t.lvl===v).length;
+ return `<div class="stage"><h2 class="q" style="margin-bottom:8px">¿Qué nivel eligen?</h2><p class="sub" style="margin-bottom:22px">Cuanto más difícil, más ${esc(cur().toLowerCase())} vale cada acierto.</p><div class="modes">${L.map(l=>`<button class="mode" data-act="level" data-v="${l[0]}"><b>${l[1]}</b><span>${n(l[0])} preguntas</span><em>${l[2]}</em></button>`).join("")}</div></div>`;
+}
+/* ===== armado ===== */
+function renderRail(){
+ const lead=S.players.length>1?[...S.players].sort((a,b)=>b.pts-a.pts):[];
+ const leadId=lead.length&&lead[0].pts>0&&lead[0].pts>lead[1].pts?lead[0].id:null;
+ const list=S.players.map((p,i)=>{
+  const on=S.active===p.id;
+  return `<li class="pl ${on?"on":""}"><button class="pl-main" data-act="pick" data-id="${p.id}" aria-pressed="${on}"><span class="pl-name">${i<9?`<kbd>${i+1}</kbd> `:""}${esc(p.name)}</span><span class="pl-char">${p.id===leadId?`<span class="pl-lead">★ va primero</span> `:""}${esc(p.char)}</span><span class="pl-pts" data-pid="${p.id}">${p.pts}</span></button>
+  ${on?`<div class="pl-tools"><button class="mini" data-act="adj" data-v="-10" aria-label="Restar 10">−10</button><button class="mini" data-act="adj" data-v="10" aria-label="Sumar 10">+10</button><button class="mini" data-act="editp" data-id="${p.id}">Editar</button></div>`:""}</li>`;
+ }).join("");
+ const all=S.players.length>1?`<li class="pl all ${S.active==="all"?"on":""}"><button class="pl-main" data-act="pick" data-id="all" aria-pressed="${S.active==="all"}"><span class="pl-name">Todo el grupo</span><span class="pl-char">Los puntos van a cada jugador</span></button></li>`:"";
+ $("#rail").innerHTML=`<h2>Jugadores <span>${esc(cur())}</span></h2>
+ ${S.players.length?`<ul class="pl-list">${list}${all}</ul>`:`<p class="empty">Aún no hay jugadores. Añade al primero para empezar.</p>`}
+ <form class="add" id="addForm"><label for="pn">Nombre del jugador</label><input class="fld" id="pn" required maxlength="30" autocomplete="off">
+ <label for="pc">Personaje (opcional)</label><input class="fld" id="pc" list="pjs" maxlength="40" autocomplete="off"><datalist id="pjs">${PJ_NAMES.map(n=>`<option value="${esc(n)}">`).join("")}</datalist>
+ <button class="btn pri" type="submit">Añadir jugador</button></form>`;
+ S.players.forEach(p=>{
+  if(lastPts[p.id]!=null&&lastPts[p.id]!==p.pts){const el=$(`.pl-pts[data-pid="${p.id}"]`);if(el)el.classList.add("bump")}
+  lastPts[p.id]=p.pts;
+ });
+}
+function renderMain(){
+ const nav=[["home","Sala"],["retos","Retos"],["dados","Dados"],["tienda","Tienda"],["registro","Registro"]];
+ const curNav=view==="play"?"retos":view;
+ const body=view==="home"?viewHome():view==="retos"?viewRetos():view==="play"?viewPlay():view==="dados"?viewDados():view==="tienda"?viewTienda():viewRegistro();
+ $("#main").innerHTML=`<header class="top"><button class="brand" data-act="nav" data-v="home"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="13" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15 2 L12 10 L17 14 L11 19 L16 28" fill="none" stroke="var(--ember)" stroke-width="2.4" stroke-linejoin="bevel"/></svg>Apexora</button>
+ <nav class="nav" aria-label="Secciones">${nav.map(n=>`<button data-act="nav" data-v="${n[0]}" ${curNav===n[0]?'aria-current="page"':""}>${n[1]}</button>`).join("")}</nav></header>
+ <main class="content">${body}</main>
+ <footer class="hints"><kbd>A</kbd>–<kbd>D</kbd> responder · <kbd>Enter</kbd> enviar respuesta · <kbd>Espacio</kbd> pista o tirada · <kbd>N</kbd> siguiente jugador · <kbd>1</kbd>–<kbd>9</kbd> elegir jugador · <kbd>→</kbd> siguiente reto</footer>`;
+ if(view==="home")bindRing();
+ if(view==="play"&&!(window.GM&&GM.has(C&&C.mode)))paintTimer();
+}
+function render(){renderRail();renderMain()}
+function bindRing(){
+ const c=$("#ringc");
+ document.querySelectorAll(".dn").forEach(g=>{
+  const i=+g.dataset.i,show=()=>{ringSel=i;c.innerHTML=ringCenter(i);document.querySelectorAll(".dn").forEach(x=>x.classList.toggle("sel",x===g))};
+  g.addEventListener("pointerenter",show);g.addEventListener("focus",show);g.addEventListener("click",show);
+ });
+}
+
+/* ===== diálogos ===== */
+function dlg(html){const d=$("#dlg");d.innerHTML=html;if(!d.open)d.showModal()}
+function closeDlg(){const d=$("#dlg");if(d.open)d.close()}
+function ask(title,text,yes,label="Confirmar"){
+ pendingYes=yes;
+ dlg(`<h3>${esc(title)}</h3><p style="margin-bottom:20px;color:var(--muted)">${esc(text)}</p><div class="row"><button class="btn pri" data-act="yes">${esc(label)}</button><button class="btn ghost" data-act="close">Cancelar</button></div>`);
+}
+function rewardDialog(r){
+ dlg(`<h3>${r?"Editar recompensa":"Nueva recompensa"}</h3><div class="set"><label>Nombre<input class="fld" id="rn" value="${esc(r?r.name:"")}" maxlength="40"></label>
+ <label>Descripción<input class="fld" id="rd" value="${esc(r?r.desc:"")}" maxlength="140"></label>
+ <label>Costo<input class="fld" id="rc" type="number" min="1" value="${r?r.cost:50}"></label></div>
+ <div class="row"><button class="btn pri" data-act="saverw" data-id="${r?r.id:""}">Guardar</button><button class="btn ghost" data-act="close">Cancelar</button></div>`);
+}
+
+/* ===== acciones ===== */
+const A={
+ nav(b){stopTimer();view=b.dataset.v;C=null;render();window.scrollTo(0,0)},
+ mode(b){const m=b.dataset.m;if(m==="trivia"){stopTimer();view="play";C={mode:"trivia",picking:true};render();window.scrollTo(0,0)}else startMode(m)},
+ level(b){F.lvl=+b.dataset.v;startMode("trivia")},
+ surprise(){const ks=Object.keys(MODES).filter(k=>k!=="imagen"||IMGS.length);startMode(ks[Math.floor(Math.random()*ks.length)])},
+ pick(b){S.active=b.dataset.id;save();render()},
+ adj(b){const t=targets();if(!t.length)return;const m={};t.forEach(id=>m[id]=+b.dataset.v);applyDelta(m,`${targetLabel()}: ajuste manual`,"adj");render()},
+ editp(b){const p=P(b.dataset.id);if(!p)return;
+  dlg(`<h3>Editar jugador</h3><div class="set"><label>Nombre<input class="fld" id="en" value="${esc(p.name)}" maxlength="30"></label><label>Personaje<input class="fld" id="ec" value="${esc(p.char)}" maxlength="40"></label><label>${esc(cur())}<input class="fld" id="ep" type="number" min="0" value="${p.pts}"></label></div>
+  <div class="row"><button class="btn pri" data-act="savep" data-id="${p.id}">Guardar</button><button class="btn danger" data-act="delp" data-id="${p.id}">Quitar jugador</button><button class="btn ghost" data-act="close">Cancelar</button></div>`)},
+ savep(b){const p=P(b.dataset.id);if(!p)return;const n=$("#en").value.trim();if(n)p.name=n;p.char=$("#ec").value.trim();
+  const np=Math.max(0,parseInt($("#ep").value)||0);if(np!==p.pts){applyDelta({[p.id]:np-p.pts},`${p.name}: puntos corregidos`,"adj")}
+  save();closeDlg();render()},
+ delp(b){const p=P(b.dataset.id);if(!p)return;closeDlg();
+  ask("¿Quitar a "+p.name+"?","Se pierden sus puntos. Esta acción no se puede deshacer.",()=>{S.players=S.players.filter(x=>x.id!==p.id);if(S.active===p.id)S.active=S.players[0]?S.players[0].id:null;save();render()},"Quitar")},
+ close(){closeDlg()},
+ yes(){const f=pendingYes;pendingYes=null;closeDlg();if(f)f()},
+ choose(b){if(C.revealed)return;const i=+b.dataset.i;C.chosen=C.chosen===i?null:i;render()},
+ start(){timerStart();render()},
+ reveal(){if(C.revealed)return;stopTimer();C.revealed=true;render()},
+ give(b){const n=+b.dataset.n;if(award(n,b.dataset.t||MODES[C.mode].name)){C.resolved=true;stopTimer();render()}},
+ none(){C.resolved=true;C.revealed=true;stopTimer();render()},
+ nextq(){if(S.settings.autoNext&&S.players.length>1&&S.active!=="all")nextPlayer();startMode(C.mode)},
+ clue(){if(C.clues<5){C.clues++;render()}},
+ guess(){if(award(cluePts(),"¿Quién soy? "+C.item.a+" (pista "+C.clues+")")){C.revealed=true;C.resolved=true;render()}},
+ giveup(){C.revealed=true;C.resolved=true;render()},
+ twist(){C.twist=TWISTS[Math.floor(Math.random()*TWISTS.length)];render()},
+ fcat(b){F.cat=b.dataset.v;startMode("trivia")},
+ flvl(b){F.lvl=+b.dataset.v;startMode("trivia")},
+ dside(b){D.sides=+b.dataset.v;render()},
+ dcount(b){D.count=Math.min(10,Math.max(1,D.count+ +b.dataset.v));render()},
+ dmod(b){D.mod=Math.min(20,Math.max(-20,D.mod+ +b.dataset.v));render()},
+ roll(){roll()},
+ dgive(){if(award(Math.max(1,parseInt(D.pts)||1),"tirada de dados"))render()},
+ redeem(b){const r=S.rewards.find(x=>x.id===b.dataset.id),p=P(S.active);if(!r||!p)return;
+  ask("¿Canjear "+r.name+"?",`${p.name} gasta ${r.cost} ${cur().toLowerCase()} y le quedan ${p.pts-r.cost}.`,()=>{applyDelta({[p.id]:-r.cost},`${p.name} canjeó ${r.name}`,"redeem");beep(520,160);toast(`${p.name} canjeó ${r.name}`);render()},"Canjear")},
+ shopedit(){shopEdit=!shopEdit;render()},
+ addrw(){rewardDialog(null)},
+ editrw(b){rewardDialog(S.rewards.find(x=>x.id===b.dataset.id))},
+ saverw(b){const name=$("#rn").value.trim();if(!name)return;const o={name,desc:$("#rd").value.trim(),cost:Math.max(1,parseInt($("#rc").value)||1)};
+  if(b.dataset.id){Object.assign(S.rewards.find(x=>x.id===b.dataset.id),o)}else S.rewards.push(Object.assign({id:uid()},o));
+  S.rewards.sort((a,b)=>a.cost-b.cost);save();closeDlg();render()},
+ delrw(b){S.rewards=S.rewards.filter(x=>x.id!==b.dataset.id);save();render()},
+ undo(){const l=S.log.find(x=>Object.keys(x.deltas||{}).length);if(!l)return;
+  for(const [id,d] of Object.entries(l.deltas)){const p=P(id);if(p)p.pts=Math.max(0,p.pts-d)}
+  S.log=S.log.filter(x=>x!==l);save();toast("Movimiento deshecho");render()},
+ bankadd(){
+  const r=parseBank(bankText);let added=0,dup=0;
+  for(const c of r.ok){if(S.custom.some(o=>bankKey(o)===bankKey(c))){dup++;continue}S.custom.push(c);added++}
+  save();bankText=r.bad.join("\n");bankMsg={added,dup,err:r.err};render();
+ },
+ bankdel(b){S.custom=S.custom.filter(c=>c.id!==b.dataset.id);save();render()},
+ bankclear(){ask("¿Vaciar el banco propio?","Se quitan todos los desafíos que añadiste. Los de fábrica se quedan.",()=>{S.custom=[];save();bankMsg=null;render()},"Vaciar")},
+ copyprompt(){try{navigator.clipboard.writeText(BANK_PROMPT).then(()=>toast("Instrucciones copiadas. Pégalas en un chat con Claude"),()=>toast("No se pudo copiar"))}catch(e){toast("No se pudo copiar")}},
+  imgstep(){if(C&&C.mode==="imagen"&&(C.step||0)<2&&!C.revealed){C.step=(C.step||0)+1;render()}},
+ imgguess(){if(award(IMG_PTS[C.step||0],"Adivina la imagen: "+C.item.answer)){C.revealed=true;C.resolved=true;render()}},
+  async imgadd(){
+  const d=imgDraft,a=d.answer.trim();
+  if(!d.src||!a){toast("Elige una imagen y escribe qué es");return}
+  const m={id:"i"+uid(),src:d.src,answer:a,cat:d.cat};
+  try{await idbPut(m)}catch(e){toast("No se pudo guardar la imagen en el navegador");return}
+  IMGS.push(m);imgDraft={src:"",answer:"",cat:d.cat};toast("Imagen añadida");render();
+ },
+  async imgdel(b){try{await idbDel(b.dataset.id)}catch(e){}IMGS=IMGS.filter(m=>m.id!==b.dataset.id);render()},
+};
+document.addEventListener("click",e=>{const b=e.target.closest("[data-act]");if(!b||b.disabled)return;const f=A[b.dataset.act];if(f)f(b,e)});
+document.addEventListener("submit",e=>{
+ if(e.target.id!=="addForm")return;e.preventDefault();
+ const n=$("#pn").value.trim();if(!n)return;
+ const p={id:uid(),name:n,char:$("#pc").value.trim(),pts:0};S.players.push(p);if(!P(S.active)&&S.active!=="all")S.active=p.id;
+ save();render();$("#pn").focus();
+});
+document.addEventListener("change",e=>{
+ const t=e.target;
+ if(t.dataset.setting){const k=t.dataset.setting;
+  if(k==="currency"){S.currency=t.value.trim()||"Fragmentos"}
+  else if(k==="timer"){S.settings.timer=Math.min(300,Math.max(0,parseInt(t.value)||0))}
+  else S.settings[k]=t.checked;
+  save();renderRail();}
+});
+document.addEventListener("input",e=>{const t=e.target;
+ if(t.dataset.set==="dc")D.dc=t.value;
+ if(t.dataset.set==="dpts")D.pts=t.value;
+ if(t.dataset.set==="bank")bankText=t.value;
+});
+
+/* ===== dados ===== */
+function roll(){
+ if(D.rolling)return;D.rolling=true;let n=0;beep(300,40);
+ render();
+ const iv=setInterval(()=>{const el=$("#dnum");if(el){el.textContent=1+Math.floor(Math.random()*D.sides*D.count);el.style.color=""}
+  if(++n>=9){clearInterval(iv);
+   const rolls=[...Array(D.count)].map(()=>1+Math.floor(Math.random()*D.sides));
+   const total=rolls.reduce((a,b)=>a+b,0)+D.mod,dc=D.dc===""?"":parseInt(D.dc);
+   D.res={rolls,total,sides:D.sides,count:D.count,mod:D.mod,dc:isNaN(dc)?"":dc};
+   D.res.ok=D.res.dc===""?null:total>=D.res.dc;
+   D.hist.unshift(D.res);D.rolling=false;beep(660,120);render();}
+ },70);
+}
+
+/* ===== teclado ===== */
+document.addEventListener("keydown",e=>{
+ const tg=e.target,tag=tg.tagName;
+ if(["INPUT","TEXTAREA","SELECT"].includes(tag)||$("#dlg").open||e.ctrlKey||e.metaKey||e.altKey)return;
+ const k=e.key.toLowerCase();
+ if(/^[1-9]$/.test(k)&&S.players[+k-1]){S.active=S.players[+k-1].id;save();render();return}
+ if(k==="n"){nextPlayer();render();return}
+ if(view==="dados"&&k===" "&&tag!=="BUTTON"){e.preventDefault();roll();return}
+ if(view!=="play"||!C||C.picking)return;
+ const m=C.mode;
+ if(k===" "&&tag!=="BUTTON"){e.preventDefault();if(m==="quien")A.clue();else if(m==="imagen")A.imgstep();else if(!C.revealed&&!C.resolved)A.start();return}
+ if(k==="r"&&m!=="quien"&&m!=="rol"&&m!=="imagen")A.reveal();
+ if((m==="trivia"||m==="vof")&&!C.revealed){
+  const i=m==="vof"?({v:0,f:1,a:0,b:1})[k]:"abcd".indexOf(k);
+  if(i!=null&&i>=0&&C.item.opts[i]!==undefined){A.choose({dataset:{i}})}
+ }
+ if(k==="arrowright"&&C.resolved)A.nextq();
+});
+
+render(),imgInit();
+
+</script>
+<script>
+(function(){
+const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
+let X,M,dly;
+function ctx(){if(X)return X;try{X=new(window.AudioContext||window.webkitAudioContext)();M=X.createGain();M.gain.value=.6;dly=X.createDelay();dly.delayTime.value=.22;const fb=X.createGain();fb.gain.value=.3,w=X.createGain();w.gain.value=.35;dly.connect(fb);fb.connect(dly);dly.connect(w);w.connect(M);M.connect(X.destination)}catch(e){X=null}return X}
+var w;
+function n(f,t,d,type='triangle',v=.12,s=0,sl){const c=ctx();if(!c)return;const o=c.createOscillator(),g=c.createGain(),T=c.currentTime+t;o.type=type;o.frequency.setValueAtTime(f,T);if(sl)o.frequency.exponentialRampToValueAtTime(sl,T+d);g.gain.setValueAtTime(0,T);g.gain.linearRampToValueAtTime(v,T+.015);g.gain.exponentialRampToValueAtTime(.0001,T+d);o.connect(g);g.connect(M);g.connect(dly);o.start(T);o.stop(T+d+.05)}
+const N=m=>440*Math.pow(2,(m-69)/12);
+const SFX={
+click:()=>{n(900,0,.06,'square',.04,0,500)},
+good:()=>[72,76,79,84].forEach((m,i)=>n(N(m),i*.08,.35,'triangle',.14)),
+bad:()=>{n(180,0,.35,'sawtooth',.1,0,70);n(120,.05,.4,'square',.06,0,50)},
+tick:()=>n(1200,0,.05,'square',.05),
+over:()=>{[67,64,60,55].forEach((m,i)=>n(N(m),i*.16,.5,'sawtooth',.09))},
+roll:()=>{for(let i=0;i<9;i++)n(300+Math.random()*500,i*.045,.05,'square',.04)},
+fan:()=>{[60,64,67,72,76,79,84].forEach((m,i)=>{n(N(m),i*.07,.7,'triangle',.12);n(N(m-12),i*.07,.7,'sawtooth',.03)});n(N(88),.55,1,'sine',.1)},
+coin:()=>{n(N(83),0,.1,'square',.07);n(N(88),.09,.45,'square',.07)}
+};
+window.sfx=k=>{try{if(S.settings.sound)SFX[k]&&SFX[k]()}catch(e){}};
+window.__beep=function(f,d){if(f===880)sfx('fan');else if(f===200)sfx('over');else if(f===660&&d===80)sfx('tick');else if(f===300)sfx('roll');else if(f===660)sfx('coin');else sfx('click')};
+/* música ambiente generativa */
+let mus=null,mt=null;const SC=[57,60,64,67,69,72,76];
+function pad(){if(!S.settings.sound)return;const r=SC[Math.floor(Math.random()*SC.length)],c=ctx();[r-12,r,r+7].forEach(m=>n(N(m),0,5,'sine',.035));if(Math.random()<.6)n(N(SC[Math.floor(Math.random()*SC.length)]+12),1+Math.random()*2,2,'triangle',.03)}
+const mb=document.createElement('button');mb.id='mus';mb.title='Música ambiente';mb.textContent='🎵';mb.setAttribute('aria-label','Música ambiente');
+mb.onclick=()=>{mus=!mus;mb.classList.toggle('on',mus);mb.textContent=mus?'🎶':'🎵';clearInterval(mt);if(mus){pad();mt=setInterval(pad,3800)}sfx('click')};document.body.appendChild(mb);
+document.addEventListener('click',e=>{if(e.target.closest('button,.pl-main'))sfx('click')},true);
+/* partículas */
+const cv=document.getElementById('fx'),g=cv.getContext('2d');let P=[],W,H;
+function rs(){W=cv.width=innerWidth;H=cv.height=innerHeight}rs();addEventListener('resize',rs);
+for(let i=0;i<(RM?0:50);i++)P.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*2+.4,vy:-(Math.random()*.4+.1),a:Math.random(),amb:1,h:Math.random()<.5?44:260});
+window.burst=(x,y,cnt=70,gold=true)=>{if(RM)return;for(let i=0;i<cnt;i++){const a=Math.random()*6.28,s=Math.random()*9+2;P.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-4,r:Math.random()*4+2,life:1,h:gold?30+Math.random()*30:Math.random()*360,sq:1})}};
+(function loop(){g.clearRect(0,0,W,H);P=P.filter(p=>p.amb||p.life>0);for(const p of P){if(p.amb){p.y+=p.vy;if(p.y<-5){p.y=H+5;p.x=Math.random()*W}g.fillStyle=`hsla(${p.h},90%,70%,${.25+.25*Math.sin(p.a+=.02)})`;g.beginPath();g.arc(p.x,p.y,p.r,0,6.28);g.fill()}else{p.x+=p.vx;p.y+=p.vy;p.vy+=.28;p.vx*=.99;p.life-=.014;g.fillStyle=`hsla(${p.h},95%,60%,${Math.max(p.life,0)})`;g.fillRect(p.x,p.y,p.r,p.r*1.6)}}requestAnimationFrame(loop)})();
+/* reacciones a los eventos del juego */
+const seen=new WeakSet();
+new MutationObserver(()=>{document.querySelectorAll('.opt.right,.opt.wrong,.verdict,.dnum.crit,.dnum.fumble').forEach(el=>{if(seen.has(el))return;seen.add(el);const r=el.getBoundingClientRect(),x=r.left+r.width/2,y=r.top+r.height/2;
+if(el.matches('.opt.right,.verdict.ok,.dnum.crit')){sfx('good');burst(x,y,el.matches('.dnum')?160:90)}else{sfx('bad');if(el.matches('.dnum'))burst(x,y,40,false)}})}).observe(document.getElementById('main'),{subtree:true,childList:true,attributes:true,attributeFilter:['class']});
+const _b=window.toast;
+})();
+</script>
+<script>
+(function(){
+const SH=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]),RN=a=>a[Math.floor(Math.random()*a.length)];
+const MODS={
+wordle:{name:"Wordle de Apexora",desc:"Adivina el nombre secreto del mundo en 6 intentos. Verde, ámbar o gris.",pts:"10 a 60 (−20 con pista)"},
+conex:{name:"Conexiones",desc:"16 palabras, 4 grupos ocultos. Agrúpalas sin gastar tus 4 vidas.",pts:"20 a 50"},
+impostor:{name:"Impostor",desc:"Tres comparten algo. Uno no pertenece. Encuentra al intruso en 5 rondas.",pts:"hasta 50"},
+top10:{name:"Top 10",desc:"Nombra los elementos de una lista oculta del lore: dioses, naciones, personajes. Tienes 5 vidas.",pts:"hasta 50"}};
+Object.assign(MODES,MODS);
+const WORDS=[["UMBRA","Ciudad caótica de las sombras"],["LUMIS","La ciudad que gobierna una IA"],["FUANA","Donde Gobz aprendió vidrio y forja"],["KARIM","El Bailarín del Estoque"],["ZARICK","Semi-orco, Hijo de la Sombra"],["MILLOT","Deidad de la creación"],["JILPER","Deidad de la destrucción"],["CABALA","Deidad de lo finito"],["GANORE","Deidad de la Nada"],["TAPIEM","Deidad de la gravedad"],["DACAMA","Deidad del tiempo"],["KIPRIKA","Deidad del Todo"],["SOLARIS","Hizo inmortal a Mit Caleus"],["ARBORIS","Donde Zarick fue guía"]];
+const CXS=[[["Deidades","Ape,Xora,Millot,Jilper"],["Dominios divinos","Gravedad,Tiempo,Infinidad,La Nada"],["Personajes","Zarick,Gobz,Karim,Andreas"],["Lugares","Umbra,Luminarae,Arboris,Fuana"]],[["Deidades","Cumacur,Cabala,Ganore,Kiprika"],["Dominios divinos","Entropía,Orden,Creación,Destrucción"],["Lugares","Psybernia,Sinfalía,Lumis,Fuana"],["Personajes","Mit Caleus,Valeria,Pin Kuku,Vina"]]];
+const GC=["#f6c453","#4fd1c5","#b39bff","#ff9a5e"];
+const IMP=[["¿Cuál NO es una deidad?",["Ape","Xora","Zarick","Tapiem"],2,"Zarick es un semi-orco, no un dios."],["¿Cuál NO tiene una deidad opuesta?",["Millot","Cabala","Kiprika","Tapiem"],3,"Tapiem (Gravedad) no tiene par; los demás sí: Jilper, Cumacur y Ganore."],["¿Cuál NO es un lugar?",["Umbra","Arboris","Karim","Luminarae"],2,"Karim Balteus es un personaje."],["¿Cuál NO es un dominio divino?",["Entropía","Gravedad","Valeria","Tiempo"],2,"Valeria es la Soberana de Psybernia."],["¿Cuál NO es un personaje?",["Zarick","Mit Caleus","Sinfalía","Vina"],2,"Sinfalía es un lugar."]];
+const NZ=s=>String(s).normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9 ]/g,"").trim();
+const LISTS=[["Los diez hijos de Espacio",["Ape","Xora","Millot","Jilper","Cumacur","Cabala","Ganore","Kiprika","Tapiem","Dacama"]],["Naciones del oeste",["Luminarae Luxor","Negatt","Skaldrum","Lumis","Boro","Umbra"]],["Naciones del este",["Sinfalía","Sylvaris","Krahn","Ostraca","Psybernia","Pongí","Disnjav"]],["Miembros del Campamento Sopharum",["Zarick","Bane","Karim","Vina","Pin Kuku","Tomah","Seah","Caleus"]],["Participantes destacados del Torneo de Umbra",["Aurora D'arwen","Piuk","Asan","Lurim de Skaldrum","Willow","Krymm","Solara","Garvok","Lyra Shadowthorn","Astra Skyfall","Ova Caleus"]]];
+let lt=-1;
+function tend(){const f=G.f.filter(Boolean).length,t=G.l[1].length,p=Math.max(0,Math.round(f/t*50)-5*(G.hn||0));G.over=true;G.win=f===t;G.pts=p;G.txt=`Encontraste ${f} de ${t}.`;if(p)award(p,"Top 10: "+G.l[0])}
+let G={};
+const KR=["QWERTYUIOP","ASDFGHJKL","ZXCVBNM"];
+function ev(g,w){const r=Array(w.length).fill("no"),u={};for(let i=0;i<w.length;i++)if(g[i]===w[i])r[i]="ok";else u[w[i]]=(u[w[i]]||0)+1;for(let i=0;i<w.length;i++)if(r[i]!=="ok"&&u[g[i]]>0){r[i]="pr";u[g[i]]--}return r}
+function fin(win,pts,txt){G.over=true;G.win=win;G.txt=txt;G.pts=pts;if(win)award(pts,txt)}
+function res(){if(!G.over)return"";return `<div class="result"><div class="verdict ${G.win||G.pts?"ok":"no"}">${G.win?"¡Victoria! +"+G.pts:G.pts?"Terminaste con +"+G.pts:"Derrota"}</div><p>${esc(G.txt)}</p><div class="ctrls"><button class="btn pri" data-act="gnew">Otra partida ›</button></div></div>`}
+const V={
+wordle(){const w=G.w[0],L=w.length;let h=`<div class="stage"><p class="meta"><span class="gem">${L} letras</span>${G.hint?`<span>Pista: ${esc(G.w[1])}</span>`:G.over?"":`<button class="btn" data-act="gh">Pedir pista (−20 pts)</button>`}</p><div class="wr">`;
+ for(let r=0;r<6;r++){h+="<div>";for(let i=0;i<L;i++){const g=G.rows[r];let c="",t="";if(g){t=g[i];c=G.ev[r][i]}else if(r===G.rows.length&&!G.over){t=G.cur[i]||"";c=t?"f":""}h+=`<span class="wc ${c}">${t}</span>`}h+="</div>"}
+ h+=`</div><div class="kb">${KR.map((k,i)=>`<div>${i==2?'<button data-act="gk" data-k="ENTER">⏎</button>':""}${[...k].map(c=>`<button class="${G.ks[c]||""}" data-act="gk" data-k="${c}">${c}</button>`).join("")}${i==2?'<button data-act="gk" data-k="BACK">⌫</button>':""}</div>`).join("")}</div>${res()}</div>`;return h},
+conex(){let h=`<div class="stage"><p class="meta"><span>Selecciona 4 palabras relacionadas</span></p>`;
+ G.solved.forEach(i=>{const g=G.p[i];h+=`<div class="cxs" style="background:${GC[i]}">${esc(g[0])}<small>${esc(g[1].split(",").join(" · "))}</small></div>`});
+ h+=`<div class="cxg">${G.items.filter(t=>!G.solved.includes(t.g)).map(t=>`<button class="gt ${G.sel.includes(t.t)?"on":""}" data-act="gt" data-t="${esc(t.t)}" ${G.over?"disabled":""}>${esc(t.t)}</button>`).join("")}</div>
+ <div class="lives" aria-label="Vidas">${"♥".repeat(4-G.mist)}${"♡".repeat(G.mist)}</div>${G.msg?`<p>${G.msg}</p>`:""}
+ ${G.over?"":`<div class="ctrls" style="margin-top:8px"><button class="btn pri" data-act="gsub" ${G.sel.length<4?"disabled":""}>Comprobar</button><button class="btn" data-act="gshuf">Mezclar</button><button class="btn" data-act="gcxh" ${G.hint?"disabled":""}>Pista: nombre de un grupo · −10</button></div>`}${res()}</div>`;return h},
+impostor(){const q=G.q[G.i];let h=`<div class="stage"><p class="meta"><span>Ronda ${G.i+1} de 5</span><span class="gem">Aciertos: ${G.sc}</span></p><div class="q">${esc(q[0])}</div><div class="opts">`;
+ q[4].forEach((o,k)=>{const c=G.pk==null?"":k===q[2]?"right":k===G.pk?"wrong":"dim";h+=`<button class="opt ${c} ${G.hid===k?"gone":""}" data-act="gi" data-k="${k}" ${G.pk!=null?"disabled":""}><span class="lt">${"ABCD"[k]}</span>${esc(o)}</button>`});
+ h+="</div>";if(G.pk==null)h+=`<div class="ctrls"><button class="btn" data-act="gih" ${G.hq?"disabled":""}>Pista: descartar una opción · mitad de puntos</button></div>`;if(G.pk!=null&&!G.over)h+=`<p class="twist">${esc(q[3])}</p><div class="ctrls"><button class="btn pri" data-act="gnx">${G.i<4?"Siguiente ›":"Ver resultado"}</button></div>`;return h+res()+"</div>"},
+top10(){let h=`<div class="stage"><p class="meta"><span>${esc(G.l[0])}</span><span class="gem">${G.f.filter(Boolean).length} de ${G.l[1].length}</span></p><div class="lives" aria-label="Vidas">${"♥".repeat(5-G.mist)}${"♡".repeat(G.mist)}</div>`;
+ if(!G.over)h+=`<div class="ctrls"><input class="fld gin" id="gt10" placeholder="Escribe un nombre…" autocomplete="off" aria-label="Tu respuesta"><button class="btn pri" data-act="gtry">Probar</button><button class="btn" data-act="ghint" ${(G.hn||0)>=3?"disabled":""}>Pista: primera letra · −5</button><button class="btn" data-act="gend">Rendirme</button></div>${G.msg?`<p>${G.msg}</p>`:""}`;
+ h+=`<ol class="t10">${G.l[1].map((n,i)=>`<li class="${G.f[i]?"ok":G.over?"miss":""}"><span>${i+1}</span>${G.f[i]||G.over?esc(n):G.hs&&G.hs[i]?esc(n[0])+" · · ·":"· · ·"}</li>`).join("")}</ol>`;return h+res()+"</div>"}};
+const INIT={
+wordle(){G={w:RN(WORDS),rows:[],ev:[],cur:"",ks:{},hint:0}},
+conex(){const p=RN(CXS);G={p,items:SH(p.flatMap((g,i)=>g[1].split(",").map(t=>({t,g:i})))),sel:[],solved:[],mist:0,msg:""}},
+impostor(){G={q:SH(IMP).map(q=>{const c=q[1][q[2]],o=SH(q[1]);return[q[0],q[1],o.indexOf(c),q[3],o]}),i:0,sc:0,pk:null}},
+top10(){let i;do{i=Math.floor(Math.random()*LISTS.length)}while(i===lt&&LISTS.length>1);lt=i;const l=LISTS[i];G={l,f:l[1].map(()=>null),mist:0,msg:""}}};
+window.GM={has:m=>!!INIT[m],start(m){stopTimer();view="play";C={mode:m};INIT[m]();render();window.scrollTo(0,0)},view:m=>V[m]()};
+function wsub(){const w=G.w[0];if(G.cur.length!==w.length){toast("Faltan letras");return}const r=ev(G.cur,w);G.rows.push(G.cur);G.ev.push(r);[...G.cur].forEach((c,i)=>{const o=G.ks[c];if(r[i]==="ok"||(r[i]==="pr"&&o!=="ok")||!o)G.ks[c]=r[i]});
+ const n=G.rows.length;G.cur="";if(r.every(x=>x==="ok"))fin(true,Math.max(10,70-10*n-(G.hint?20:0)),`Era ${w}. ¡En ${n} intento${n>1?"s":""}!`);else if(n>=6)fin(false,0,`La palabra era ${w}.`)}
+function key(k){if(G.over)return;if(k==="ENTER")wsub();else if(k==="BACK")G.cur=G.cur.slice(0,-1);else if(G.cur.length<G.w[0].length)G.cur+=k;render()}
+Object.assign(A,{gnew(){GM.start(C.mode)},gk(b){key(b.dataset.k)},
+gt(b){if(G.over)return;const t=b.dataset.t,i=G.sel.indexOf(t);if(i>=0)G.sel.splice(i,1);else if(G.sel.length<4)G.sel.push(t);G.msg="";render()},
+gshuf(){G.items=SH(G.items);render()},
+gsub(){const gs=G.sel.map(t=>G.items.find(x=>x.t===t).g),top=Math.max(...[0,1,2,3].map(g=>gs.filter(x=>x===g).length));
+ if(top===4){G.solved.push(gs[0]);G.sel=[];G.msg="";if(G.solved.length===4)fin(true,Math.max(10,50-10*G.mist-(G.hint?10:0)),"Encontraste los cuatro grupos.")}
+ else{G.mist++;G.msg=top===3?"¡Casi! Tres de esas van juntas.":"Esa combinación no es.";G.sel=[];if(G.mist>=4){G.solved=[0,1,2,3];fin(false,0,"Te quedaste sin vidas. Estos eran los grupos.")}}render()},
+gi(b){if(G.pk!=null||G.hid===+b.dataset.k)return;const k=+b.dataset.k;G.pk=k;if(k===G.q[G.i][2]){G.sc++;G.pt=(G.pt||0)+(G.hq?5:10)}render()},
+gnx(){if(G.i>=4){G.pk=null;fin(G.sc>=3,G.pt||0,`Encontraste ${G.sc} de 5 impostores.`)}else{G.i++;G.pk=null;G.hid=null;G.hq=0}render()},
+gh(){G.hint=1;render()},
+gtry(){const el=$("#gt10"),g=NZ(el?el.value:"");if(g.length<2)return;const i=G.l[1].findIndex(n=>{const t=NZ(n);return t===g||t.split(" ").some(x=>x.length>=3&&x===g)||(g.length>=4&&t.includes(g))});
+ if(i<0){G.mist++;G.msg="Esa no está en la lista.";sfx("bad");if(G.mist>=5)tend()}else if(G.f[i])G.msg="Ya la tenías.";else{G.f[i]=G.l[1][i];G.msg="";sfx("coin");if(G.f.every(Boolean))tend()}
+ render();const e=$("#gt10");if(e)e.focus()},
+gend(){tend();render()},
+gcxh(){if(G.hint||G.over)return;const un=[0,1,2,3].filter(i=>!G.solved.includes(i)),g=RN(un);G.hint=1;G.msg="Pista: uno de los grupos es «"+G.p[g][0]+"» (−10).";render()},
+gih(){if(G.pk!=null||G.hq)return;const q=G.q[G.i];G.hid=RN([0,1,2,3].filter(k=>k!==q[2]));G.hq=1;render()},
+ghint(){if(G.over||(G.hn||0)>=3)return;const m=G.l[1].map((_,i)=>i).filter(i=>!G.f[i]&&!(G.hs&&G.hs[i]));if(!m.length)return;G.hs=G.hs||{};G.hs[RN(m)]=1;G.hn=(G.hn||0)+1;render();const e=$("#gt10");if(e)e.focus()}});
+document.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.id==="gt10"){e.preventDefault();A.gtry()}});
+addEventListener("keydown",e=>{if(view!=="play"||!C||!GM.has(C.mode)||$("#dlg").open||e.ctrlKey||e.metaKey||e.altKey)return;const t=e.target.tagName;if(["INPUT","TEXTAREA","SELECT"].includes(t))return;
+ const k=e.key;if(/^[1-9n]$/i.test(k))return;e.stopImmediatePropagation();if(C.mode!=="wordle")return;
+ if(k==="Enter"){if(t==="BUTTON")return;e.preventDefault();key("ENTER")}else if(k==="Backspace")key("BACK");else if(/^[a-zA-Z]$/.test(k))key(k.toUpperCase())},true);
+})();
+</script>
+<script>
+(function(){
+window.ensureP=()=>{S.players.push({id:uid(),name:"Aventurero",char:"",pts:0});S.active=S.players[0].id;save()};
+const nz=s=>String(s).normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9 ]/g,"").trim();
+function ok(v,a){const g=nz(v),t=nz(a);return g.length>=3&&(g===t||t.split(" ").includes(g)||g.includes(t)||(g.length>=4&&t.includes(g)))}
+const gv=()=>($("#gi")||{}).value||"";
+Object.assign(A,{
+choose(b){if(C.revealed)return;const i=+b.dataset.i;C.chosen=i;stopTimer();C.revealed=true;C.resolved=true;if(i===C.item.ai)award(C.pts,shortQ(C.item.q));render()},
+guess(){if(ok(gv(),C.item.a)){award(cluePts(),"¿Quién soy? "+C.item.a+" (pista "+C.clues+")");C.revealed=C.resolved=true;render()}else{toast("No es esa. ¡Pide otra pista!");sfx("bad")}},
+imgguess(){if(ok(gv(),C.item.answer)){award(IMG_PTS[C.step||0],"Adivina la imagen: "+C.item.answer);C.revealed=C.resolved=true;render()}else{toast("No es esa. Aclara la imagen.");sfx("bad")}},
+cpick(b){C.pk.push(+b.dataset.i);render()},cundo(){C.pk.pop();render()},
+ccheck(){const it=C.item;C.cor=it.order.filter((e,n)=>it.evs[C.pk[n]]===e).length;C.revealed=C.resolved=true;if(C.cor)award(Math.max(5,C.cor*10-(C.chint?10:0)),"Cronología: "+it.track);render()}});
+document.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.id==="gi"){e.preventDefault();A[C.mode==="imagen"?"imgguess":"guess"]()}});
+/* Cronología: eventos tomados de la web del mundo (cronología, historias y personajes) */
+CRONO.forEach(e=>{if(e.y===912)e.y=1012});
+CRONO.push({y:1011,t:"Torneo de Umbra",d:"Los del campamento acuden; termina con la bomba de Andreas y la liberación de Astra."});
+const seq=(name,a)=>({name,y:0,ev:a.map((x,i)=>({y:i,t:x[0],d:x[1]}))});
+const TR=[{name:"Eras de Apexora",y:1,ev:CRONO},
+{name:"Campamento Sopharum",y:1,ev:[[998,"Nace el Campamento Sopharum","Caleus funda el campamento tras reestructurarse Umbra."],[1000,"Llega Vina Miceus","La guerrera de Skaldrum comparte un té con Caleus y es la primera en entrar."],[1001,"Llega Seah de Pato","Tras un duelo con Vina que la deja vencida, decide quedarse."],[1005,"Llega Tomah","El arquero que huyó de Luminarae entra con mentiras desesperadas."],[1007,"Llega Pin Kuku","Caleus encuentra al niño prodigio en una de sus bajadas al llano."],[1011,"Torneo de Umbra","El campamento viaja a la capital para el gran certamen."]].map(x=>({y:x[0],t:x[1],d:x[2]}))},
+seq("Vida de Zarick",[["Un romance prohibido","Evelyn de Luminarae y el orco Zodd se enamoran en Arboris."],["La traición de Heiss","Envía mercenarios y destruye la Caverna Mortuoria."],["Nace Zarick","Evelyn huye embarazada a Umbra."],["Pierde a su madre","A los ocho años, por una enfermedad que solo curaba Luminarae."],["Roba el Velo Carmesí","Su prueba de iniciación en la pandilla de Puj."],["Huye a Arboris","Se hace superviviente y guía de viajeros."],["Salva a Bane","Lo carga hasta Lumis tras la explosión de la batería."],["Conoce a Caleus","Tras escapar de Lumis, lo siguen al campamento."]]),
+seq("Vida de Karim Balteus",[["Lo abandonan","A los cuatro años, en un centro de adoración a Ape."],["Lo adopta Saúl","La Orden de los Marcados lo entrena."],["Nace el Bailarín del Estoque","Un estilo fluido y propio que lo hace legendario."],["Deserta de la Orden","A sus 36 años, consumido por la muerte de camaradas."],["Vive en VenuVenu","Conoce a RiaRia y tiene a su hija Calliope."],["Arrasan su pueblo","Mata a 29 de los 30 atacantes."],["Caleus lo admite","Entra al campamento de Sopharum."],["Cae en Umbra","Defiende a Zarick durante el caos del torneo."]]),
+seq("El Torneo de Umbra",[["Viaje a la capital","El campamento llega a Umbra y se topa con Puj."],["Primera ronda","Zarick humilla a Solara; Bane derrota a Astra."],["Segunda ronda","Bane empata con Lyra y gana; Karim humilla a Ova."],["La noche en la enfermería","Burun revisa los implantes de Bane."],["La final","Bane y Karim se miden en la arena."],["Aparece Orx","Un portal se abre y el coliseo se resquebraja."],["Cae Karim","Recibe el golpe destinado a Zarick."],["Las estatuas","Luminarae honra a Karim y a Astra."]]),
+seq("Destinos Entrelazados",[["Iniciación de Bane","Los merodeadores lo envían a recuperar un objeto robado."],["La cueva","Bane toma la batería y se enfrenta a un orco."],["La explosión","Zarick lo carga a Lumis para salvarlo."],["Zarick, a prisión","La IA de la ciudad lo encierra."],["La fuga","Bane dobla los barrotes con sus nuevos brazos."],["Las alcantarillas","Esquivan a los guardias bajo la ciudad."],["Aparece Caleus","El líder de Sopharum les ordena seguirlo."]])];
+const UK="apexora-crono-u";let U={};try{U=JSON.parse(localStorage.getItem(UK)||"{}")}catch(e){}
+function mkCrono(){const cc=(typeof cust==="function"?cust("crono"):[]).map(c=>c.x||c).filter(c=>c&&c.t&&c.y!=null);
+ const pool=TR.map(t=>t===TR[0]?Object.assign({},t,{ev:CRONO.concat(cc)}):t);
+ const rk=TR.map(t=>"t:"+t.name);const tr=pool.slice().sort((a,b)=>(U["t:"+a.name]||0)-(U["t:"+b.name]||0)+Math.random()*2-1)[0];
+ const evs=tr.ev.slice().sort((a,b)=>(U[tr.name+a.t]||0)-(U[tr.name+b.t]||0)+Math.random()*1.4-.7).slice(0,4);
+ U["t:"+tr.name]=(U["t:"+tr.name]||0)+1;evs.forEach(e=>U[tr.name+e.t]=(U[tr.name+e.t]||0)+1);try{localStorage.setItem(UK,JSON.stringify(U))}catch(e){}
+ const order=evs.slice().sort((a,b)=>a.y-b.y),sh=evs.slice().sort(()=>Math.random()-.5);
+ C.pk=[];return{track:tr.name,hasY:!!tr.y,evs:sh,order}}
+const _ni=newItem;window.newItem=m=>m==="crono"?mkCrono():_ni(m);
+window.stageCrono=function(){const it=C.item,pk=C.pk||(C.pk=[]),card=(e,c,l,x)=>`<div class="ev ${c}"><span class="lt">${l}</span><b>${esc(e.t)}</b>${x||`<span>${esc(e.d)}</span>`}</div>`;
+ let h=`<div class="stage"><div class="meta">Cronología rota<span>${esc(it.track)}</span><span>Del más antiguo al más reciente</span><span>hasta 40 ${cur().toLowerCase()}</span></div><h2 class="q">Toca los eventos en el orden en que ocurrieron.</h2>${C.chint?`<p class="twist">El primero fue «${esc(it.order[0].t)}».</p>`:""}`;
+ if(!C.revealed)h+=`<div class="evs">${it.evs.map((e,i)=>pk.includes(i)?"":`<button class="ev evb" data-act="cpick" data-i="${i}"><span class="lt">${LET[i]}</span><b>${esc(e.t)}</b><span>${esc(e.d)}</span></button>`).join("")}</div><p class="meta" style="margin-top:22px">Tu orden</p><div class="evs">${[0,1,2,3].map(n=>pk[n]!=null?card(it.evs[pk[n]],"done",n+1):`<div class="ev slot"><span class="lt">${n+1}</span><span>…</span></div>`).join("")}</div><div class="ctrls"><button class="btn" data-act="chint" ${C.chint?"disabled":""}>Pista: ¿cuál fue primero? · −10</button><button class="btn" data-act="cundo" ${pk.length?"":"disabled"}>Deshacer</button><button class="btn pri" data-act="ccheck" ${pk.length<4?"disabled":""}>Comprobar</button></div>`;
+ else h+=`<div class="evs">${it.order.map((e,n)=>{const g=it.evs[pk[n]]===e;return card(e,g?"done":"bad",n+1,`<span class="yr">${it.hasY?"Año "+e.y+(e.y===1012?" · presente":""):"Paso "+(n+1)}${g?" ✓":" ✗ pusiste: "+esc(it.evs[pk[n]].t)}</span><span style="grid-column:2">${esc(e.d)}</span>`)}).join("")}</div><div class="result"><div class="verdict ${C.cor>=3?"ok":"no"}">${C.cor} de 4 en su lugar</div>${nextBar()}</div>`;
+ return h+"</div>"};
+MODES.crono.desc="Ordena cuatro hechos del lore, de la cronología, los personajes y las historias de Apexora.";
+})();
+</script>
+<script>
+(function(){
+const RM=matchMedia("(prefers-reduced-motion:reduce)").matches,K="apexora-prog";
+let P={xp:0,streak:0,best:0,wins:0,ach:{},day:"",dstreak:0,t:0},T=null;
+try{Object.assign(P,JSON.parse(localStorage.getItem(K)||"{}"))}catch(e){}
+const sv=()=>{try{localStorage.setItem(K,JSON.stringify(P))}catch(e){}};
+const LV=x=>Math.floor(Math.sqrt(x/40))+1,FL=l=>40*(l-1)*(l-1);
+const RANK=["Aprendiz del Archivo","Explorador de Umbra","Cronista de Apexora","Guardián de Sopharum","Maestro del Lore","Leyenda de Luxor","Hijo de Espacio"];
+const rank=l=>RANK[Math.min(RANK.length-1,Math.floor((l-1)/2))];
+const mult=()=>1+Math.min(1,Math.floor(P.streak/3)*.25);
+const pop=el=>{if(el&&!RM)el.animate([{transform:"scale(1)"},{transform:"scale(1.3)"},{transform:"scale(1)"}],{duration:350})};
+const cf=o=>{if(!RM&&window.confetti)confetti(Object.assign({colors:["#f6c453","#ffe08a","#b39bff","#4fd1c5","#ff9a5e"],zIndex:50},o))};
+/* ---------- audio de calidad con Tone.js (si no carga, queda el motor anterior) ---------- */
+const oldSfx=window.sfx,SC=["C5","D5","E5","G5","A5","C6","D6","E6","G6","A6"];
+const now=()=>Tone.now();
+function build(){if(T||!window.Tone)return;
+ const rev=new Tone.Freeverb({roomSize:.65,dampening:3200,wet:.25}).toDestination();
+ T={rev,syn:new Tone.PolySynth(Tone.Synth,{oscillator:{type:"triangle"},envelope:{attack:.005,decay:.25,sustain:.05,release:.5}}).connect(rev),
+ bell:new Tone.PolySynth(Tone.FMSynth,{harmonicity:3,modulationIndex:8,envelope:{attack:.005,decay:.4,sustain:0,release:.8}}).connect(rev),
+ low:new Tone.MembraneSynth({pitchDecay:.08,octaves:4}).toDestination(),
+ pad:new Tone.PolySynth(Tone.Synth,{oscillator:{type:"sine"},envelope:{attack:1.2,decay:.5,sustain:.8,release:2}}).connect(rev),
+ arp:new Tone.Synth({oscillator:{type:"triangle"},envelope:{attack:.01,decay:.2,sustain:0,release:.2}}).connect(rev)};
+ T.syn.volume.value=-8;T.bell.volume.value=-14;T.low.volume.value=-6;T.pad.volume.value=-24;T.arp.volume.value=-24;
+ const ch=[["A2","E3","A3","C4"],["F2","C3","F3","A3"],["C3","G3","C4","E4"],["G2","D3","G3","B3"]],pat=[0,1,2,3,2,1,2,3];let st=0;
+ T.loop=new Tone.Loop(t=>{const c=ch[Math.floor(st/8)%4];if(st%8===0)T.pad.triggerAttackRelease(c,"1m",t);T.arp.triggerAttackRelease(Tone.Frequency(c[pat[st%8]]).transpose(12).toNote(),"16n",t);st++},"8n").start(0);
+ Tone.Transport.bpm.value=96}
+const FX={
+click:()=>T.syn.triggerAttackRelease("E6","64n",now(),.15),
+good:()=>{const i=Math.min(P.streak,7);[0,2,4].forEach((d,j)=>T.syn.triggerAttackRelease(SC[Math.min(i+d,9)],"16n",now()+j*.07,.7))},
+bad:()=>{T.low.triggerAttackRelease("A1","8n",now());T.low.triggerAttackRelease("E1","4n",now()+.12)},
+tick:()=>T.syn.triggerAttackRelease("A6","64n",now(),.3),
+over:()=>["G4","E4","C4","G3"].forEach((n,j)=>T.low.triggerAttackRelease(n,"8n",now()+j*.16)),
+roll:()=>{for(let j=0;j<8;j++)T.syn.triggerAttackRelease(400+Math.random()*900,"64n",now()+j*.05,.3)},
+fan:()=>["C5","G5","C6"].forEach((n,j)=>T.bell.triggerAttackRelease(n,"8n",now()+j*.06,.5)),
+coin:()=>{T.bell.triggerAttackRelease("B6","16n",now(),.5);T.bell.triggerAttackRelease("E7","8n",now()+.08,.5)},
+lvl:()=>["C5","E5","G5","C6","E6","G6","C7"].forEach((n,j)=>T.bell.triggerAttackRelease(n,"8n",now()+j*.07,.6)),
+chest:()=>{for(let j=0;j<14;j++)T.bell.triggerAttackRelease(SC[Math.floor(Math.random()*10)],"16n",now()+j*.05,.4)},
+ach:()=>["G5","C6","E6"].forEach((n,j)=>T.bell.triggerAttackRelease(n,"8n",now()+j*.09,.5))};
+const FB={lvl:"fan",chest:"coin",ach:"coin"};
+window.sfx=k=>{try{if(!S.settings.sound)return;if(T&&FX[k])FX[k]();else oldSfx(FB[k]||k)}catch(e){}};
+document.addEventListener("pointerdown",()=>{if(window.Tone){build();Tone.start()}},{capture:true});
+const mb=$("#mus"),oc=mb.onclick;let on=false;
+mb.onclick=()=>{if(!T){oc&&oc();return}on=!on;mb.classList.toggle("on",on);mb.textContent=on?"🎶":"🎵";on?Tone.Transport.start():Tone.Transport.pause();sfx("click")};
+/* ---------- HUD, banners y feedback ---------- */
+const hd=document.createElement("div");hd.id="hud";hd.innerHTML='<div class="hp lvp"><b id="hl"></b><div><small id="hr"></small><i><u id="hx"></u></i></div></div><div class="hp" id="hs"></div><div class="hp" id="hc"></div>';document.body.appendChild(hd);
+function hud(){const l=LV(P.xp),a=FL(l),b=FL(l+1);$("#hl").textContent=l;$("#hr").textContent=rank(l);$("#hx").style.width=((P.xp-a)/(b-a)*100)+"%";
+ $("#hs").innerHTML=P.streak?`🔥 <b>${P.streak}</b> ×${+mult().toFixed(2)}`:`📅 Día ${P.dstreak}`;$("#hc").innerHTML=`🎁 en <b>${5-P.wins%5}</b>`;if(T)Tone.Transport.bpm.rampTo(96+Math.min(P.streak,10)*3,.8)}
+let bq=0;
+function banner(h,c=""){const e=document.createElement("div");e.className="bn "+c;e.innerHTML=h;e.style.top=(70+bq*58)+"px";bq++;document.body.appendChild(e);
+ if(!RM)e.animate([{transform:"translate(-50%,-30px) scale(.8)",opacity:0},{transform:"translate(-50%,0) scale(1)",opacity:1}],{duration:380,easing:"cubic-bezier(.2,1.4,.4,1)",fill:"forwards"});
+ setTimeout(()=>{e.remove();bq--},2800)}
+function flo(n){const s=$(".stage"),r=(s||document.body).getBoundingClientRect(),e=document.createElement("div");e.className="fl";e.textContent="+"+n+(P.streak>=3?" 🔥":"");e.style.left=(r.left+r.width/2)+"px";e.style.top=Math.max(120,r.top+Math.min(r.height/2,300))+"px";document.body.appendChild(e);
+ const a=e.animate([{transform:"translate(-50%,0) scale(.4)",opacity:0},{transform:"translate(-50%,-30px) scale(1.4)",opacity:1,offset:.3},{transform:"translate(-50%,-130px) scale(1)",opacity:0}],{duration:RM?600:1300,easing:"ease-out"});a.onfinish=()=>e.remove()}
+function levelUp(l){banner(`⭐ ¡NIVEL ${l}! <b>${rank(l)}</b>`);sfx("lvl");cf({particleCount:220,spread:130,origin:{y:.3}})}
+const AC=[["first","🏅","Primera victoria",()=>P.wins>=1],["s5","🔥","Racha de 5",()=>P.streak>=5],["s10","⚡","Imparable: racha de 10",()=>P.streak>=10],["w25","📚","25 aciertos",()=>P.wins>=25],["l5","⭐","Nivel 5",()=>LV(P.xp)>=5],["d3","📅","3 días seguidos",()=>P.dstreak>=3]];
+function ach(){AC.forEach(a=>{if(!P.ach[a[0]]&&a[3]()){P.ach[a[0]]=1;setTimeout(()=>{banner(`${a[1]} Logro: <b>${a[2]}</b>`,"ach");sfx("ach")},900)}})}
+/* cofre sorpresa cada 5 aciertos: recompensa variable */
+function chest(){const ov=document.createElement("div");ov.id="chest";ov.innerHTML='<div class="cbox"><div class="gift" role="button" tabindex="0">🎁</div><p id="cm">¡Cofre sorpresa! Tócalo</p></div>';document.body.appendChild(ov);
+ const g=ov.querySelector(".gift"),w=!RM&&g.animate([{transform:"rotate(-9deg) scale(1)"},{transform:"rotate(9deg) scale(1.08)"}],{duration:170,iterations:Infinity,direction:"alternate"});sfx("coin");let done=0;
+ const open=()=>{if(done)return;done=1;w&&w.cancel();const r=Math.random(),pr=r<.5?[10,"Común","#c9cdee"]:r<.8?[20,"Raro","#4fd1c5"]:r<.95?[40,"Épico","#b39bff"]:[100,"LEGENDARIO","#ffe08a"];
+  if(!S.players.length)ensureP();const m={};targets().forEach(id=>m[id]=pr[0]);applyDelta(m,`${targetLabel()}: cofre sorpresa`,"score");P.xp+=pr[0];
+  g.outerHTML=`<div class="prize" style="color:${pr[2]};text-shadow:0 0 30px ${pr[2]}">+${pr[0]}</div>`;$("#cm").innerHTML=`<b style="color:${pr[2]}">${pr[1]}</b><br><button class="btn pri" id="cc" style="margin-top:14px">Continuar</button>`;
+  sfx("chest");cf({particleCount:pr[0]*4+60,spread:120,origin:{y:.5}});$("#cc").onclick=()=>{ov.remove();render()};hud();sv()};
+ g.onclick=open;g.onkeydown=e=>{if(e.key==="Enter"||e.key===" ")open()}}
+window.Prog={mult,win(n){const l0=LV(P.xp);P.streak++;P.best=Math.max(P.best,P.streak);P.wins++;P.t=Date.now();P.xp+=n;flo(n);cf({particleCount:30+Math.min(P.streak,10)*10,spread:70,origin:{y:.65}});
+ if([3,5,8,10,15,20].includes(P.streak))banner(`🔥 ¡Racha de ${P.streak}! ×${+mult().toFixed(2)}`);const l1=LV(P.xp);if(l1>l0)levelUp(l1);hud();pop($("#hs"));ach();sv();if(P.wins%5===0)setTimeout(chest,1500)},
+ lose(){if(Date.now()-P.t<600)return;if(P.streak>=3)banner("💔 Racha perdida: "+P.streak,"bad");P.streak=0;hud();sv();const m=$("#main");if(m&&!RM)m.animate([{transform:"translateX(0)"},{transform:"translateX(-9px)"},{transform:"translateX(9px)"},{transform:"translateX(-5px)"},{transform:"translateX(0)"}],{duration:320})}};
+const seen=new WeakSet();
+new MutationObserver(()=>{document.querySelectorAll(".opt.wrong,.verdict.no").forEach(el=>{if(!seen.has(el)){seen.add(el);Prog.lose()}})}).observe($("#main"),{subtree:true,childList:true,attributes:true,attributeFilter:["class"]});
+/* pistas */
+const oc2=A.choose;
+Object.assign(A,{choose(b){if(C.hide&&C.hide.includes(+b.dataset.i))return;oc2(b)},
+ hint50(){if(C.revealed||C.hinted||C.mode!=="trivia")return;const it=C.item;C.hide=[0,1,2,3].filter(i=>i!==it.ai).sort(()=>Math.random()-.5).slice(0,2);C.hinted=1;C.pts=Math.max(5,Math.round(C.pts/10)*5);render()},
+ chint(){C.chint=1;render()}});
+/* racha diaria */
+const td=new Date().toISOString().slice(0,10);
+if(P.day!==td){const y=new Date(Date.now()-864e5).toISOString().slice(0,10);P.dstreak=P.day===y?P.dstreak+1:1;P.day=td;const b=10*Math.min(P.dstreak,7);P.xp+=b;sv();setTimeout(()=>{banner(`📅 Día ${P.dstreak} de racha · <b>+${b} XP</b>`);ach()},900)}
+hud();
+})();
+</script>
+</body>
+</html>
