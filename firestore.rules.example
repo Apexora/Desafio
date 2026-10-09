@@ -1,0 +1,10 @@
+// Añade estas reglas a las que ya tienes en Firestore (no reemplaces las de tus otras páginas).
+// Dentro de: match /databases/{database}/documents { ... }
+
+match /apexora_profiles/{uid} {
+  allow read: if true;                                   // el selector de perfiles lista nombre + avatar
+  allow create, update: if request.auth != null && request.auth.uid == uid;
+}
+match /apexora_data/{uid} {
+  allow read, write: if request.auth != null && request.auth.uid == uid;   // puntos y progreso: solo el dueño
+}
