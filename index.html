@@ -1383,10 +1383,10 @@ import {getFirestore,collection,getDocs,doc,getDoc,setDoc} from "https://www.gst
 
 /* >>> PEGA AQUÍ la config de tu proyecto (Firebase Console > Configuración del proyecto > Tus apps) <<< */
 const FIREBASE_CONFIG={
- apiKey:"AIzaSyAsw466_wzsiLtbjw6FXZ1_O3HQ_AkVyU8",
- authDomain:"album-apexora.firebaseapp.com",
- projectId:"album-apexora",
- appId:"1:17231648284:web:20edb8477453f50473f1d9"
+ apiKey:"TU_API_KEY",
+ authDomain:"TU_PROYECTO.firebaseapp.com",
+ projectId:"TU_PROYECTO",
+ appId:"TU_APP_ID"
 };
 const AV_DIR="avatars/";                 // carpeta con los avatares (1x1)
 const MAIL_DOMAIN="apexora-sala.app";    // dominio ficticio: el perfil se guarda como nombre@dominio
@@ -1420,7 +1420,7 @@ function boot(auth,db){
  async function loadAvatars(){
   try{const r=await fetch(AV_DIR+"avatars.json",{cache:"no-cache"});if(r.ok){const a=await r.json();if(Array.isArray(a)&&a.length)return a.map(String)}}catch(e){}
   const out=[];
-  for(let i=1;i<=80;i++){let f=null;for(const x of ["png","jpg","jpeg","webp"]){if(await probe(AV_DIR+i+"."+x)){f=i+"."+x;break}}if(!f)break;out.push(f)}
+  for(let i=1;i<=80;i++){let f=null;for(const x of ["webp","png","jpg","jpeg"]){if(await probe(AV_DIR+i+"."+x)){f=i+"."+x;break}}if(!f)break;out.push(f)}
   return out;
  }
  async function loadProfiles(){
@@ -1442,7 +1442,7 @@ function boot(auth,db){
  let draft={name:"",avatar:""};
  function viewNew(err){
   shell(`<form class="gt-card" data-g="create"><h1 style="font-size:1.6rem;margin:0 0 6px;text-align:center">Nuevo perfil</h1>
-  <label>Elige tu avatar</label>${avatars.length?`<div class="gt-avs" role="group" aria-label="Avatares">${avatars.map(f=>`<button type="button" data-g="av" data-f="${E(f)}" aria-pressed="${draft.avatar===f}" aria-label="Avatar ${E(f)}">${avImg(f)}</button>`).join("")}</div>`:`<p class="gt-note">No encontré avatares. Pon las imágenes 1x1 en la carpeta <code>avatars/</code> y un <code>avatars.json</code> con la lista de nombres de archivo (o nómbralas <code>1.png</code>, <code>2.png</code>…).</p>`}
+  <label>Elige tu avatar</label>${avatars.length?`<div class="gt-avs" role="group" aria-label="Avatares">${avatars.map(f=>`<button type="button" data-g="av" data-f="${E(f)}" aria-pressed="${draft.avatar===f}" aria-label="Avatar ${E(f)}">${avImg(f)}</button>`).join("")}</div>`:`<p class="gt-note">No encontré avatares. Pon las imágenes 1x1 en la carpeta <code>avatars/</code> y un <code>avatars.json</code> con la lista de nombres de archivo (o nómbralas <code>1.webp</code>, <code>2.webp</code>…).</p>`}
   <label>Nombre<input class="fld" id="gnm" maxlength="24" autocomplete="off" required value="${E(draft.name)}"></label>
   <label>Contraseña (mínimo 6)<input class="fld" type="password" id="gp1" autocomplete="new-password" minlength="6" required></label>
   <label>Repite la contraseña<input class="fld" type="password" id="gp2" autocomplete="new-password" required></label>
@@ -1480,7 +1480,7 @@ function boot(auth,db){
  });
  gate.addEventListener("submit",async e=>{
   const f=e.target.closest("form[data-g]");if(!f)return;e.preventDefault();
-  const btn=f.querySelector("button[type=submit]"),err=f.querySelector(".gt-err");btn.disabled=true;
+  const btn=f.querySelector("button[type=submit]"),err=f.querySelector(".gt-err");btn.disabled=true;entering=true;
   try{
    if(f.dataset.g==="login"){
     const p=profiles[+f.dataset.i],c=await signInWithEmailAndPassword(auth,p.login,$g("#gpw").value);
@@ -1493,20 +1493,29 @@ function boot(auth,db){
     if(avatars.length&&!draft.avatar)return fail("Elige un avatar.");
     if(p1.length<6)return fail("La contraseña debe tener al menos 6 caracteres.");
     if(p1!==p2)return fail("Las contraseñas no coinciden.");
-    const login=slug(name)+"@"+MAIL_DOMAIN,c=await createUserWithEmailAndPassword(auth,login,p1);
+    const login=slug(name)+"@"+MAIL_DOMAIN;let c;
+    try{c=await createUserWithEmailAndPassword(auth,login,p1)}
+    catch(x){
+     if(!x||x.code!=="auth/email-already-in-use")throw x;
+     /* cuenta que quedó a medias (sin perfil): si la contraseña coincide, se completa */
+     try{c=await signInWithEmailAndPassword(auth,login,p1)}catch(y){throw {code:"auth/email-already-in-use"}}
+     const ex=await getDoc(doc(db,COL_PROFILES,c.user.uid));
+     if(ex.exists()){await signOut(auth);throw {code:"auth/email-already-in-use"}}
+    }
     const prof={name,avatar:draft.avatar,login,created:Date.now()};
     await setDoc(doc(db,COL_PROFILES,c.user.uid),prof);
     await enter(c.user,prof);
    }
-  }catch(x){err.textContent=msg(x);btn.disabled=false}
+  }catch(x){entering=false;err.textContent=msg(x);btn.disabled=false}
  });
  window.FB={async logout(){try{await signOut(auth)}catch(e){}localStorage.removeItem("apexora-uid");location.reload()}};
  let t;
  window.cloudPush=()=>{const u=auth.currentUser;if(!u)return;clearTimeout(t);t=setTimeout(async()=>{
   try{const g=k=>localStorage.getItem(k+":"+u.uid)||"",ts=Date.now();localStorage.setItem("apexora-ts:"+u.uid,String(ts));
    await setDoc(doc(db,COL_DATA,u.uid),{s:g("apexora-sala-v1"),p:g("apexora-prog"),u:g("apexora-crono-u"),ts})}catch(e){}},1500)};
- let first=true;
+ let first=true,entering=false;
  onAuthStateChanged(auth,u=>{
+  if(entering)return;
   if(u&&APX_UID===u.uid){
    window.PROFILE=cached()||{name:"Jugador",avatar:""};
    unlock();if(first&&window.render)render();first=false;
