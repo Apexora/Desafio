@@ -1,0 +1,11 @@
+/* Sala de Desafíos · "agua e índigo": turquesa y azul noche. Se carga al final para ganar a los :root del archivo */
+:root[data-mood="sala"], :root[data-mood="sala"][data-theme] {
+  --bg: #161a36; --bg2: #1c2150; --surface: #232a5a; --surface2: #2d3570; --line: #4a5399;
+  --text: #f6efe4; --muted: #bcc2e0;
+  --acc: #5fd0c8; --on-acc: #0f1a2e; --acc-text: #7fe0d8;
+  --ape: #d56e6f; --bad: #e0817e; --ember: #e3b488;
+  --display: var(--apx-display); --body: var(--apx-body);
+  font-synthesis: none;
+}
+:root[data-mood="sala"] body { background: radial-gradient(1000px 600px at 85% -10%, rgba(6,148,148,.35), transparent 60%), radial-gradient(900px 700px at -10% 110%, rgba(58,65,118,.55), transparent 60%), #161a36 fixed; }
+:root[data-mood="sala"] h1, :root[data-mood="sala"] h2, :root[data-mood="sala"] h3 { font-weight: 400; letter-spacing: .02em; }
