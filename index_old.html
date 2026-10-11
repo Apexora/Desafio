@@ -407,39 +407,6 @@ html.locked #gate{display:grid;position:fixed;inset:0;z-index:100;place-items:ce
 .flamechip{display:inline-flex;gap:6px;align-items:center;padding:6px 14px;border-radius:99px;background:#0006;border:1px solid #ffffff2e;font-weight:700}
 .foot{padding:16px 34px 28px;color:var(--muted);font-size:.85rem}
 @media (max-width:1000px){.foot{padding-left:18px;padding-right:18px}}
-/* ===== Apexora tic tac toe ===== */
-.tt-how{color:var(--muted);max-width:46em;margin:0 0 16px;font-size:.95rem}
-.tt-how b{color:var(--text)}
-.tt-board{display:grid;grid-template-columns:minmax(64px,.8fr) repeat(3,minmax(0,1fr));gap:8px;max-width:640px;margin:6px auto 0}
-.tt-h{display:flex;align-items:center;justify-content:center;text-align:center;padding:8px 6px;min-height:52px;border-radius:12px;background:#ffffff0f;border:1px solid #ffffff22;color:var(--acc);font-weight:800;font-size:clamp(.64rem,2.3vw,.9rem);line-height:1.15;overflow-wrap:anywhere}
-.tt-c{box-sizing:border-box;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:clamp(78px,16vw,112px);padding:6px;border-radius:14px;border:1px solid #ffffff30;background:linear-gradient(180deg,#522a4d,#43203f);box-shadow:0 4px 0 #150a09;color:var(--text);transition:transform .15s,border-color .2s,box-shadow .2s}
-.tt-c:hover:not(:disabled){transform:translateY(-2px);border-color:var(--acc)}
-.tt-c:disabled{cursor:default}
-.tt-c:disabled:not(.p):not(.b){opacity:.7}
-.tt-c.sel{border-color:var(--acc);box-shadow:0 0 0 2px var(--acc),0 0 26px #e8b47f77}
-.tt-c.p{background:linear-gradient(180deg,#5b3a2a,#3d2318);border-color:var(--acc)}
-.tt-c.b{background:linear-gradient(180deg,#1f4a52,#10282e);border-color:#4fd1cb}
-.tt-c.win{box-shadow:0 0 0 3px #fff,0 0 36px var(--acc);animation:pop .6s}
-.tt-m{font-family:var(--display);font-weight:800;font-size:clamp(1.6rem,6vw,2.4rem);line-height:1}
-.tt-c.p .tt-m{color:var(--acc)}
-.tt-c.b .tt-m{color:#4fd1cb}
-.tt-n{font-size:clamp(.58rem,2vw,.78rem);font-weight:700;line-height:1.1;text-align:center;overflow-wrap:anywhere}
-.tt-pick{margin-top:24px;border-top:1px dashed var(--line);padding-top:18px}
-.tt-ph{font-weight:700;margin-bottom:10px}
-.tt-ph b{color:var(--acc)}
-.tt-hint{margin-top:12px;border-left:5px solid var(--ember);padding:8px 14px;background:var(--bg2);border-radius:0 12px 12px 0;font-weight:600}
-.tt-list{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));max-height:260px;overflow:auto}
-.tt-opt{width:100%;text-align:left;padding:10px 14px}
-.tt-empty{grid-column:1/-1;color:var(--muted)}
-.tt-msg{margin-top:16px;min-height:1.5em;font-weight:700}
-.tt-msg.ok{color:var(--acc)}
-.tt-msg.bad{color:var(--bad)}
-.tt-verdict{font-family:var(--display);font-weight:800;font-size:2rem;margin-bottom:8px;color:var(--muted);text-shadow:0 0 24px currentColor}
-.tt-ans{margin-top:14px;color:var(--muted)}
-.tt-ans summary{cursor:pointer;font-weight:700;color:var(--text)}
-.tt-ans ul{margin:10px 0 0;padding-left:20px;display:grid;gap:4px;font-size:.92rem}
-.tt-ans b{color:var(--text)}
-@media (max-width:560px){.tt-board{gap:6px}.tt-h{padding:6px 3px}.tt-list{grid-template-columns:1fr}}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.3/confetti.browser.min.js"></script>
@@ -836,8 +803,6 @@ function finishDaily(m,win,txt,dk){
  g.best=Math.max(g.best||0,g.streak);g.last=dk;g.pending="";
  if(win)g.wins++;else g.losses++;
  g.today={d:dk,win:!!win,txt:txt||""};save();
- /* esencias del Portal: una vez por modo y día (el return de arriba evita repetir) */
- try{if(window.APX){window.APX.premiar(win?15:3,0);if(win)window.APX.desbloquearLogro("sala_primer_reto")}}catch(e){}
 }
 function dailyEnd(win,txt){
  if(!C||C.rec||!C.mode)return false;
@@ -1092,210 +1057,6 @@ addEventListener("keydown",e=>{if(view!=="play"||!C||!GM.has(C.mode)||$("#dlg").
 })();
 </script>
 <script>
-/* ===== Apexora tic tac toe · tres en línea contra el bot =====
-   Tablero 3x3: cada fila y cada columna tiene una condición del lore.
-   Para reclamar una casilla nombras a un personaje o dios que cumpla las dos.
-   Si fallas pierdes el turno. Cada nombre se usa una sola vez.
-   Para ampliar el juego edita TT_E (personajes) y TT_CR (condiciones). */
-(function(){
-const TT_WIN=50,TT_HINT=5,TT_MISS=5,TT_MIN=10,TT_BOT=.8,TT_MAXHINT=3; /* puntos, penalizaciones, acierto del bot, pistas */
-const LINES=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-/* condiciones: id -> [nombre corto, explicación al pasar el cursor] */
-const TT_CR={
- camp:["Campamento Sopharum","Miembro del campamento que fundó Mit Caleus"],
- torneo:["Torneo de Umbra","Presente en el Torneo de Umbra (participante, público o saboteador)"],
- hz:["Historia de Zarick","Aparece en la vida de Zarick"],
- hk:["Historia de Karim","Aparece en la vida de Karim Balteus"],
- umbra:["Umbra","Nació, creció o actúa en Umbra"],
- arboris:["Arboris","Ligado a Arboris"],
- lumx:["Luminarae Luxor","Ligado a Luminarae Luxor (origen, familia, servicio, fe u honra)"],
- skald:["Skaldrum","Ligado a Skaldrum (incluye a su dios venerado)"],
- sinf:["Sinfalía","Ligado a Sinfalía"],
- psyb:["Psybernia","Ligado a Psybernia"],
- negatt:["Negatt","Ligado a Negatt"],
- lumis:["Lumis","Ligado a Lumis (nació cerca, vivió, fue preso o la gobierna)"],
- deidad:["Deidad","Una de las diez fuerzas, hijas de Espacio"],
- lider:["Líder","Lidera un grupo, una orden, una pandilla o una nación"],
- orco:["Orco o semi-orco","Sangre de orco"],
- tec:["Implantes o tecnología","Implantes, armadura robótica, traje simbiótico o IA"],
- orden:["Criado por una orden","Lo crió o adoptó una orden desde niño"]
-};
-/* personajes: [nombre, condiciones que cumple, apodos para la búsqueda] */
-const TT_E=[
-["Zarick",["camp","torneo","hz","hk","umbra","arboris","lumx","lumis","orco"],[]],
-["Bane Ironhand",["camp","torneo","hz","lumis","tec"],["bane"]],
-["Karim Balteus",["camp","torneo","hk","lumx","orden"],["karim"]],
-["Vina Miceus",["camp","torneo","skald"],["vina"]],
-["Seah de Pato",["camp","torneo"],["seah"]],
-["Tomah de la Luz de Xora",["camp","torneo","lumx"],["tomah"]],
-["Pin Kuku",["camp","torneo"],["pin"]],
-["Mit Caleus",["camp","torneo","hz","hk","umbra","lumis","lider"],["caleus"]],
-["Andreas Light",["torneo","lumx","orden","tec"],["andreas","leon skyrider"]],
-["Puj",["torneo","hz","umbra","lider"],[]],
-["Astra Skyfall",["torneo","lumx"],["astra"]],
-["Solara",["torneo"],[]],
-["Lyra Shadowthorn",["torneo"],["lyra"]],
-["Ova Caleus",["torneo"],["ova"]],
-["Lurim de Skaldrum",["torneo","skald"],["lurim"]],
-["Oci",["torneo","skald"],[]],
-["Vela",["torneo","lumis"],[]],
-["Burun",["torneo"],[]],
-["Orx",["torneo"],[]],
-["Aurora D'arwen",["torneo"],["aurora"]],
-["Piuk",["torneo"],[]],["Asan",["torneo"],[]],["Willow",["torneo"],[]],["Krymm",["torneo"],[]],["Garvok",["torneo"],[]],
-["Gobz Gobinson",["psyb","sinf","tec"],["gobz"]],
-["Valeria",["psyb","lider"],[]],
-["Tsuji",["negatt"],[]],
-["Alnasi",["negatt","lider"],[]],
-["Raulo Casa III",["negatt","lider"],["raulo"]],
-["Inargo",["lumis","tec","lider"],[]],
-["Evelyn von Grace",["hz","umbra","arboris","lumx"],["evelyn"]],
-["Luminara IV",["lumx","lider"],["luminara"]],
-["Khagzol «Zodd» Shazolg",["hz","arboris","orco"],["zodd","khagzol"]],
-["Heiss",["hz"],[]],
-["Saúl",["hk","orden"],["saul"]],
-["Calliope",["hk"],[]],
-["RiaRia",["hk"],[]],
-["Ape",["deidad","skald"],[]],
-["Xora",["deidad","lumx"],[]],
-["Ganore",["deidad","sinf"],[]],
-["Millot",["deidad"],[]],["Jilper",["deidad"],[]],["Cumacur",["deidad"],[]],["Cabala",["deidad"],[]],
-["Kiprika",["deidad"],["ki"]],["Tapiem",["deidad"],[]],["Dacama",["deidad"],[]]
-];
-const CR=TT_CR,E=TT_E,IDS=Object.keys(CR);
-const nz=s=>String(s).normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9 ]/g," ").replace(/\s+/g," ").trim();
-const NM=E.map(e=>nz(e[0])),HAY=E.map(e=>nz(e[0]+" "+e[2].join(" ")));
-const sh=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
-const ANS={};
-function ans(r,c){const k=r+"|"+c;return ANS[k]||(ANS[k]=E.map((e,i)=>e[1].includes(r)&&e[1].includes(c)?i:-1).filter(i=>i>=0))}
-function comb(a,k){return k===0?[[]]:a.flatMap((x,i)=>comb(a.slice(i+1),k-1).map(r=>[x,...r]))}
-/* ¿se pueden llenar las 9 casillas con 9 personajes distintos? (así nunca hay un tablero imposible) */
-function perfect(cells){const own={};const tr=(i,seen)=>{for(const e of cells[i]){if(seen.has(e))continue;seen.add(e);if(own[e]==null||tr(own[e],seen)){own[e]=i;return true}}return false};
- for(let i=0;i<cells.length;i++)if(!tr(i,new Set()))return false;return true}
-let BOARDS=null;
-function boards(){
- if(BOARDS)return BOARDS;const out=[];
- for(const R of comb(IDS,3))for(const C of comb(IDS.filter(x=>!R.includes(x)),3)){
-  const cells=[];let ok=true,sum=0;
-  for(const r of R){for(const c of C){const a=ans(r,c);if(!a.length){ok=false;break}cells.push(a);sum+=a.length}if(!ok)break}
-  if(ok&&perfect(cells))out.push({R,C,sum});
- }
- const good=out.filter(b=>b.sum>=18);BOARDS=good.length>=10?good:out;return BOARDS;
-}
-let G={};
-function init(){
- const bs=boards(),b=bs[Math.floor(Math.random()*bs.length)];
- G={R:sh(b.R),C:sh(b.C),b:Array(9).fill(null),used:new Set(),turn:"p",sel:null,q:"",msg:"",mk:"",hn:0,miss:0,hint:{},over:false,line:[],tok:Math.random()};
-}
-const rl=i=>CR[G.R[Math.floor(i/3)]][0],cl=i=>CR[G.C[i%3]][0];
-const cellName=i=>rl(i)+" × "+cl(i);
-const valid=(i,e)=>{const t=E[e][1];return t.includes(G.R[Math.floor(i/3)])&&t.includes(G.C[i%3])};
-const openCells=()=>G.b.map((x,i)=>x?-1:i).filter(i=>i>=0);
-const avail=i=>ans(G.R[Math.floor(i/3)],G.C[i%3]).filter(e=>!G.used.has(e));
-const lineWin=(w,cell)=>LINES.some(l=>l.includes(cell)&&l.every(j=>j===cell||(G.b[j]&&G.b[j].w===w)));
-function finish(res,line){
- G.over=true;G.res=res;G.line=line||[];
- const pts=res==="win"?Math.max(TT_MIN,TT_WIN-TT_HINT*G.hn-TT_MISS*G.miss):0;G.pts=pts;
- G.txt=res==="win"?`Completaste una línea de tres. Fallos: ${G.miss} · pistas: ${G.hn}.`:res==="lose"?"El bot completó una línea de tres.":"No quedan personajes que encajen en las casillas libres.";
- if(res==="win")award(pts,"Apexora tic tac toe");
- dailyEnd(res==="win",res==="win"?"Victoria contra el bot":res==="draw"?"Empate con el bot":"Perdiste contra el bot");
-}
-function endCheck(){
- for(const l of LINES){const[a,b,c]=l;if(G.b[a]&&G.b[b]&&G.b[c]&&G.b[a].w===G.b[b].w&&G.b[b].w===G.b[c].w){finish(G.b[a].w==="p"?"win":"lose",l);return true}}
- const op=openCells();if(!op.length||!op.some(i=>avail(i).length)){finish("draw");return true}
- return false;
-}
-function claim(i,e,w){G.b[i]={w,e};G.used.add(e);endCheck()}
-function botPick(){
- const cand=openCells().filter(i=>avail(i).length);if(!cand.length)return -1;
- const pr=[...cand.filter(i=>lineWin("b",i)),...cand.filter(i=>lineWin("p",i)),...(cand.includes(4)?[4]:[]),
-  ...sh(cand.filter(i=>[0,2,6,8].includes(i))),...sh(cand.filter(i=>[1,3,5,7].includes(i)))];
- return pr[0];
-}
-function botMove(){
- const i=botPick();if(i<0){finish("draw");return}
- if(Math.random()<TT_BOT){const a=avail(i),e=a[Math.floor(Math.random()*a.length)];claim(i,e,"b");G.msg=`El bot reclamó «${E[e][0]}» en ${cellName(i)}.`;G.mk="";if(!G.over)sfx("click")}
- else{G.msg=`El bot no supo qué nombrar en ${cellName(i)} y pierde el turno.`;G.mk="ok";sfx("coin")}
- if(!G.over)G.turn="p";
-}
-function schedule(){const g=G;setTimeout(()=>{if(G!==g||g.over||!C||C.mode!=="tateti"||view!=="play")return;botMove();render()},900)}
-function results(){
- const q=nz(G.q||"");if(!q)return[];const tk=q.split(" ");
- return E.map((e,i)=>i).filter(i=>!G.used.has(i)&&tk.every(t=>HAY[i].includes(t)))
-  .sort((a,b)=>(NM[b].startsWith(q)-NM[a].startsWith(q))||a-b).slice(0,12);
-}
-function listHTML(){
- if(!nz(G.q||""))return`<li class="tt-empty">Escribe un nombre para buscar…</li>`;
- const r=results();if(!r.length)return`<li class="tt-empty">Nadie coincide con eso, o ya se usó en esta partida.</li>`;
- return r.map(i=>`<li><button class="btn tt-opt" data-act="ttpick" data-n="${i}">${esc(E[i][0])}</button></li>`).join("");
-}
-function focusQ(){setTimeout(()=>{const q=$("#tt-q");if(q){q.focus();try{q.setSelectionRange(q.value.length,q.value.length)}catch(e){}}},0)}
-function res(){
- if(!G.over)return"";
- const v=G.res==="win"?`<div class="verdict ok">¡Victoria! +${G.pts}</div>`:G.res==="lose"?`<div class="verdict no">Derrota</div>`:`<div class="tt-verdict">Empate</div>`;
- const pos=G.b.map((x,i)=>x?"":`<li><b>${esc(cellName(i))}</b>: ${esc(ans(G.R[Math.floor(i/3)],G.C[i%3]).filter(e=>!G.used.has(e)).map(e=>E[e][0]).join(", ")||"sin respuestas libres")}</li>`).join("");
- return`<div class="result">${v}<p>${esc(G.txt)}</p>${pos?`<details class="tt-ans"><summary>Ver las respuestas que quedaron libres</summary><ul>${pos}</ul></details>`:""}${nextBar()}</div>`;
-}
-function V(){
- let h=`<div class="stage tt"><p class="tt-how">Toca una casilla y nombra a un personaje o dios que cumpla <b>las dos</b> condiciones: la de su fila y la de su columna. Si fallas, pierdes el turno, y cada nombre se usa una sola vez. Tú eres ✕ y empiezas; gana quien una tres casillas en línea.</p>
- <p class="meta"><span class="gem">${G.over?"Partida terminada":G.turn==="p"?"Tu turno · ✕":"Turno del bot · ○"}</span><span>Fallos: ${G.miss}</span><span>Pistas: ${G.hn} de ${TT_MAXHINT}</span></p>
- <div class="tt-board" role="group" aria-label="Tablero de tres en línea"><div></div>${G.C.map(c=>`<div class="tt-h" title="${esc(CR[c][1])}">${esc(CR[c][0])}</div>`).join("")}`;
- for(let r=0;r<3;r++){
-  h+=`<div class="tt-h row" title="${esc(CR[G.R[r]][1])}">${esc(CR[G.R[r]][0])}</div>`;
-  for(let c=0;c<3;c++){
-   const i=r*3+c,x=G.b[i],cls=["tt-c"];if(x)cls.push(x.w);if(G.sel===i)cls.push("sel");if(G.line.includes(i))cls.push("win");
-   const st=x?(x.w==="p"?"tuya":"del bot")+": "+E[x.e][0]:"libre";
-   h+=`<button class="${cls.join(" ")}" data-act="ttcell" data-i="${i}" ${x||G.over||G.turn!=="p"?"disabled":""} aria-label="${esc(cellName(i)+". "+st)}">${x?`<span class="tt-m" aria-hidden="true">${x.w==="p"?"✕":"○"}</span><span class="tt-n">${esc(E[x.e][0])}</span>`:""}</button>`;
-  }
- }
- h+=`</div>`;
- if(G.sel!=null&&!G.over&&G.turn==="p"){
-  h+=`<div class="tt-pick"><p class="tt-ph">Casilla: <b>${esc(rl(G.sel))}</b> × <b>${esc(cl(G.sel))}</b></p>
-  <div class="ctrls" style="margin-top:0"><input class="fld gin" id="tt-q" value="${esc(G.q)}" placeholder="Escribe un personaje o dios…" autocomplete="off" aria-label="Nombre del personaje"><button class="btn" data-act="tthint" ${G.hn>=TT_MAXHINT||G.hint[G.sel]?"disabled":""}>Pista · −${TT_HINT}</button><button class="btn ghost" data-act="ttcancel">Cancelar</button></div>
-  ${G.hint[G.sel]?`<p class="tt-hint">${esc(G.hint[G.sel])}</p>`:""}<ul class="tt-list" id="tt-list">${listHTML()}</ul></div>`;
- }
- h+=`<p class="tt-msg ${G.mk}" role="status" aria-live="polite">${esc(G.msg)}${!G.over&&G.turn==="b"?" El bot está pensando…":""}</p>`;
- return h+res()+`</div>`;
-}
-/* acciones */
-Object.assign(A,{
- ttcell(b){const i=+b.dataset.i;if(!G||G.over||G.turn!=="p"||G.b[i])return;G.sel=G.sel===i?null:i;G.q="";G.msg="";G.mk="";render();if(G.sel!=null)focusQ()},
- ttcancel(){G.sel=null;G.q="";render()},
- tthint(){
-  if(G.over||G.sel==null||G.hn>=TT_MAXHINT||G.hint[G.sel])return;
-  const a=avail(G.sel);if(!a.length)return;
-  const e=a[Math.floor(Math.random()*a.length)];G.hn++;G.hint[G.sel]="Pista: uno de los nombres válidos empieza con «"+E[e][0][0].toUpperCase()+"».";render();focusQ()},
- ttpick(b){
-  if(!G||G.over||G.turn!=="p"||G.sel==null)return;
-  const e=+b.dataset.n,i=G.sel;if(G.used.has(e))return;
-  if(valid(i,e)){claim(i,e,"p");G.msg=`«${E[e][0]}» encaja en ${cellName(i)}.`;G.mk="ok";if(!G.over)sfx("coin")}
-  else{G.miss++;G.msg=`«${E[e][0]}» no encaja en ${cellName(i)}. Pierdes el turno.`;G.mk="bad";sfx("bad")}
-  G.sel=null;G.q="";if(!G.over){G.turn="b";schedule()}render();
- }
-});
-/* buscador: actualiza solo la lista para no perder el foco ni el cursor */
-document.addEventListener("input",e=>{if(e.target.id==="tt-q"&&C&&C.mode==="tateti"){G.q=e.target.value;const l=$("#tt-list");if(l)l.innerHTML=listHTML()}});
-document.addEventListener("keydown",e=>{
- if(!C||C.mode!=="tateti"||view!=="play"||$("#dlg").open)return;
- if(e.target.id==="tt-q"){
-  if(e.key==="Enter"){e.preventDefault();const r=results();if(r.length)A.ttpick({dataset:{n:r[0]}})}
-  else if(e.key==="Escape"){e.preventDefault();A.ttcancel()}
-  return;
- }
- if(e.ctrlKey||e.metaKey||e.altKey||["INPUT","TEXTAREA","SELECT"].includes(e.target.tagName))return;
- if(/^[1-9]$/.test(e.key))A.ttcell({dataset:{i:+e.key-1}});
-});
-/* se suma al sistema de juegos diarios de la sala */
-Object.assign(MODES,{tateti:{name:"Apexora tic tac toe",desc:"Tres en línea contra el bot: reclama cada casilla nombrando a un personaje o dios que encaje en su fila y su columna.",pts:"hasta "+TT_WIN}});
-if(!GAME_ORDER.includes("tateti"))GAME_ORDER.push("tateti");
-GAME_COLOR.tateti="#8e6bd1";GAME_ICON.tateti="⭕";REC_LABEL.tateti=["victoria","victorias","sin ganar","sin ganar"];
-const GM0=window.GM;
-window.GM={has:m=>m==="tateti"||GM0.has(m),
- start(m){if(m!=="tateti")return GM0.start(m);stopTimer();view="play";C={mode:m};init();render();window.scrollTo(0,0)},
- view:m=>m==="tateti"?V():GM0.view(m)};
-})();
-</script>
-<script>
 (function(){
 window.ensureP=()=>{S.players.push({id:uid(),name:(window.PROFILE&&PROFILE.name)||"Aventurero",char:"",pts:0});S.active=S.players[0].id;save()};
 const nz=s=>String(s).normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9 ]/g,"").trim();
@@ -1534,22 +1295,27 @@ function boot(auth,db){
  let first=true,entering=false;
  onAuthStateChanged(auth,u=>{
   if(entering)return;
-  if(u&&u.email&&u.email.endsWith("@apexora-sala.app")&&APX_UID!==u.uid){localStorage.setItem("apexora-uid",u.uid);location.reload();return}
   if(u&&APX_UID===u.uid){
    window.PROFILE=cached()||{name:"Jugador",avatar:""};
    unlock();if(first&&window.render)render();first=false;
    getDoc(doc(db,COL_PROFILES,u.uid)).then(s=>{if(s.exists()){const d=s.data();window.PROFILE={name:d.name,avatar:d.avatar||""};localStorage.setItem("apexora-profile:"+u.uid,JSON.stringify(window.PROFILE));window.render&&render()}}).catch(()=>{});
   }else{
-   localStorage.removeItem("apexora-uid");lock();first=false;
-   location.href="/Portal/?volver="+encodeURIComponent(location.href);   /* login único: se entra por el Portal */
+   if(u)signOut(auth).catch(()=>{});
+   localStorage.removeItem("apexora-uid");lock();first=false;showPicker();
   }
  });
 }
 </script>
 <script type="module">
-import { onSesion, registrarVisita, premiar, desbloquearLogro } from "https://apexora.github.io/Portal/apexora-core.js";
-window.APX = { premiar, desbloquearLogro };
-onSesion((u) => { if (u?.email?.endsWith("@apexora-sala.app")) registrarVisita(); });
-</script>
+import { onSesion, registrarVisita, desbloquearLogro, sumarFragmentos, sumarStat }
+  from "https://apexora.github.io/portal/portal-perfil.js";
+
+onSesion((u) => { if (u) registrarVisita(); });   // cuenta la racha
+
+// Ejemplos dentro de tu juego:
+// desbloquearLogro("racha_7");
+// sumarFragmentos("comun", 15);
+// sumarStat("tcg", "victorias");
+</script> 
 </body>
 </html>
