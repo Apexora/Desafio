@@ -840,7 +840,7 @@ function finishDaily(m,win,txt,dk){
  if(win)g.wins++;else g.losses++;
  g.today={d:dk,win:!!win,txt:txt||""};save();
  /* esencias del Portal: una vez por modo y día (el return de arriba evita repetir) */
- try{if(window.APX){window.APX.premiar(win?15:3,0);if(win)window.APX.desbloquearLogro("sala_primer_reto")}}catch(e){}
+ try{if(window.APX){window.APX.premiar(win?15:3,0);if(win)window.APX.desbloquearLogro("sala_primer_reto")};window.APX.registrarActividad("sala","reto",{modo:(MODES[m]||{}).name||m,gano:!!win})}catch(e){}
 }
 function dailyEnd(win,txt){
  if(!C||C.rec||!C.mode)return false;
@@ -1550,8 +1550,8 @@ function boot(auth,db){
 }
 </script>
 <script type="module">
-import { onSesion, registrarVisita, premiar, desbloquearLogro } from "https://apexora.github.io/Portal/apexora-core.js";
-window.APX = { premiar, desbloquearLogro };
+import { onSesion, registrarVisita, premiar, desbloquearLogro, registrarActividad } from "https://apexora.github.io/Portal/apexora-core.js" ;
+window.APX = { premiar, desbloquearLogro, registrarActividad };
 onSesion((u) => { if (u?.email?.endsWith("@apexora-sala.app")) registrarVisita(); });
 </script>
 </body>

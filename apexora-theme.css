@@ -7,5 +7,6 @@
   --display: var(--apx-display); --body: var(--apx-body);
   font-synthesis: none;
 }
+:root[data-mood="sala"] { --apx-hud-top: auto; --apx-hud-bottom: calc(76px + env(safe-area-inset-bottom,0px)); }
 :root[data-mood="sala"] body { background: radial-gradient(1000px 600px at 85% -10%, rgba(6,148,148,.35), transparent 60%), radial-gradient(900px 700px at -10% 110%, rgba(58,65,118,.55), transparent 60%), #161a36 fixed; }
 :root[data-mood="sala"] h1, :root[data-mood="sala"] h2, :root[data-mood="sala"] h3 { font-weight: 400; letter-spacing: .02em; }
