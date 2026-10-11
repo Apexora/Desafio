@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es" data-mood="lore">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tirar Dados — Apexora</title>
+<meta name="description" content="Tirador de dados estilo D&D para las campañas de Apexora: d4 a d100, ventaja/desventaja e historial.">
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<link rel="stylesheet" href="css/style.css">
+<script>try{var k='apx-arr:lore';if(sessionStorage.getItem(k))document.documentElement.classList.add('apx-seen');else sessionStorage.setItem(k,1)}catch(e){}</script>
+<link rel="stylesheet" href="https://apexora.github.io/Portal/apexora-ui.css">
+<script type="module" src="https://apexora.github.io/Portal/apexora-hud.js"></script>
+<link rel="stylesheet" href="css/apexora-theme.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img class="nav-logo-mark" src="assets/logo-96.png" alt="">
+      Apexora
+    </a>
+    <button class="nav-search-btn" id="search-trigger" type="button" aria-label="Buscar en Apexora (Ctrl K)">
+      <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><line x1="21" y1="21" x2="16.2" y2="16.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <span class="nav-search-kbd">Ctrl K</span>
+    </button>
+    <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">&#9776;</button>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="mitologia.html">Mitología</a></li>
+      <li><a href="mundo.html">Mundo</a></li>
+      <li><a href="mapa.html">Mapa</a></li>
+      <li><a href="linea-tiempo.html">Cronología</a></li>
+      <li><a href="personajes.html">Personajes</a></li>
+      <li><a href="historias.html">Historias</a></li>
+      <li><a href="dados.html" class="active">Dados</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="search-overlay" id="search-overlay" hidden>
+  <div class="search-modal" role="dialog" aria-modal="true" aria-label="Buscar en Apexora">
+    <div class="search-input-row">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><line x1="21" y1="21" x2="16.2" y2="16.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <input type="text" id="search-input" placeholder="Buscar naciones, personajes, historias..." autocomplete="off" aria-label="Buscar en Apexora">
+      <kbd>Esc</kbd>
+    </div>
+    <ul class="search-results" id="search-results"></ul>
+    <p class="search-empty hint" id="search-empty" hidden>Sin resultados. Probá con otro término.</p>
+  </div>
+</div>
+
+
+<header class="page-header">
+  <div class="starfield" aria-hidden="true"></div>
+  <div class="wrap">
+    <p class="eyebrow">Herramientas de mesa</p>
+    <h1>Tirar Dados</h1>
+    <p class="prose" style="margin-top:1.25rem;color:var(--ink-dim);font-size:1.15rem;">Elegí el dado, la cantidad y el modificador. Ventaja y desventaja funcionan con cualquier dado, no solo el d20. Los dados se tiran en 3D, como en mesa.</p>
+    <nav class="toc" aria-label="Contenido de la página">
+      <a href="#tirador">El Tirador</a>
+      <a href="#historial">Historial</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section id="tirador" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">01</p>
+      <h2>Elegí tu dado</h2>
+    </div>
+
+    <div class="dice-grid" id="dice-grid">
+      <button type="button" class="die-btn" data-die="4">d4</button>
+      <button type="button" class="die-btn" data-die="6">d6</button>
+      <button type="button" class="die-btn" data-die="8">d8</button>
+      <button type="button" class="die-btn" data-die="10">d10</button>
+      <button type="button" class="die-btn" data-die="12">d12</button>
+      <button type="button" class="die-btn active" data-die="20">d20</button>
+      <button type="button" class="die-btn" data-die="100">d100</button>
+    </div>
+
+    <div class="preset-row">
+      <button type="button" class="preset-btn" data-preset="attack">Ataque (d20 + mod)</button>
+      <button type="button" class="preset-btn" data-preset="dmg-1d6-3">Daño 1d6 + 3</button>
+      <button type="button" class="preset-btn" data-preset="dmg-2d6">Daño 2d6</button>
+      <button type="button" class="preset-btn" data-preset="dmg-1d8-2">Daño 1d8 + 2</button>
+      <button type="button" class="preset-btn" data-preset="save">Salvación (d20)</button>
+    </div>
+
+    <div class="roll-controls panel">
+      <div class="roll-field">
+        <label for="qty">Cantidad</label>
+        <div class="stepper">
+          <button type="button" id="qty-minus" aria-label="Restar dado">&minus;</button>
+          <input type="number" id="qty" value="1" min="1" max="20" inputmode="numeric">
+          <button type="button" id="qty-plus" aria-label="Sumar dado">+</button>
+        </div>
+      </div>
+
+      <div class="roll-field">
+        <label for="mod">Modificador</label>
+        <div class="stepper">
+          <button type="button" id="mod-minus" aria-label="Restar modificador">&minus;</button>
+          <input type="number" id="mod" value="0" inputmode="numeric">
+          <button type="button" id="mod-plus" aria-label="Sumar modificador">+</button>
+        </div>
+      </div>
+
+      <div class="roll-field" id="adv-field">
+        <label>Ventaja / Desventaja</label>
+        <div class="adv-toggle">
+          <button type="button" class="adv-btn" data-mode="advantage">Ventaja</button>
+          <button type="button" class="adv-btn" data-mode="disadvantage">Desventaja</button>
+        </div>
+      </div>
+    </div>
+
+    <button type="button" class="btn btn-primary roll-btn" id="roll-btn">Tirar</button>
+
+    <div class="roll-result panel" id="roll-result" aria-live="polite">
+      <div class="dice-viewport" id="dice-viewport"></div>
+      <div id="roll-result-text">
+        <p class="hint">Elegí un dado y tocá "Tirar".</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="historial">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">02</p>
+      <h2>Historial</h2>
+      <p style="margin-top:1rem;color:var(--ink-dim);">Las últimas 20 tiradas de esta sesión. Se pierden al recargar la página.</p>
+    </div>
+    <ul class="roll-history" id="roll-history">
+      <li class="hint" style="border:none;">Todavía no tiraste ningún dado.</li>
+    </ul>
+    <button type="button" class="btn btn-ghost" id="clear-history" style="margin-top:1.5rem;">Limpiar historial</button>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <div>
+      <div class="f-title">Apexora</div>
+      <div>Un archivo vivo del lore del mundo.</div>
+    </div>
+    <ul class="roadmap">
+      <li>Mitología ✓</li>
+      <li>Mundo ✓</li>
+      <li>Personajes ✓</li>
+      <li>Dados ✓</li>
+    </ul>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="js/main.js"></script>
+<script type="module" src="js/apexora.js"></script>
+<script src="js/dice3d.js"></script>
+<script src="js/dice.js"></script>
+<script src="js/search-data.js"></script>
+<script src="js/search.js"></script>
+</body>
+</html>
