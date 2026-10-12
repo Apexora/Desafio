@@ -1,6 +1,1157 @@
 [
-  "abreluz.webp",
-  "tucho.png",
-  "santi.png",
-  "cine.png"
+ {
+  "file": "santi.png",
+  "tipo": "Personaje",
+  "respuesta": "Santi"
+ },
+ {
+  "file": "abyssara.webp",
+  "tipo": "Personaje",
+  "respuesta": "Abyssara"
+ },
+ {
+  "file": "aekob.webp",
+  "tipo": "Personaje",
+  "respuesta": "Aekob"
+ },
+ {
+  "file": "Aelyon.webp",
+  "tipo": "Personaje",
+  "respuesta": "Aelyon"
+ },
+ {
+  "file": "agamuno.webp",
+  "tipo": "Personaje",
+  "respuesta": "Agamuno"
+ },
+ {
+  "file": "ala_def.webp",
+  "tipo": "Personaje",
+  "respuesta": "Ala"
+ },
+ {
+  "file": "Albara.webp",
+  "tipo": "Personaje",
+  "respuesta": "Albara"
+ },
+ {
+  "file": "aldebaran.webp",
+  "tipo": "Personaje",
+  "respuesta": "Aldebaran"
+ },
+ {
+  "file": "aldric.webp",
+  "tipo": "Personaje",
+  "respuesta": "Aldric"
+ },
+ {
+  "file": "alnasi.webp",
+  "tipo": "Personaje",
+  "respuesta": "Alnasi"
+ },
+ {
+  "file": "amark.webp",
+  "tipo": "Personaje",
+  "respuesta": "Amark"
+ },
+ {
+  "file": "andreas_light.webp",
+  "tipo": "Personaje",
+  "respuesta": "Andreas"
+ },
+ {
+  "file": "ape.webp",
+  "tipo": "Deidad",
+  "respuesta": "Ape"
+ },
+ {
+  "file": "aranis durgun.webp",
+  "tipo": "Personaje",
+  "respuesta": "Aranis"
+ },
+ {
+  "file": "Arboris.webp",
+  "tipo": "Lugar",
+  "respuesta": "Arboris"
+ },
+ {
+  "file": "Arkonia.webp",
+  "tipo": "Personaje",
+  "respuesta": "Arkonia"
+ },
+ {
+  "file": "asan.webp",
+  "tipo": "Personaje",
+  "respuesta": "Asan"
+ },
+ {
+  "file": "astra.webp",
+  "tipo": "Personaje",
+  "respuesta": "Astra"
+ },
+ {
+  "file": "astrologa.webp",
+  "tipo": "Personaje",
+  "respuesta": "Astróloga"
+ },
+ {
+  "file": "axeraide_3.webp",
+  "tipo": "Personaje",
+  "respuesta": "Axeraide"
+ },
+ {
+  "file": "axeraide2.webp",
+  "tipo": "Personaje",
+  "respuesta": "Axeraide"
+ },
+ {
+  "file": "azalange.webp",
+  "tipo": "Personaje",
+  "respuesta": "Azalange"
+ },
+ {
+  "file": "azalange2_1.webp",
+  "tipo": "Personaje",
+  "respuesta": "Azalange"
+ },
+ {
+  "file": "balmi-sinfalia-fullbody.webp",
+  "tipo": "Personaje",
+  "respuesta": "Balmi"
+ },
+ {
+  "file": "bane.webp",
+  "tipo": "Personaje",
+  "respuesta": "Bane"
+ },
+ {
+  "file": "bane-god.webp",
+  "tipo": "Personaje",
+  "respuesta": "Bane"
+ },
+ {
+  "file": "Barrigan_Zepi_VII.webp",
+  "tipo": "Personaje",
+  "respuesta": "Barrigan"
+ },
+ {
+  "file": "bason_new.webp",
+  "tipo": "Personaje",
+  "respuesta": "Bason"
+ },
+ {
+  "file": "beo.webp",
+  "tipo": "Personaje",
+  "respuesta": "Beo"
+ },
+ {
+  "file": "beoDeBoro.webp",
+  "tipo": "Personaje",
+  "respuesta": "Beo"
+ },
+ {
+  "file": "bisten.webp",
+  "tipo": "Personaje",
+  "respuesta": "Bisten"
+ },
+ {
+  "file": "blue1.webp",
+  "tipo": "Personaje",
+  "respuesta": "Blue"
+ },
+ {
+  "file": "Bob.webp",
+  "tipo": "Personaje",
+  "respuesta": "Bob"
+ },
+ {
+  "file": "bornie.webp",
+  "tipo": "Personaje",
+  "respuesta": "Bornie"
+ },
+ {
+  "file": "Boro.webp",
+  "tipo": "Lugar",
+  "respuesta": "Boro"
+ },
+ {
+  "file": "Burun.webp",
+  "tipo": "Personaje",
+  "respuesta": "Burun"
+ },
+ {
+  "file": "cabala.webp",
+  "tipo": "Deidad",
+  "respuesta": "Cabala"
+ },
+ {
+  "file": "caelum.webp",
+  "tipo": "Personaje",
+  "respuesta": "Caelum"
+ },
+ {
+  "file": "caleus.webp",
+  "tipo": "Personaje",
+  "respuesta": "Caleus"
+ },
+ {
+  "file": "caleus_joven.webp",
+  "tipo": "Personaje",
+  "respuesta": "Caleus"
+ },
+ {
+  "file": "cap-fuego.webp",
+  "tipo": "Personaje",
+  "respuesta": "Fuego"
+ },
+ {
+  "file": "Capitan Fuego2.webp",
+  "tipo": "Personaje",
+  "respuesta": "Fuego"
+ },
+ {
+  "file": "chip.webp",
+  "tipo": "Personaje",
+  "respuesta": "Chip"
+ },
+ {
+  "file": "chudo.webp",
+  "tipo": "Personaje",
+  "respuesta": "Chudo"
+ },
+ {
+  "file": "Chunchunmaru.webp",
+  "tipo": "Personaje",
+  "respuesta": "Chunchnmaru"
+ },
+ {
+  "file": "ciana_2.webp",
+  "tipo": "Personaje",
+  "respuesta": "Ciana"
+ },
+ {
+  "file": "corvus.webp",
+  "tipo": "Personaje",
+  "respuesta": "Corvus"
+ },
+ {
+  "file": "corvus_lumis.webp",
+  "tipo": "Personaje",
+  "respuesta": "Corvus"
+ },
+ {
+  "file": "criatura.webp",
+  "tipo": "Personaje",
+  "respuesta": "Criatura"
+ },
+ {
+  "file": "criatura_3.webp",
+  "tipo": "Personaje",
+  "respuesta": "Criatura"
+ },
+ {
+  "file": "CuasiPapei.webp",
+  "tipo": "Personaje",
+  "respuesta": "CuasiPapei"
+ },
+ {
+  "file": "cumacur.webp",
+  "tipo": "Deidad",
+  "respuesta": "Cumacur"
+ },
+ {
+  "file": "CYIC.webp",
+  "tipo": "Personaje",
+  "respuesta": "Cyic"
+ },
+ {
+  "file": "dacama.webp",
+  "tipo": "Deidad",
+  "respuesta": "Dacama"
+ },
+ {
+  "file": "daisuke.webp",
+  "tipo": "Personaje",
+  "respuesta": "Daisuke"
+ },
+ {
+  "file": "Darvok.webp",
+  "tipo": "Personaje",
+  "respuesta": "Darvok"
+ },
+ {
+  "file": "didih.webp",
+  "tipo": "Personaje",
+  "respuesta": "Didih"
+ },
+ {
+  "file": "diurna.webp",
+  "tipo": "Personaje",
+  "respuesta": "Diurna"
+ },
+ {
+  "file": "doctorM.webp",
+  "tipo": "Personaje",
+  "respuesta": "Doctor M"
+ },
+ {
+  "file": "Dorianus.webp",
+  "tipo": "Personaje",
+  "respuesta": "Dorianus"
+ },
+ {
+  "file": "draco.webp",
+  "tipo": "Personaje",
+  "respuesta": "Draco"
+ },
+ {
+  "file": "Drog.webp",
+  "tipo": "Personaje",
+  "respuesta": "Drog"
+ },
+ {
+  "file": "echo.webp",
+  "tipo": "Personaje",
+  "respuesta": "Echo"
+ },
+ {
+  "file": "El Magnifico Marcel.webp",
+  "tipo": "Personaje",
+  "respuesta": "Marcel"
+ },
+ {
+  "file": "escin_cob.webp",
+  "tipo": "Personaje",
+  "respuesta": "Escin"
+ },
+  {
+  "file": "SRSC.webp",
+  "tipo": "Personaje",
+  "respuesta": "SRSC"
+ },
+ {
+  "file": "espacio.webp",
+  "tipo": "Deidad",
+  "respuesta": "Espacio"
+ },
+ {
+  "file": "file.webp",
+  "tipo": "Personaje",
+  "respuesta": "File"
+ },
+ {
+  "file": "Frost Giant.webp",
+  "tipo": "Personaje",
+  "respuesta": "Frost Giant"
+ },
+ {
+  "file": "fudo.webp",
+  "tipo": "Personaje",
+  "respuesta": "Fudo"
+ },
+ {
+  "file": "galel.webp",
+  "tipo": "Personaje",
+  "respuesta": "Galel"
+ },
+ {
+  "file": "ganore.webp",
+  "tipo": "Deidad",
+  "respuesta": "Ganore"
+ },
+ {
+  "file": "gobz_sinfalia.webp",
+  "tipo": "Personaje",
+  "respuesta": "Gobz"
+ },
+ {
+  "file": "Grakk.webp",
+  "tipo": "Personaje",
+  "respuesta": "Grakk"
+ },
+ {
+  "file": "Gran Beel.webp",
+  "tipo": "Personaje",
+  "respuesta": "Beel"
+ },
+ {
+  "file": "gran raiz.webp",
+  "tipo": "Personaje",
+  "respuesta": "Raíz"
+ },
+ {
+  "file": "guardias_reales.webp",
+  "tipo": "Personaje",
+  "respuesta": "Guardias Reales"
+ },
+ {
+  "file": "hati.webp",
+  "tipo": "Personaje",
+  "respuesta": "Hati"
+ },
+ {
+  "file": "Ho.webp",
+  "tipo": "Personaje",
+  "respuesta": "Ho"
+ },
+ {
+  "file": "ia.webp",
+  "tipo": "Personaje",
+  "respuesta": "Inargo"
+ },
+ {
+  "file": "ibrich_yugos.webp",
+  "tipo": "Personaje",
+  "respuesta": "Ibrich"
+ },
+ {
+  "file": "icowa_frontal.webp",
+  "tipo": "Personaje",
+  "respuesta": "Icowha"
+ },
+ {
+  "file": "icowha kartohs.webp",
+  "tipo": "Personaje",
+  "respuesta": "Icowha"
+ },
+ {
+  "file": "Iris.webp",
+  "tipo": "Personaje",
+  "respuesta": "Iris"
+ },
+ {
+  "file": "IRIS_RIN.webp",
+  "tipo": "Personaje",
+  "respuesta": "Iris"
+ },
+ {
+  "file": "jaep.webp",
+  "tipo": "Personaje",
+  "respuesta": "Jaep"
+ },
+ {
+  "file": "Jarek_Nohr.webp",
+  "tipo": "Personaje",
+  "respuesta": "Jarek"
+ },
+ {
+  "file": "jilper.webp",
+  "tipo": "Deidad",
+  "respuesta": "Jilper"
+ },
+ {
+  "file": "Joshua.webp",
+  "tipo": "Personaje",
+  "respuesta": "Joshua"
+ },
+ {
+  "file": "joshua2.webp",
+  "tipo": "Personaje",
+  "respuesta": "Joshua"
+ },
+ {
+  "file": "julio.webp",
+  "tipo": "Personaje",
+  "respuesta": "Julio"
+ },
+ {
+  "file": "julio2.webp",
+  "tipo": "Personaje",
+  "respuesta": "Julio"
+ },
+ {
+  "file": "jup.webp",
+  "tipo": "Personaje",
+  "respuesta": "Jup"
+ },
+ {
+  "file": "Kael Draven.webp",
+  "tipo": "Personaje",
+  "respuesta": "Kael"
+ },
+ {
+  "file": "kaelen.webp",
+  "tipo": "Personaje",
+  "respuesta": "Kaelen"
+ },
+ {
+  "file": "karim joven.webp",
+  "tipo": "Personaje",
+  "respuesta": "Karim"
+ },
+ {
+  "file": "karim.webp",
+  "tipo": "Personaje",
+  "respuesta": "Karim"
+ },
+ {
+  "file": "karim_niño.webp",
+  "tipo": "Personaje",
+  "respuesta": "Karim"
+ },
+ {
+  "file": "karim2.webp",
+  "tipo": "Personaje",
+  "respuesta": "Karim"
+ },
+ {
+  "file": "Karl.webp",
+  "tipo": "Personaje",
+  "respuesta": "Karl"
+ },
+ {
+  "file": "kelshir espaca.webp",
+  "tipo": "Personaje",
+  "respuesta": "Kelshir"
+ },
+ {
+  "file": "kiprika.webp",
+  "tipo": "Deidad",
+  "respuesta": "Kiprika"
+ },
+ {
+  "file": "Klio.webp",
+  "tipo": "Personaje",
+  "respuesta": "Klio"
+ },
+ {
+  "file": "KLYTH.webp",
+  "tipo": "Personaje",
+  "respuesta": "Klyth"
+ },
+ {
+  "file": "Kru.webp",
+  "tipo": "Personaje",
+  "respuesta": "Kru"
+ },
+ {
+  "file": "Lael.webp",
+  "tipo": "Personaje",
+  "respuesta": "Lael"
+ },
+ {
+  "file": "Lael_fb.webp",
+  "tipo": "Personaje",
+  "respuesta": "Lael"
+ },
+ {
+  "file": "laki.webp",
+  "tipo": "Personaje",
+  "respuesta": "Laki"
+ },
+ {
+  "file": "laki2.webp",
+  "tipo": "Personaje",
+  "respuesta": "Laki"
+ },
+ {
+  "file": "liora_venn.webp",
+  "tipo": "Personaje",
+  "respuesta": "Liora"
+ },
+ {
+  "file": "Liyam Tak.webp",
+  "tipo": "Personaje",
+  "respuesta": "Liyam"
+ },
+ {
+  "file": "LIYU.webp",
+  "tipo": "Personaje",
+  "respuesta": "Liyu"
+ },
+ {
+  "file": "lobo.webp",
+  "tipo": "Personaje",
+  "respuesta": "Lobo"
+ },
+ {
+  "file": "luma.webp",
+  "tipo": "Personaje",
+  "respuesta": "Luma"
+ },
+ {
+  "file": "Luminara_Vigna.webp",
+  "tipo": "Personaje",
+  "respuesta": "Luminara Vigna"
+ },
+ {
+  "file": "luminaralV.webp",
+  "tipo": "Personaje",
+  "respuesta": "Luminara IV"
+ },
+ {
+  "file": "lumis.webp",
+  "tipo": "Lugar",
+  "respuesta": "Lumis"
+ },
+ {
+  "file": "lurim.webp",
+  "tipo": "Personaje",
+  "respuesta": "Lurim"
+ },
+ {
+  "file": "lurim_3.webp",
+  "tipo": "Personaje",
+  "respuesta": "Lurim"
+ },
+ {
+  "file": "lurim_4.webp",
+  "tipo": "Personaje",
+  "respuesta": "Lurim"
+ },
+ {
+  "file": "Luxor.webp",
+  "tipo": "Lugar",
+  "respuesta": "Luxor"
+ },
+ {
+  "file": "LVL3BOT.webp",
+  "tipo": "Personaje",
+  "respuesta": "LVL3BOT"
+ },
+ {
+  "file": "LVL4BOT.webp",
+  "tipo": "Personaje",
+  "respuesta": "LVL4BOT"
+ },
+ {
+  "file": "lynch.webp",
+  "tipo": "Personaje",
+  "respuesta": "Lynch"
+ },
+ {
+  "file": "lynch_3.webp",
+  "tipo": "Personaje",
+  "respuesta": "Lynch"
+ },
+ {
+  "file": "Lyra.webp",
+  "tipo": "Personaje",
+  "respuesta": "Lyra"
+ },
+ {
+  "file": "lyra_shadowthorn.webp",
+  "tipo": "Personaje",
+  "respuesta": "Lyra"
+ },
+ {
+  "file": "macarabe.webp",
+  "tipo": "Personaje",
+  "respuesta": "Macarabe"
+ },
+ {
+  "file": "Mas-K-rade.webp",
+  "tipo": "Personaje",
+  "respuesta": "Mas-K-rade"
+ },
+ {
+  "file": "mido.webp",
+  "tipo": "Personaje",
+  "respuesta": "Mido"
+ },
+ {
+  "file": "millot.webp",
+  "tipo": "Deidad",
+  "respuesta": "Millot"
+ },
+ {
+  "file": "Moktar.webp",
+  "tipo": "Personaje",
+  "respuesta": "Moktar"
+ },
+ {
+  "file": "nailis_espiritu delmar.webp",
+  "tipo": "Personaje",
+  "respuesta": "Nailis"
+ },
+ {
+  "file": "nailis_full.webp",
+  "tipo": "Personaje",
+  "respuesta": "Nailis"
+ },
+ {
+  "file": "NE7.webp",
+  "tipo": "Personaje",
+  "respuesta": "NE7"
+ },
+ {
+  "file": "NE7_NEO.webp",
+  "tipo": "Personaje",
+  "respuesta": "NE7"
+ },
+  {
+  "file": "ubiubis.webp",
+  "tipo": "Personaje",
+  "respuesta": "Ubiubis"
+ },
+ {
+  "file": "nefri_espiritu delmar.webp",
+  "tipo": "Personaje",
+  "respuesta": "Nefri"
+ },
+ {
+  "file": "nefri_full.webp",
+  "tipo": "Personaje",
+  "respuesta": "Nefri"
+ },
+ {
+  "file": "Negatt.webp",
+  "tipo": "Lugar",
+  "respuesta": "Negatt"
+ },
+ {
+  "file": "niño ape.webp",
+  "tipo": "Deidad",
+  "respuesta": "Ape"
+ },
+ {
+  "file": "Nira_Luth.webp",
+  "tipo": "Personaje",
+  "respuesta": "Nira"
+ },
+ {
+  "file": "niro.webp",
+  "tipo": "Personaje",
+  "respuesta": "Niro"
+ },
+ {
+  "file": "Nova.webp",
+  "tipo": "Personaje",
+  "respuesta": "Nova"
+ },
+ {
+  "file": "nova_frontal.webp",
+  "tipo": "Personaje",
+  "respuesta": "Nova"
+ },
+ {
+  "file": "oci.webp",
+  "tipo": "Personaje",
+  "respuesta": "Oci"
+ },
+ {
+  "file": "oci_1.webp",
+  "tipo": "Personaje",
+  "respuesta": "Oci"
+ },
+ {
+  "file": "ollontras_hijo.webp",
+  "tipo": "Personaje",
+  "respuesta": "Ullontras"
+ },
+ {
+  "file": "Orion.webp",
+  "tipo": "Personaje",
+  "respuesta": "Orion"
+ },
+ {
+  "file": "orion3.webp",
+  "tipo": "Personaje",
+  "respuesta": "Orion"
+ },
+ {
+  "file": "orx capturado.webp",
+  "tipo": "Personaje",
+  "respuesta": "Orx"
+ },
+ {
+  "file": "orx_archy.webp",
+  "tipo": "Personaje",
+  "respuesta": "Orx"
+ },
+ {
+  "file": "ova caleus.webp",
+  "tipo": "Personaje",
+  "respuesta": "Ova"
+ },
+ {
+  "file": "Ova_fullmask.webp",
+  "tipo": "Personaje",
+  "respuesta": "Ova"
+ },
+ {
+  "file": "pin_5.webp",
+  "tipo": "Personaje",
+  "respuesta": "Pin"
+ },
+ {
+  "file": "Pinzarrak.webp",
+  "tipo": "Personaje",
+  "respuesta": "Pinzarrak"
+ },
+ {
+  "file": "piuk.webp",
+  "tipo": "Personaje",
+  "respuesta": "Piuk"
+ },
+ {
+  "file": "plumarquias.webp",
+  "tipo": "Personaje",
+  "respuesta": "Plumarquias"
+ },
+ {
+  "file": "puj.webp",
+  "tipo": "Personaje",
+  "respuesta": "Puj"
+ },
+ {
+  "file": "puj_nobg.webp",
+  "tipo": "Personaje",
+  "respuesta": "Puj"
+ },
+ {
+  "file": "recital_luminarae.webp",
+  "tipo": "Lugar",
+  "respuesta": "Luminarae"
+ },
+ {
+  "file": "reggina.webp",
+  "tipo": "Personaje",
+  "respuesta": "Reggina"
+ },
+ {
+  "file": "ricardo.webp",
+  "tipo": "Personaje",
+  "respuesta": "Ricardo"
+ },
+ {
+  "file": "rob.webp",
+  "tipo": "Personaje",
+  "respuesta": "Rob"
+ },
+ {
+  "file": "robot-girax.webp",
+  "tipo": "Personaje",
+  "respuesta": "Girax"
+ },
+ {
+  "file": "rolac.webp",
+  "tipo": "Personaje",
+  "respuesta": "Rolac"
+ },
+ {
+  "file": "rolac2.webp",
+  "tipo": "Personaje",
+  "respuesta": "Rolac"
+ },
+ {
+  "file": "ruruk.webp",
+  "tipo": "Personaje",
+  "respuesta": "Ruruk"
+ },
+ {
+  "file": "sabio_skanuj.webp",
+  "tipo": "Personaje",
+  "respuesta": "Skanuj"
+ },
+ {
+  "file": "salin.webp",
+  "tipo": "Personaje",
+  "respuesta": "Salin"
+ },
+ {
+  "file": "Saneones.webp",
+  "tipo": "Personaje",
+  "respuesta": "Saneones"
+ },
+ {
+  "file": "santomachelo.webp",
+  "tipo": "Personaje",
+  "respuesta": "Santomachelo"
+ },
+ {
+  "file": "sao.webp",
+  "tipo": "Personaje",
+  "respuesta": "Sao"
+ },
+ {
+  "file": "sapot.webp",
+  "tipo": "Personaje",
+  "respuesta": "Sapot"
+ },
+ {
+  "file": "Sara.webp",
+  "tipo": "Personaje",
+  "respuesta": "Sara"
+ },
+ {
+  "file": "seah.webp",
+  "tipo": "Personaje",
+  "respuesta": "Seah"
+ },
+ {
+  "file": "seah_damage.webp",
+  "tipo": "Personaje",
+  "respuesta": "Seah"
+ },
+ {
+  "file": "secta_subterranea.webp",
+  "tipo": "Grupo",
+  "respuesta": "Secta Subterránea"
+ },
+ {
+  "file": "Seilá Anamé_V0.webp",
+  "tipo": "Personaje",
+  "respuesta": "Seilá"
+ },
+ {
+  "file": "Seilá-Anamé.webp",
+  "tipo": "Personaje",
+  "respuesta": "Seilá"
+ },
+ {
+  "file": "silith.webp",
+  "tipo": "Personaje",
+  "respuesta": "Silith"
+ },
+ {
+  "file": "sinfalia.webp",
+  "tipo": "Lugar",
+  "respuesta": "Sinfalía"
+ },
+ {
+  "file": "sistar.webp",
+  "tipo": "Personaje",
+  "respuesta": "Sistar"
+ },
+ {
+  "file": "skaldor.webp",
+  "tipo": "Personaje",
+  "respuesta": "Skaldor"
+ },
+ {
+  "file": "Skaldrum_Capital.webp",
+  "tipo": "Lugar",
+  "respuesta": "Skaldrum"
+ },
+ {
+  "file": "solara.webp",
+  "tipo": "Personaje",
+  "respuesta": "Solara"
+ },
+ {
+  "file": "solara_nobg.webp",
+  "tipo": "Personaje",
+  "respuesta": "Solara"
+ },
+ {
+  "file": "solaris.webp",
+  "tipo": "Personaje",
+  "respuesta": "Solaris"
+ },
+ {
+  "file": "soldado_skaldrum.webp",
+  "tipo": "Personaje",
+  "respuesta": "Soldado de Skaldrum"
+ },
+ {
+  "file": "tapiem.webp",
+  "tipo": "Deidad",
+  "respuesta": "Tapiem"
+ },
+ {
+  "file": "tatal.webp",
+  "tipo": "Personaje",
+  "respuesta": "Tatal"
+ },
+ {
+  "file": "tatal_2.webp",
+  "tipo": "Personaje",
+  "respuesta": "Tatal"
+ },
+ {
+  "file": "teniente_bull.webp",
+  "tipo": "Personaje",
+  "respuesta": "Bull"
+ },
+ {
+  "file": "themis.webp",
+  "tipo": "Personaje",
+  "respuesta": "Themis"
+ },
+ {
+  "file": "tiligod.webp",
+  "tipo": "Personaje",
+  "respuesta": "Tiligod"
+ },
+ {
+  "file": "tilimad.webp",
+  "tipo": "Personaje",
+  "respuesta": "Tilimad"
+ },
+ {
+  "file": "tilimad1.webp",
+  "tipo": "Personaje",
+  "respuesta": "Tilimad"
+ },
+ {
+  "file": "tilimad2.webp",
+  "tipo": "Personaje",
+  "respuesta": "Tilimad"
+ },
+ {
+  "file": "tom.webp",
+  "tipo": "Personaje",
+  "respuesta": "Tom"
+ },
+ {
+  "file": "tomah.webp",
+  "tipo": "Personaje",
+  "respuesta": "Tomah"
+ },
+ {
+  "file": "torio.webp",
+  "tipo": "Personaje",
+  "respuesta": "Torio"
+ },
+ {
+  "file": "Tribu_Frostpeak.webp",
+  "tipo": "Lugar",
+  "respuesta": "Frostpeak"
+ },
+ {
+  "file": "truman.webp",
+  "tipo": "Personaje",
+  "respuesta": "Truman"
+ },
+ {
+  "file": "tsuji.webp",
+  "tipo": "Personaje",
+  "respuesta": "Tsuji"
+ },
+ {
+  "file": "ullontras_padre.webp",
+  "tipo": "Personaje",
+  "respuesta": "Ullontras"
+ },
+ {
+  "file": "Umbra.webp",
+  "tipo": "Lugar",
+  "respuesta": "Umbra"
+ },
+ {
+  "file": "vela.webp",
+  "tipo": "Personaje",
+  "respuesta": "Vela"
+ },
+ {
+  "file": "vela2.webp",
+  "tipo": "Personaje",
+  "respuesta": "Vela"
+ },
+ {
+  "file": "vina.webp",
+  "tipo": "Personaje",
+  "respuesta": "Vina"
+ },
+ {
+  "file": "vina_2.webp",
+  "tipo": "Personaje",
+  "respuesta": "Vina"
+ },
+ {
+  "file": "visu.webp",
+  "tipo": "Personaje",
+  "respuesta": "Visu"
+ },
+ {
+  "file": "volmí.webp",
+  "tipo": "Personaje",
+  "respuesta": "Volmí"
+ },
+ {
+  "file": "voragos.webp",
+  "tipo": "Personaje",
+  "respuesta": "Voragos"
+ },
+ {
+  "file": "Vrako Unis.webp",
+  "tipo": "Personaje",
+  "respuesta": "Vrako"
+ },
+ {
+  "file": "whilow.webp",
+  "tipo": "Personaje",
+  "respuesta": "Willow"
+ },
+ {
+  "file": "xora.webp",
+  "tipo": "Deidad",
+  "respuesta": "Xora"
+ },
+ {
+  "file": "xuelen.webp",
+  "tipo": "Personaje",
+  "respuesta": "Xuelen"
+ },
+ {
+  "file": "xuelen_2.webp",
+  "tipo": "Personaje",
+  "respuesta": "Xuelen"
+ },
+ {
+  "file": "zack.webp",
+  "tipo": "Personaje",
+  "respuesta": "Zack"
+ },
+ {
+  "file": "zarick.webp",
+  "tipo": "Personaje",
+  "respuesta": "Zarick"
+ },
+ {
+  "file": "zarick_armor_sk.webp",
+  "tipo": "Personaje",
+  "respuesta": "Zarick"
+ },
+ {
+  "file": "zarick_disfraz.webp",
+  "tipo": "Personaje",
+  "respuesta": "Zarick"
+ },
+ {
+  "file": "zarick3.webp",
+  "tipo": "Personaje",
+  "respuesta": "Zarick"
+ },
+ {
+  "file": "zazap.webp",
+  "tipo": "Personaje",
+  "respuesta": "Zazap"
+ },
+ {
+  "file": "zazap_5.webp",
+  "tipo": "Personaje",
+  "respuesta": "Zazap"
+ },
+ {
+  "file": "Zhorak de Hierro.webp",
+  "tipo": "Personaje",
+  "respuesta": "Zhorak"
+ },
+ {
+  "file": "abreluz.webp",
+  "tipo": "Personaje",
+  "respuesta": "Abreluz"
+ },
+ {
+  "file": "ape final.webp",
+  "tipo": "Deidad",
+  "respuesta": "Ape"
+ },
+ {
+  "file": "astra2.webp",
+  "tipo": "Personaje",
+  "respuesta": "Astra"
+ },
+ {
+  "file": "cine.png",
+  "tipo": "Personaje",
+  "respuesta": "Cine"
+ },
+ {
+  "file": "tucho.png",
+  "tipo": "Personaje",
+  "respuesta": "Tucho"
+ }
 ]
