@@ -170,8 +170,6 @@ h1.page{font-family:var(--display);font-weight:800;font-size:clamp(1.7rem,3vw,2.
 .ev .yr{grid-column:2;font-family:var(--display);font-weight:800;color:var(--acc-text);font-size:1.1rem}
 .ev.done{border-color:var(--acc-text)}
 .twist{margin-top:20px;border-left:5px solid var(--ember);padding:10px 18px;background:var(--bg2);border-radius:0 12px 12px 0;font-size:1.25rem;font-weight:600}
-.place{display:inline-block;background:var(--surface2);border:1px solid var(--line);border-radius:99px;padding:2px 14px;font-weight:700;font-size:.9rem;color:var(--muted)}
-.rt{font-family:var(--display);font-weight:800;font-size:clamp(1.6rem,2.6vw,2.6rem);margin:14px 0}
 .scenetxt{font-size:clamp(1.15rem,1.4vw + .6rem,1.7rem);max-width:36em;line-height:1.4;font-weight:500}
 .filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
 .chip{border:1px solid var(--line);background:none;border-radius:99px;padding:4px 14px;font-size:.9rem;font-weight:700;color:var(--muted)}
@@ -305,8 +303,8 @@ dialog{background:linear-gradient(160deg,#43203f,#241018);border:1px solid var(-
 #mus.on{animation:pulse 2s infinite}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 
-.wr{display:grid;gap:7px;justify-content:center;margin:8px 0 22px}.wr div{display:flex;gap:7px}
-.wc{width:clamp(40px,10vw,60px);aspect-ratio:1;display:grid;place-items:center;font:800 1.6rem var(--display);border:2px solid #ffffff33;border-radius:12px;background:#0006;text-transform:uppercase}
+.wr{display:grid;gap:6px;justify-content:center;margin:8px 0 22px}.wr div{display:flex;gap:6px}
+.wc{width:clamp(32px,9.5vw,60px);aspect-ratio:1;display:grid;place-items:center;font:800 1.6rem var(--display);border:2px solid #ffffff33;border-radius:12px;background:#0006;text-transform:uppercase}
 .wc.f{border-color:#fff8}.wc.ok{background:#6b9e72;border-color:#6b9e72;animation:pop .5s}.wc.pr{background:#a8993a;color:#331c15;border-color:#a8993a;animation:pop .5s}.wc.no{background:#3a2030;color:#b79a98;animation:pop .5s}
 .kb{display:grid;gap:6px;justify-items:center}.kb div{display:flex;gap:5px}
 .kb button{min-width:clamp(26px,6.5vw,44px);height:50px;padding:0 6px;border-radius:9px;border:0;background:#522a4d;font-weight:800}.kb button.ok{background:#6b9e72}.kb button.pr{background:#a8993a;color:#331c15}.kb button.no{background:#241018;color:#8a6a70}
@@ -455,6 +453,7 @@ html.locked #gate{display:grid;position:fixed;inset:0;z-index:100;place-items:ce
 </div>
 <dialog id="dlg"></dialog>
 <div id="toast" role="status" aria-live="polite"></div>
+<script src="lore-data.js"></script>
 <script>
 const DEITIES=[
  {n:"Ape",d:"Entropía y oscuridad",c:"ape"},{n:"Xora",d:"Orden y luz",c:"xora"},
@@ -550,8 +549,8 @@ const TRIVIA=[
 ["Historia", 2, "¿Cuántos participantes figuran en el Torneo de los Dos Emperadores?", "32", ["16", "27", "24"], "Entre ellos, Astra, Axeraide, Bane, Karim, Kelshir, Laki, Seah, Zarick y Zazap."],
 ["Personajes", 2, "¿Quiénes son los dos emperadores del Torneo de los Dos Emperadores?", "Oci, de Skaldrum, y Puj, de Umbra", ["Oci y Luminara IV", "Puj y Caleus", "Ape y Xora"], "Puj actúa en complicidad con Oci."],
 ["Personajes", 3, "¿De quién es hijo el emperador Oci de Skaldrum?", "De Ape", ["De Xora", "De Solaris", "De Puj"], "Oci es un semidiós."],
-["Personajes", 2, "¿Quién ayuda a los héroes a infiltrarse en Luminarae y los lleva en auto a su mansión?", "File", ["Petat", "Abyssara", "Kelshir"], "File es amiga de Abyssara."],
-["Personajes", 2, "¿Qué hechizo aplica File a Karim para que pase desapercibido en Luminarae?", "Una ilusión de juventud", ["Una ilusión de invisibilidad", "Un cambio de especie", "Un velo de ceguera"], "A los luminaerenses no les agradan los orcos ni los ancianos extranjeros; a Zarick lo maquilló y le puso peluca y túnica negra."],
+["Personajes", 2, "¿Quién recibe a los héroes en Luminarae y los disfraza para infiltrarse?", "File", ["Petat", "Abyssara", "Kelshir"], "File es amiga de Abyssara."],
+["Personajes", 2, "¿Qué hechizo aplica File a Karim para que pase desapercibido en Luminarae?", "Una ilusión de juventud", ["Una ilusión de invisibilidad", "Un cambio de especie", "Un velo de ceguera"], "A Zarick lo disfrazó con maquillaje y peluca; a Karim, con una ilusión de juventud."],
 ["Personajes", 2, "¿Quién es el mago que usa clones y huye de la secta de Arboris?", "Kelshir", ["Petat", "Pin Kuku", "Tomah"], "Desde Arboris acompañó al grupo hasta Luminarae."],
 ["Personajes", 1, "¿Quién es el soldado umbreano fiel a Caleus que escolta al grupo por Arboris?", "Petat", ["Kelshir", "Jorven", "Burun"], "Los dejó al llegar a Luminarae."],
 ["Mundo", 2, "¿Con qué dos tribus tiene contacto cercano la tribu Skaldrak?", "Adad y Koko", ["Frostpeak y Pato", "Zzamua y Adad", "Koko y Jup"], "Es una de las tribus más pequeñas y aisladas de las montañas Skaldrak."],
@@ -607,7 +606,6 @@ const VOF=[
 ["En el Torneo de Umbra del año 1011 participaron representantes de todas las naciones.", false, 2, "Otras naciones no presentaron participantes: fueron 16 en total."],
 ["El Torneo de los Dos Emperadores se celebra en territorio de Umbra.", false, 1, "Se celebra en territorio de Skaldrum."],
 ["El emperador Oci de Skaldrum es un semidiós hijo de Ape.", true, 3, "Actúa en complicidad con Puj, emperador de Umbra."],
-["A los luminaerenses les agradan los orcos y los ancianos extranjeros.", false, 1, "No les agradan: por eso File disfrazó a Zarick y a Karim."],
 ["La tribu Skaldrak es una de las más grandes de las montañas Skaldrak.", false, 2, "Es una de las más pequeñas y aisladas."],
 ["Kelshir es un mago que utiliza clones.", true, 2, "Huía de la secta de Arboris."],
 ["Vina Miceus exploró Bahía Lunar antes de lo ocurrido en Vasané-Nalú.", true, 2, "Allí se había perdido un estudiante."],
@@ -646,30 +644,18 @@ const CRONO=[
 [547,"Surgir de Negatt","Tres academias luminaraenses experimentan con magias prohibidas."],
 [673,"Noche de las Luciérnagas","Lumis muestra su poderío en todos los cielos."],
 [860,"Erupción del Skaldrak","El volcán más masivo de Apexora reduce los recursos esenciales."],
-[912,"Apexora hoy","Comienzan las historias de los Guardianes de Apexora."]
+[1012,"Apexora hoy","Comienzan las historias de los Guardianes de Apexora."]
 ].map(r=>({y:r[0],t:r[1],d:r[2]}));
 
-// [título, lugar, escena]
-const ROL=[
-["Ojos en la ciudad","Umbra","Entras a la capital de Umbra, donde siempre hay alguien escuchando. Un guardia te detiene: dice que oyeron a alguien hablar mal del dictador. Convéncelo de que te deje seguir."],
-["La cara larga","Sinfalía","En un pueblo sinfaliense te ven con gesto sombrío y te citan ante la asamblea. Explica qué te pasa sin asustar a nadie."],
-["Un don por otro","Sinfalía","Necesitas un servicio urgente y no tienes dinero: aquí todo se rige por dones. Negocia el valor de un favor adeudado."],
-["Pulso en Tharnok","Boro","Junto al templo en ruinas, el puesto de turismo cierra a los gritos: el templo acaba de expulsar un pulso electromagnético. Actúa ante los peregrinos."],
-["Cena en Disnjav","Disnjav","Un local te invita a quedarte a cenar, pero conviene no pasar mucho tiempo en la tierra enferma. Recházalo sin ofender."],
-["La patrulla de Krahn","Krahn","Una patrulla te captura y sospecha que eres espía de Psybernia. Defiéndete ante ellos."],
-["Un dron te sigue","Lumis","Un dron de Lumis te pide identificarte y te sigue por la ciudad. Dale una explicación creíble."],
-["Un pacto en la penumbra","Negatt","Un consejo oscuro te ofrece inmortalidad a cambio de un favor. Negocia, o recházalo, en personaje."],
-["Rezar el Gan","Suminé","Un monje ganorista te invita a rezar pidiendo el Gan en un observatorio. Participa, o pon a prueba su paz."],
-["Feria en Pongí","Pongí","Una feria te reta a un juego de azar. Nadie sabe qué hay detrás de tanta fiesta: ¿qué haces?"],
-["La oferta encubierta","Luminarae Luxor","Alguien de aspecto amable te ofrece unirte a una orden que «protege a Luxor». Reacciona sin revelar lo que sospechas."],
-["Tribunal de Skaldrum","Skaldrum","Te llevan ante un tribunal del feudalismo más extremo. Presenta tu defensa."],
-["Tres clanes, un paso","Boro","Clanes y mafias se disputan tu paso entre estructuras colapsadas y luces rotas. Elige con quién hablar y qué prometes."],
-["Frontera cerrada","Psybernia","Un guardia te niega el paso: quienes lo intentan rara vez vuelven. Justifica por qué necesitas cruzar."],
-["Un estudiante desaparecido", "Bahía Lunar", "Llegas a un pueblo del sur donde se perdió un estudiante. Interroga a los vecinos sin que sepan lo que realmente investigas."],
-["Un pueblo en ruinas", "Vasané-Nalú", "Encuentras un lugar destruido y lleno de miedo. Un aldeano te pide ayuda: decide cuánto confías en él."],
-["Disfraz en la feria", "Luminarae", "A los luminaerenses no les agradan los extranjeros, así que vas disfrazado. Recorre el mercado sin levantar sospechas."]
-].map((r,i)=>({id:"r"+i,t:r[0],place:r[1],x:r[2]}));
-const TWISTS=["Cae ceniza del cielo gris.","Alguien reconoce tu rostro.","Un aliado inesperado interviene.","Se corta la luz de golpe.","Pierdes un objeto clave.","Una campana suena a lo lejos y todos callan.","Un niño lo ha visto todo.","Solo tienes un minuto."];
+/* ===== ampliaciones del lore (lore-data.js) ===== */
+(function(L){
+ L.trivia.forEach(r=>TRIVIA.push({id:"t"+TRIVIA.length,cat:r[0],lvl:r[1],q:r[2],right:r[3],wrong:r[4],exp:r[5]}));
+ L.vof.forEach(r=>VOF.push({id:"v"+VOF.length,q:r[0],t:r[1],lvl:r[2],exp:r[3]}));
+ L.quien.forEach(r=>QUIEN.push({id:"q"+QUIEN.length,cat:r[0],a:r[1],clues:r[2],bio:r[3]}));
+ L.crono.forEach(r=>CRONO.push({y:r[0],t:r[1],d:r[2]}));
+})(window.LORE);
+
+
 
 
 /* ===== utilidades ===== */
@@ -764,8 +750,13 @@ function newItem(mode){
  }
  if(mode==="vof"){const v=pick("vof",poolOf("vof",VOF));return Object.assign({},v,{opts:["Verdadero","Falso"],ai:v.t?0:1})}
  if(mode==="quien")return pick("quien",poolOf("quien",QUIEN));
- if(mode==="rol")return pick("rol",poolOf("rol",ROL));
- if(mode==="imagen")return IMGS.length?pick("imagen",IMGS):null;
+ if(mode==="imagen"){
+  if(!IMGS.length)return null;
+  const g={};IMGS.forEach(x=>{const k=String(x.answer).toLowerCase();(g[k]=g[k]||[]).push(x)});
+  const ks=Object.keys(g).sort();
+  if(window.DAILY_ON){const v=g[rotPick("imagen",ks)[0]];return v[Math.floor(Math.random()*v.length)]}
+  return pick("imagen",IMGS);
+ }
  if(mode==="crono"){
   const cc=cust("crono"),cp=S.settings.onlyCustom&&cc.length>=4?cc:CRONO.concat(cc);
   const evs=shuffle(cp).slice(0,4);
@@ -826,7 +817,7 @@ function stageCrono(){
  const cards=list.map((e,i)=>{
   const L=LET[it.evs.indexOf(e)];
   return C.revealed
-   ?`<div class="ev done"><span class="lt">${i+1}</span><b>${esc(e.t)}</b><span class="yr">Año ${e.y}${e.y===912?" · presente":""}</span><span style="grid-column:2">${esc(e.d)}</span></div>`
+   ?`<div class="ev done"><span class="lt">${i+1}</span><b>${esc(e.t)}</b><span class="yr">Año ${e.y}${e.y===1012?" · presente":""}</span><span style="grid-column:2">${esc(e.d)}</span></div>`
    :`<div class="ev"><span class="lt">${L}</span><b>${esc(e.t)}</b><span>${esc(e.d)}</span></div>`;
  }).join("");
  let res="";
@@ -836,21 +827,10 @@ function stageCrono(){
  <div class="ctrls">${C.revealed?"":`<button class="btn" data-act="start">Iniciar tiempo</button><button class="btn pri" data-act="reveal">Revelar orden</button>`}${timerHTML()}</div>
  ${S.settings.cheat&&!C.revealed?`<p class="cheat">Chuleta del DM: ${it.order.map(e=>LET[it.evs.indexOf(e)]).join(" → ")}</p>`:""}${res}</div>`;
 }
-function stageRol(){
- const it=C.item,dis=targets().length?"":"disabled";
- const sc=C.resolved?nextBar():`<div class="result"><div class="verdict">¿Cuánto brilló la interpretación?</div><div class="ctrls" style="margin-top:12px">
- <button class="btn" data-act="none">Sin brillo</button>
- <button class="btn" data-act="give" data-n="10" data-t="Prueba de rol: ${esc(it.t)}" ${dis}>Convincente +10</button>
- <button class="btn" data-act="give" data-n="20" data-t="Prueba de rol: ${esc(it.t)}" ${dis}>Memorable +20</button>
- <button class="btn pri" data-act="give" data-n="30" data-t="Prueba de rol: ${esc(it.t)}" ${dis}>Legendario +30</button></div></div>`;
- return `<div class="stage"><span class="place">${esc(it.place)}</span><h2 class="rt">${esc(it.t)}</h2><p class="scenetxt">${esc(it.x)}</p>
- ${C.twist?`<div class="twist">Giro del destino: ${esc(C.twist)}</div>`:""}
- <div class="ctrls"><button class="btn" data-act="twist">Giro del destino</button><button class="btn" data-act="start">Iniciar tiempo</button>${timerHTML()}</div>${sc}</div>`;
-}
 function viewPlay(){
  const m=C.mode;
  if(window.GM&&GM.has(m))return playHead(MODES[m].name)+GM.view(m);
- const st=m==="trivia"||m==="vof"?stageChoice():m==="quien"?stageQuien():m==="crono"?stageCrono():m==="imagen"?stageImagen():stageRol();
+ const st=m==="trivia"||m==="vof"?stageChoice():m==="quien"?stageQuien():m==="crono"?stageCrono():m==="imagen"?stageImagen():"";
  return playHead(MODES[m].name)+st;
 }
 
@@ -892,6 +872,29 @@ function reconcileDaily(){
 /* mismo reto para todos: el azar sale de la fecha y del juego */
 function mulberry(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
 function seedOf(t){let h=2166136261;for(let i=0;i<t.length;i++){h^=t.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
+/* ===== rotación diaria sin repeticiones =====
+   Cada juego recorre todo su banco en un orden mezclado distinto en cada vuelta:
+   nada vuelve a salir hasta que haya salido todo lo demás. Es igual para todos. */
+const dayN=()=>{const p=todayKey().split("-").map(Number);return Math.floor(Date.UTC(p[0],p[1]-1,p[2])/864e5)};
+function permOf(seed,len){const r=mulberry(seedOf(seed)),a=Array.from({length:len},(_,i)=>i);for(let i=len-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+/* al empezar una vuelta nueva, lo último que salió en la anterior no vuelve a salir hasta pasado un tercio del banco */
+function permC(key,c,len){
+ const p=permOf(key+"|"+c,len),K=Math.floor(len/3);
+ if(c>0&&K>0){
+  const tail=new Set(permOf(key+"|"+(c-1),len).slice(len-K)),mid=[];
+  for(let i=K;i<len-K;i++)if(!tail.has(p[i]))mid.push(i);
+  for(let i=0;i<K;i++)if(tail.has(p[i])&&mid.length){const j=mid.shift();[p[i],p[j]]=[p[j],p[i]]}
+ }
+ return p;
+}
+function rotIdx(key,len,pos){return permC(key,Math.floor(pos/len),len)[pos%len]}
+function rotPick(key,pool,k=1,pos){
+ const n=pool.length,o=[];if(!n)return o;
+ if(!window.DAILY_ON){while(o.length<Math.min(k,n)){const x=pool[Math.floor(Math.random()*n)];if(!o.includes(x))o.push(x)}return o}
+ const base=pos==null?dayN()*k:pos;
+ for(let j=0;o.length<Math.min(k,n)&&j<k+n;j++){const x=pool[rotIdx(key,n,base+j)];if(!o.includes(x))o.push(x)}
+ return o;
+}
 function startDaily(m){
  const g=DG(m),dk=todayKey();
  if(g.last===dk){toast("Ya jugaste este juego hoy. Vuelve mañana a las 00:00.");return}
@@ -899,11 +902,11 @@ function startDaily(m){
  stopTimer();view="play";g.pending=dk;save();F.cat="Todas";F.lvl=0;
  const oldRandom=Math.random,oldPick=pick;
  Math.random=mulberry(seedOf(dk+"|"+m));window.DAILY_ON=true;
- pick=(mode,pool)=>pool[Math.floor(Math.random()*pool.length)];
+ pick=(mode,pool)=>rotPick(mode,pool)[0];
  try{
   if(window.GM&&GM.has(m))GM.start(m);
   else{
-   C={mode:m,resolved:false,revealed:false,chosen:null,running:false,remaining:S.settings.timer,timeUp:false,twist:null,clues:1};
+   C={mode:m,resolved:false,revealed:false,chosen:null,running:false,remaining:S.settings.timer,timeUp:false,clues:1};
    C.item=newItem(m);
    C.pts=m==="trivia"?TRIVIA_PTS[C.item.lvl]:m==="vof"?VOF_PTS[C.item.lvl]:0;
   }
@@ -1074,12 +1077,12 @@ conex:{name:"Conexiones",desc:"16 palabras, 4 grupos ocultos. Agrúpalas sin gas
 impostor:{name:"Impostor",desc:"Tres comparten algo. Uno no pertenece. Encuentra al intruso en 5 rondas.",pts:"hasta 50"},
 top10:{name:"Top 10",desc:"Nombra los elementos de una lista oculta del lore: dioses, naciones, personajes. Tienes 5 vidas.",pts:"hasta 50"}};
 Object.assign(MODES,MODS);
-const WORDS=[["UMBRA","Ciudad caótica de las sombras"],["LUMIS","La ciudad que gobierna una IA"],["FUANA","Donde Gobz aprendió vidrio y forja"],["KARIM","El Bailarín del Estoque"],["ZARICK","Semi-orco, Hijo de la Sombra"],["MILLOT","Deidad de la creación"],["JILPER","Deidad de la destrucción"],["CABALA","Deidad de lo finito"],["GANORE","Deidad de la Nada"],["TAPIEM","Deidad de la gravedad"],["DACAMA","Deidad del tiempo"],["KIPRIKA","Deidad del Todo"],["SOLARIS","Hizo inmortal a Mit Caleus"],["ARBORIS","Donde Zarick fue guía"],["MALINA","Donde Volmí informa al grupo"],["KELSHIR","Mago que usa clones"],["ROCKY","Perro de Gobz"]];
-const CXS=[[["Deidades","Ape,Xora,Millot,Jilper"],["Dominios divinos","Gravedad,Tiempo,Infinidad,La Nada"],["Personajes","Zarick,Gobz,Karim,Andreas"],["Lugares","Umbra,Luminarae,Arboris,Fuana"]],[["Deidades","Cumacur,Cabala,Ganore,Kiprika"],["Dominios divinos","Entropía,Orden,Creación,Destrucción"],["Lugares","Psybernia,Sinfalía,Lumis,Fuana"],["Personajes","Mit Caleus,Valeria,Pin Kuku,Vina"]]];
+const WORDS=LORE.words;
+const CATS=LORE.cats;
 const GC=["#e8b47f","#0f9e9a","#b94a6e","#d9706c"];
-const IMP=[["¿Cuál NO es una deidad?",["Ape","Xora","Zarick","Tapiem"],2,"Zarick es un semi-orco, no un dios."],["¿Cuál NO tiene una deidad opuesta?",["Millot","Cabala","Kiprika","Tapiem"],3,"Tapiem (Gravedad) no tiene par; los demás sí: Jilper, Cumacur y Ganore."],["¿Cuál NO es un lugar?",["Umbra","Arboris","Karim","Luminarae"],2,"Karim Balteus es un personaje."],["¿Cuál NO es un dominio divino?",["Entropía","Gravedad","Valeria","Tiempo"],2,"Valeria es la Soberana de Psybernia."],["¿Cuál NO es un personaje?",["Zarick","Mit Caleus","Sinfalía","Vina"],2,"Sinfalía es un lugar."]];
+const IMP=LORE.imp;
 const NZ=s=>String(s).normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9 ]/g,"").trim();
-const LISTS=[["Los diez hijos de Espacio",["Ape","Xora","Millot","Jilper","Cumacur","Cabala","Ganore","Kiprika","Tapiem","Dacama"]],["Naciones del oeste",["Luminarae Luxor","Negatt","Skaldrum","Lumis","Boro","Umbra"]],["Naciones del este",["Sinfalía","Sylvaris","Krahn","Ostraca","Psybernia","Pongí","Disnjav"]],["Miembros del Campamento Sopharum",["Zarick","Bane","Karim","Vina","Pin Kuku","Tomah","Seah","Caleus"]],["Participantes destacados del Torneo de Umbra",["Aurora D'arwen","Piuk","Asan","Lurim de Skaldrum","Willow","Krymm","Solara","Garvok","Lyra Shadowthorn","Astra Skyfall","Ova Caleus"],["Arcos de Guardianes de Apexora",["Umbra","Tribus Skaldrak","Luminarae","Boro","Luxor","Lumis","Torneo de los Dos Emperadores"]],["Convocados por la carta de Valmey",["Seila","Gobz","Lael","Valmey","Volmí"]],["Grupo del bosque de Bahía Lunar",["Augusto","Jorven","Mansekino","Vinko"]],["Participantes del Torneo de los Dos Emperadores (selección)",["Astra","Axeraide","Bane","Karim","Kelshir","Laki","Seah","Zarick","Zazap","Plumarquias"]]]];
+const LISTS=LORE.lists;
 let lt=-1;
 function tend(){const f=G.f.filter(Boolean).length,t=G.l[1].length,p=Math.max(0,Math.round(f/t*50)-5*(G.hn||0));G.over=true;G.win=f===t;G.pts=p;G.txt=`Encontraste ${f} de ${t}.`;if(p)award(p,"Top 10: "+G.l[0]);dailyEnd(G.win,G.txt)}
 let G={};
@@ -1102,11 +1105,33 @@ impostor(){const q=G.q[G.i];let h=`<div class="stage"><p class="meta"><span>Rond
 top10(){let h=`<div class="stage"><p class="meta"><span>${esc(G.l[0])}</span><span class="gem">${G.f.filter(Boolean).length} de ${G.l[1].length}</span></p><div class="lives" aria-label="Vidas">${"♥".repeat(5-G.mist)}${"♡".repeat(G.mist)}</div>`;
  if(!G.over)h+=`<div class="ctrls"><input class="fld gin" id="gt10" placeholder="Escribe un nombre…" autocomplete="off" aria-label="Tu respuesta"><button class="btn pri" data-act="gtry">Probar</button><button class="btn" data-act="ghint" ${(G.hn||0)>=3?"disabled":""}>Pista: primera letra · −5</button><button class="btn" data-act="gend">Rendirme</button></div>${G.msg?`<p>${G.msg}</p>`:""}`;
  h+=`<ol class="t10">${G.l[1].map((n,i)=>`<li class="${G.f[i]?"ok":G.over?"miss":""}"><span>${i+1}</span>${G.f[i]||G.over?esc(n):G.hs&&G.hs[i]?esc(n[0])+" · · ·":"· · ·"}</li>`).join("")}</ol>`;return h+res()+"</div>"}};
+/* conexiones e impostor se arman cada día con las categorías del lore (lore-data.js) */
+const compat=(a,b)=>a!==b&&!a.no.includes(b.id)&&!b.no.includes(a.id)&&!a.m.some(x=>b.m.includes(x));
+function mkConex(){
+ const first=rotPick("conex",CATS)[0];
+ for(let t=0;t<200;t++){
+  const ch=[first];
+  for(const c of SH(CATS.filter(c=>c!==first))){if(ch.length>=4)break;if(ch.every(x=>compat(x,c)))ch.push(c)}
+  if(ch.length<4)continue;
+  return SH(ch).map(c=>[c.n,SH(c.m).slice(0,4).join(",")]);
+ }
+ return SH(CATS.slice(0,4)).map(c=>[c.n,SH(c.m).slice(0,4).join(",")]);
+}
+function mkImp(){
+ const pool=CATS.filter(c=>c.id!=="criaturas"&&c.m.length>=4),out=[];
+ rotPick("imp-x",pool,4).forEach(x=>{
+  const y=RN(pool.filter(c=>compat(x,c))),odd=RN(y.m),opts=SH([...SH(x.m).slice(0,3),odd]);
+  out.push(["¿Cuál NO es "+x.s+"?",null,opts.indexOf(odd),"«"+odd+"» es "+y.s+", no "+x.s+".",opts]);
+ });
+ const h=rotPick("imp-h",IMP)[0],o=SH(h[1]);
+ out.push([h[0],null,o.indexOf(h[1][h[2]]),h[3],o]);
+ return SH(out);
+}
 const INIT={
-wordle(){G={w:RN(WORDS),rows:[],ev:[],cur:"",ks:{},hint:0}},
-conex(){const p=RN(CXS);G={p,items:SH(p.flatMap((g,i)=>g[1].split(",").map(t=>({t,g:i})))),sel:[],solved:[],mist:0,msg:""}},
-impostor(){G={q:SH(IMP).map(q=>{const c=q[1][q[2]],o=SH(q[1]);return[q[0],q[1],o.indexOf(c),q[3],o]}),i:0,sc:0,pk:null}},
-top10(){let i;do{i=Math.floor(Math.random()*LISTS.length)}while(!window.DAILY_ON&&i===lt&&LISTS.length>1);lt=i;const l=LISTS[i];G={l,f:l[1].map(()=>null),mist:0,msg:""}}};
+wordle(){G={w:rotPick("wordle",WORDS)[0],rows:[],ev:[],cur:"",ks:{},hint:0}},
+conex(){const p=mkConex();G={p,items:SH(p.flatMap((g,i)=>g[1].split(",").map(t=>({t,g:i})))),sel:[],solved:[],mist:0,msg:""}},
+impostor(){G={q:mkImp(),i:0,sc:0,pk:null}},
+top10(){const l=rotPick("top10",LISTS)[0];G={l,f:l[1].map(()=>null),mist:0,msg:""}}};
 window.GM={has:m=>!!INIT[m],start(m){stopTimer();view="play";C={mode:m};INIT[m]();render();window.scrollTo(0,0)},view:m=>V[m]()};
 function wsub(){const w=G.w[0];if(G.cur.length!==w.length){toast("Faltan letras");return}const r=ev(G.cur,w);G.rows.push(G.cur);G.ev.push(r);[...G.cur].forEach((c,i)=>{const o=G.ks[c];if(r[i]==="ok"||(r[i]==="pr"&&o!=="ok")||!o)G.ks[c]=r[i]});
  const n=G.rows.length;G.cur="";if(r.every(x=>x==="ok"))fin(true,Math.max(10,70-10*n-(G.hint?20:0)),`Era ${w}. ¡En ${n} intento${n>1?"s":""}!`);else if(n>=6)fin(false,0,`La palabra era ${w}.`)}
@@ -1143,67 +1168,8 @@ addEventListener("keydown",e=>{if(view!=="play"||!C||!GM.has(C.mode)||$("#dlg").
 const TT_WIN=50,TT_HINT=5,TT_MISS=5,TT_MIN=10,TT_BOT=.8,TT_MAXHINT=3; /* puntos, penalizaciones, acierto del bot, pistas */
 const LINES=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
 /* condiciones: id -> [nombre corto, explicación al pasar el cursor] */
-const TT_CR={
- camp:["Campamento Sopharum","Miembro del campamento que fundó Mit Caleus"],
- torneo:["Torneo de Umbra","Presente en el Torneo de Umbra (participante, público o saboteador)"],
- hz:["Historia de Zarick","Aparece en la vida de Zarick"],
- hk:["Historia de Karim","Aparece en la vida de Karim Balteus"],
- umbra:["Umbra","Nació, creció o actúa en Umbra"],
- arboris:["Arboris","Ligado a Arboris"],
- lumx:["Luminarae Luxor","Ligado a Luminarae Luxor (origen, familia, servicio, fe u honra)"],
- skald:["Skaldrum","Ligado a Skaldrum (incluye a su dios venerado)"],
- sinf:["Sinfalía","Ligado a Sinfalía"],
- psyb:["Psybernia","Ligado a Psybernia"],
- negatt:["Negatt","Ligado a Negatt"],
- lumis:["Lumis","Ligado a Lumis (nació cerca, vivió, fue preso o la gobierna)"],
- deidad:["Deidad","Una de las diez fuerzas, hijas de Espacio"],
- lider:["Líder","Lidera un grupo, una orden, una pandilla o una nación"],
- orco:["Orco o semi-orco","Sangre de orco"],
- tec:["Implantes o tecnología","Implantes, armadura robótica, traje simbiótico o IA"],
- orden:["Criado por una orden","Lo crió o adoptó una orden desde niño"]
-};
-/* personajes: [nombre, condiciones que cumple, apodos para la búsqueda] */
-const TT_E=[
-["Zarick",["camp","torneo","hz","hk","umbra","arboris","lumx","lumis","orco"],[]],
-["Bane Ironhand",["camp","torneo","hz","lumis","tec"],["bane"]],
-["Karim Balteus",["camp","torneo","hk","lumx","orden"],["karim"]],
-["Vina Miceus",["camp","torneo","skald"],["vina"]],
-["Seah de Pato",["camp","torneo"],["seah"]],
-["Tomah de la Luz de Xora",["camp","torneo","lumx"],["tomah"]],
-["Pin Kuku",["camp","torneo"],["pin"]],
-["Mit Caleus",["camp","torneo","hz","hk","umbra","lumis","lider"],["caleus"]],
-["Andreas Light",["torneo","lumx","orden","tec"],["andreas","leon skyrider"]],
-["Puj",["torneo","hz","umbra","lider"],[]],
-["Astra Skyfall",["torneo","lumx"],["astra"]],
-["Solara",["torneo"],[]],
-["Lyra Shadowthorn",["torneo"],["lyra"]],
-["Ova Caleus",["torneo"],["ova"]],
-["Lurim de Skaldrum",["torneo","skald"],["lurim"]],
-["Oci",["torneo","skald"],[]],
-["Vela",["torneo","lumis"],[]],
-["Burun",["torneo"],[]],
-["Orx",["torneo"],[]],
-["Aurora D'arwen",["torneo"],["aurora"]],
-["Piuk",["torneo"],[]],["Asan",["torneo"],[]],["Willow",["torneo"],[]],["Krymm",["torneo"],[]],["Garvok",["torneo"],[]],
-["Gobz Gobinson",["psyb","sinf","tec"],["gobz"]],
-["Valeria",["psyb","lider"],[]],
-["Tsuji",["negatt"],[]],
-["Alnasi",["negatt","lider"],[]],
-["Raulo Casa III",["negatt","lider"],["raulo"]],
-["Inargo",["lumis","tec","lider"],[]],
-["Evelyn von Grace",["hz","umbra","arboris","lumx"],["evelyn"]],
-["Luminara IV",["lumx","lider"],["luminara"]],
-["Khagzol «Zodd» Shazolg",["hz","arboris","orco"],["zodd","khagzol"]],
-["Heiss",["hz"],[]],
-["Saúl",["hk","orden"],["saul"]],
-["Calliope",["hk"],[]],
-["RiaRia",["hk"],[]],
-["Ape",["deidad","skald"],[]],
-["Xora",["deidad","lumx"],[]],
-["Ganore",["deidad","sinf"],[]],
-["Millot",["deidad"],[]],["Jilper",["deidad"],[]],["Cumacur",["deidad"],[]],["Cabala",["deidad"],[]],
-["Kiprika",["deidad"],["ki"]],["Tapiem",["deidad"],[]],["Dacama",["deidad"],[]]
-];
+const TT_CR=LORE.tt.cr;
+const TT_E=LORE.tt.e.map(e=>[e[0],e[1].split(" "),e[2]?e[2].split("|"):[]]);
 const CR=TT_CR,E=TT_E,IDS=Object.keys(CR);
 const nz=s=>String(s).normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9 ]/g," ").replace(/\s+/g," ").trim();
 const NM=E.map(e=>nz(e[0])),HAY=E.map(e=>nz(e[0]+" "+e[2].join(" ")));
@@ -1214,19 +1180,46 @@ function comb(a,k){return k===0?[[]]:a.flatMap((x,i)=>comb(a.slice(i+1),k-1).map
 /* ¿se pueden llenar las 9 casillas con 9 personajes distintos? (así nunca hay un tablero imposible) */
 function perfect(cells){const own={};const tr=(i,seen)=>{for(const e of cells[i]){if(seen.has(e))continue;seen.add(e);if(own[e]==null||tr(own[e],seen)){own[e]=i;return true}}return false};
  for(let i=0;i<cells.length;i++)if(!tr(i,new Set()))return false;return true}
-let BOARDS=null;
-function boards(){
- if(BOARDS)return BOARDS;const out=[];
- for(const R of comb(IDS,3))for(const C of comb(IDS.filter(x=>!R.includes(x)),3)){
-  const cells=[];let ok=true,sum=0;
-  for(const r of R){for(const c of C){const a=ans(r,c);if(!a.length){ok=false;break}cells.push(a);sum+=a.length}if(!ok)break}
-  if(ok&&perfect(cells))out.push({R,C,sum});
+/* tableros: se arman con las condiciones del lore. La condición principal rota
+   día a día (todas tienen su turno); el resto sale del azar de la fecha. */
+const FAMX=LORE.tt.fam,FMAX=LORE.tt.famMax,TT_SUM=16;
+function famOK(ids){const n={};for(const i of ids){const f=FAMX[i];n[f]=(n[f]||0)+1;if(n[f]>(FMAX[f]||3))return false}return true}
+function tryBoard(R,C,minSum){
+ const cells=[];let sum=0;
+ for(const r of R)for(const c of C){const a=ans(r,c);if(!a.length)return null;cells.push(a);sum+=a.length}
+ return sum>=minSum&&perfect(cells)?{R,C,sum}:null;
+}
+const NE={};IDS.forEach(i=>NE[i]=E.filter(e=>e[1].includes(i)).length);
+/* sorteo con peso: las condiciones con pocos personajes también tienen su lugar */
+function wsample(ids,k){
+ const a=ids.slice(),o=[];
+ while(o.length<k&&a.length){
+  const w=a.map(i=>1/Math.sqrt(NE[i]));let r=Math.random()*w.reduce((x,y)=>x+y,0),j=0;
+  while(j<a.length-1&&r>w[j]){r-=w[j];j++}
+  o.push(a.splice(j,1)[0]);
  }
- const good=out.filter(b=>b.sum>=18);BOARDS=good.length>=10?good:out;return BOARDS;
+ return o;
+}
+function pickBoard(){
+ const prim=window.DAILY_ON?rotPick("tt",IDS)[0]:IDS[Math.floor(Math.random()*IDS.length)];
+ const order=[prim,...sh(IDS.filter(x=>x!==prim))];
+ for(const first of order){
+  const others=IDS.filter(x=>x!==first);
+  for(const minSum of [TT_SUM,12,9]){
+   for(let t=0;t<700;t++){
+    const s=wsample(others,5);
+    if(!famOK([first,...s]))continue;
+    const b=tryBoard([first,s[0],s[1]],[s[2],s[3],s[4]],minSum);
+    if(b)return b;
+   }
+  }
+ }
+ for(let t=0;t<20000;t++){const s=sh(IDS).slice(0,6),b=tryBoard(s.slice(0,3),s.slice(3),0);if(b)return b}
+ return {R:IDS.slice(0,3),C:IDS.slice(3,6)};
 }
 let G={};
 function init(){
- const bs=boards(),b=bs[Math.floor(Math.random()*bs.length)];
+ const b=pickBoard();
  G={R:sh(b.R),C:sh(b.C),b:Array(9).fill(null),used:new Set(),turn:"p",sel:null,q:"",msg:"",mk:"",hn:0,miss:0,hint:{},over:false,line:[],tok:Math.random()};
 }
 const rl=i=>CR[G.R[Math.floor(i/3)]][0],cl=i=>CR[G.C[i%3]][0];
@@ -1351,7 +1344,6 @@ cpick(b){C.pk.push(+b.dataset.i);render()},cundo(){C.pk.pop();render()},
 ccheck(){const it=C.item;C.cor=it.order.filter((e,n)=>it.evs[C.pk[n]]===e).length;C.revealed=C.resolved=true;if(C.cor)award(Math.max(5,C.cor*10-(C.chint?10:0)),"Cronología: "+it.track);render()}});
 document.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.id==="gi"){e.preventDefault();A[C.mode==="imagen"?"imgguess":"guess"]()}});
 /* Cronología: eventos tomados de la web del mundo (cronología, historias y personajes) */
-CRONO.forEach(e=>{if(e.y===912)e.y=1012});
 CRONO.push({y:1011,t:"Torneo de Umbra",d:"Los del campamento acuden; termina con la bomba de Andreas y la liberación de Astra."});
 const seq=(name,a)=>({name,y:0,ev:a.map((x,i)=>({y:i,t:x[0],d:x[1]}))});
 const TR=[{name:"Eras de Apexora",y:1,ev:CRONO},
@@ -1364,8 +1356,8 @@ TR.push(seq("Campañas de Apexora",[["Umbra","Torneo Skaldrak Vlarim: del campam
 const UK="apexora-crono-u"+(APX_UID?":"+APX_UID:"");let U={};try{U=JSON.parse(localStorage.getItem(UK)||"{}")}catch(e){}
 function mkCrono(){const cc=(typeof cust==="function"?cust("crono"):[]).map(c=>c.x||c).filter(c=>c&&c.t&&c.y!=null);
  const pool=TR.map(t=>t===TR[0]?Object.assign({},t,{ev:CRONO.concat(cc)}):t);
- const rk=TR.map(t=>"t:"+t.name);const tr=window.DAILY_ON?pool[Math.floor(Math.random()*pool.length)]:pool.slice().sort((a,b)=>(U["t:"+a.name]||0)-(U["t:"+b.name]||0)+Math.random()*2-1)[0];
- const evs=window.DAILY_ON?shuffle(tr.ev).slice(0,4):tr.ev.slice().sort((a,b)=>(U[tr.name+a.t]||0)-(U[tr.name+b.t]||0)+Math.random()*1.4-.7).slice(0,4);
+ const rk=TR.map(t=>"t:"+t.name);const tr=window.DAILY_ON?rotPick("crono-t",pool)[0]:pool.slice().sort((a,b)=>(U["t:"+a.name]||0)-(U["t:"+b.name]||0)+Math.random()*2-1)[0];
+ const evs=window.DAILY_ON?rotPick("crono-"+tr.name,tr.ev,4,Math.floor(dayN()/pool.length)*4):tr.ev.slice().sort((a,b)=>(U[tr.name+a.t]||0)-(U[tr.name+b.t]||0)+Math.random()*1.4-.7).slice(0,4);
  if(!window.DAILY_ON){U["t:"+tr.name]=(U["t:"+tr.name]||0)+1;evs.forEach(e=>U[tr.name+e.t]=(U[tr.name+e.t]||0)+1);try{localStorage.setItem(UK,JSON.stringify(U))}catch(e){}}
  const order=evs.slice().sort((a,b)=>a.y-b.y),sh=window.DAILY_ON?shuffle(evs):evs.slice().sort(()=>Math.random()-.5);
  C.pk=[];return{track:tr.name,hasY:!!tr.y,evs:sh,order}}
