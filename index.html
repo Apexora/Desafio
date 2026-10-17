@@ -1584,11 +1584,6 @@ function boot(auth,db){
  });
 }
 </script>
-<script type="module">
-import { onSesion, registrarVisita, premiar, desbloquearLogro, registrarActividad } from "https://apexora.github.io/Portal/apexora-core.js" ;
-window.APX = { premiar, desbloquearLogro, registrarActividad };
-onSesion((u) => { if (u?.email?.endsWith("@apexora-sala.app")) registrarVisita(); });
-</script>
 <script type="module" src="https://apexora.github.io/Portal/apexora-hud.js"></script>
 </body>
 </html>
