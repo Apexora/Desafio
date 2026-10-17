@@ -35,10 +35,10 @@ const refJugador = () => doc(db, COL, auth.currentUser.uid);
 export const onSesion = (cb) => onAuthStateChanged(auth, cb);
 export const iniciarSesion = (u, c) => signInWithEmailAndPassword(auth, aMail(u), c);
 export const cerrarSesion = () => signOut(auth);
-export async function registrar(u, c, avatar = "🙂") {
+export async function registrar(u, c) {
   const cred = await createUserWithEmailAndPassword(auth, aMail(u), c);
   await setDoc(doc(db, "apexora_profiles", cred.user.uid),
-    { name: u.trim(), avatar, login: cred.user.email, created: Date.now() });
+    { name: u.trim(), login: cred.user.email, created: Date.now() });
   return cred;
 }
 

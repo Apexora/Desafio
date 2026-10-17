@@ -47,7 +47,12 @@ L.cats=[
 ["arcos","Arcos de Guardianes de Apexora","un arco de Guardianes de Apexora","arc","Umbra,Tribus Skaldrak,Luminarae,Boro,Luxor,Lumis,Torneo de los Dos Emperadores","oeste hitos sesiones"],
 ["criaturas","Criaturas y seres singulares","un ser singular","cri","Orx,ZX-51,Chunchunmaru,Rocky,Chacales cambiaformas,Bestia Serpiente,Bestia Marina","razas"],
 ["lugares","Lugares con nombre propio","un lugar con nombre propio","lug","Tharnok,Dekshar,Caverna Mortuoria,Lago Kcud,Myrelith,Krezgorn,Rascu,VenuVenu,Frostpeak,Liminae,Bahía Lunar","sesiones pueblos espec oeste este"],
-["vias","Vías de poder","una vía de poder","pod","Magia natural,Magia oscura,Magia divina,Tecnología",""]
+["vias","Vías de poder","una vía de poder","pod","Magia natural,Magia oscura,Magia divina,Tecnología",""],
+["academia","Academia Myrelith","un integrante de la Academia Myrelith","per","Icowha,Nova,Echo,Galel,Ibrich Yugos,Silith,Trigo,Genaro,Limón,Chudo",""],
+["bahia","Sesión Bahía Lunar","un personaje de la sesión Bahía Lunar","per","Vina,Bane,Augusto,Jorven,Mansekino,Vinko",""],
+["semidioses","Semidioses y dioses menores","un semidiós o dios menor","dio","Oci,Amark,Klio,Nova,Capsicum",""],
+["boropers","Personajes de Boro","un personaje de Boro","per","Sara,Aldric,Beo,Liyam,Liyu,Marcel,Sao,Sistar,Zhorak,Doctor M",""],
+["singob","Lugares sin gobierno central","un lugar sin gobierno central","sgc","Arboris,Tribus Skaldrak,Markivton,Boro,Sinfalía",""]
 ].map(r=>({id:r[0],n:r[1],s:r[2],f:r[3],m:r[4].split(","),no:r[5]?r[5].split(" "):[]}));
 
 /* ---------- Impostor: preguntas sueltas (con razonamiento) ----------
@@ -66,7 +71,11 @@ L.imp=[
 ["¿Con cuál de estas NO limita Psybernia?",["Umbra","Tribus Skaldrak","El Presidio de Krahn","Pongí"],3,"Psybernia limita con Umbra, las Tribus Skaldrak y el Presidio de Krahn. Pongí limita con Krahn, Sylvaris y Disnjav."],
 ["¿Con cuál de estas NO limita Pongí?",["El Presidio de Krahn","La Urdimbre de Sylvaris","Disnjav","Umbra"],3,"Pongí limita con Krahn (norte), Sylvaris (este) y Disnjav (sur)."],
 ["¿Cuál NO ocurrió durante el Torneo de Umbra?",["Krymm humilla a Willow","Zarick humilla a Solara","Karim humilla a Vina","Zarick humilla a Astra"],3,"Astra se enfrentó a Bane y perdió; Zarick jugó con Solara y con Krymm."],
-["¿Quién NO pertenece a la Orden de los Caballeros de Luxor?",["Andreas","Rose","Mikael","Karim"],3,"Karim fue criado por otra orden: la de los Marcados."]
+["¿Quién NO pertenece a la Orden de los Caballeros de Luxor?",["Andreas","Rose","Mikael","Karim"],3,"Karim fue criado por otra orden: la de los Marcados."],
+["¿Qué nación NO es un lugar sin gobierno central?",["Arboris","Markivton","Tribus Skaldrak","Skaldrum"],3,"Skaldrum lo gobierna el emperador Oci con su reina Lurim; las otras no tienen gobierno central."],
+["¿Quién NO pertenece a la Academia Myrelith?",["Echo","Galel","Silith","Zarick"],3,"Zarick es un semi-orco de Umbra, del campamento Sopharum."],
+["¿Quién NO es semidiós?",["Oci","Amark semidios","Klio","Zarick"],3,"Zarick es semi-orco. Oci, Amark y Klio son semidioses."],
+["¿Quién NO pertenece a la facción Girax de Boro?",["Beo","Autómata Girax","Girax","Beel"],3,"Beel es el general de la tribu Zzamua, de Sylvaris."]
 ];
 
 /* ---------- Wordle: [PALABRA, pista] — solo A–Z, de 4 a 8 letras ---------- */
@@ -83,7 +92,10 @@ L.words=[
 ["CALEUS","Líder del Campamento Sopharum"],["MALAKAR","Antiguo comandante de Umbra"],["ROBERT","Herrero reformado, padre adoptivo de Laki"],["MARTINA","Precognitiva, madre adoptiva de Laki"],["ROSE","Compañera de Andreas en la OCL"],["VALERIA","Soberana de Psybernia"],["ALNASI","Padre no biológico y líder de los Ocho"],["AZALANGE","Fusión fallida de Bestia Serpiente y Bestia Marina"],["FUDO","El Asesino entre los Ocho de Negatt"],["THEMIS","El Balance entre los Ocho de Negatt"],["NIRO","La Fuerza entre los Ocho de Negatt"],["DAISUKE","El Sirviente entre los Ocho de Negatt"],
 ["SALIN","Juez de Inasuno difícil de vencer"],["FRAGUA","Transportista del grupo de Caleus"],["ASTRA","Aspirante a heroína que genera agujeros negros"],["SOLARA","Guerrera con exotraje y espada eléctrica"],["LYRA","Guerrera brutal de Umbra de puños vendados"],["VELA","Arquitecta de Lumis que sostuvo una grada"],["BURUN","Sanador del Torneo de Umbra"],["KRYMM","Nómada con espada larga de fuego"],["GARVOK","Pirata de Markivton con un mono al hombro"],["AURORA","Hipertech de Lumis cuyo traje se vuelve toro"],["WILLOW","Shamán de Arboris en el Torneo de Umbra"],["LURIM","Aspirante a reina de Skaldrum"],
 ["ZODD","Orco de Zudodh Ez, padre de Zarick"],["EVELYN","Madre de Zarick"],["HEISS","Pactó con la tribu Zudodh Ez y la traicionó"],["ABYSSARA","Traza planes con Caleus en el campamento"],["PETAT","Soldado umbreano fiel a Caleus"],["GUETTO","Guardia de la compuerta norte de Umbra"],["SAUL","Líder de los Marcados que adoptó a Karim"],["CALLIOPE","Hija de Karim"],["TSUJI","Investigador de Negatt, padre de los Ocho"],["INARGO","IA que gobierna Lumis"],["BASON","Armadura robótica de Gobz"],["LUMINARA","Reina de Luminarae Luxor"],["SKALDOR","Frostpeak, participante de las Tribus Skaldrak"],["ZAZAP","Favorita para suceder al anciano Alal"],["ALAL","Anciano de la tribu Skaldrak"],["BLUE","Mecánica de otro planeta en un taller de Lumis"],["FILE","Amiga de Abyssara en Luminarae"],["VOLMI","Guerrera de Malina que informa al grupo"],["VISU","Orco, asistente y amigo de Valmey"],["TOBEAS","Padre de Tomah"],["MIKAEL","Activo experimentado de la OCL"],["GRAKK","Orco que reclutó a Zarick para la pandilla de Puj"],["MOKTAR","Compañero de pandilla de Zarick"],
-["MORFO","Traje simbiótico de Andreas"],["MIEL","Mandoble de Vina"],["ESTOQUE","Arma del Bailarín"],["OCARINA","Instrumento de Pin Kuku"],["LUKIMORA","Idioma que habla Valeria con sus criaturas"],["VIZLUM","Escuela general de Sinfalía"],["LUTECH","Humanos modificados con tecnología"],["SKANUJ","Pueblo adaptado al frío extremo"],["ZZAMUA","Tribu que tomó Vasané-Nalú"],["SOPHARUM","Campamento fundado en el año 998"],["GIRAX","Facción tecnológica y autoritaria de Boro"],["TORZH","Facción de Boro que pretende destruir la tecnología"],["NOKVAR","Facción de Boro que controla información y mentes"],["SOBRIOS","Facción sinfaliense que prefiere la realidad"],["SAJE","Agua que conecta con la dimensión méltida"],["MELTIDA","Dimensión a la que se accede por electrónica"],["VINICOS","Nómadas fundadores de Sinfalía"]
+["MORFO","Traje simbiótico de Andreas"],["MIEL","Mandoble de Vina"],["ESTOQUE","Arma del Bailarín"],["OCARINA","Instrumento de Pin Kuku"],["LUKIMORA","Idioma que habla Valeria con sus criaturas"],["VIZLUM","Escuela general de Sinfalía"],["LUTECH","Humanos modificados con tecnología"],["SKANUJ","Pueblo adaptado al frío extremo"],["ZZAMUA","Tribu que tomó Vasané-Nalú"],["SOPHARUM","Campamento fundado en el año 998"],["GIRAX","Facción tecnológica y autoritaria de Boro"],["TORZH","Facción de Boro que pretende destruir la tecnología"],["NOKVAR","Facción de Boro que controla información y mentes"],["SOBRIOS","Facción sinfaliense que prefiere la realidad"],["SAJE","Agua que conecta con la dimensión méltida"],["MELTIDA","Dimensión a la que se accede por electrónica"],["VINICOS","Nómadas fundadores de Sinfalía"],
+["CRATESI","Líder de la Orden de los Marcados"],["AGAMUNO","Líder de la secta de Arboris"],["KAELEN","Elfo del Programa Elfos de Negatt"],["BEEL","General de la tribu Zzamua"],
+["CHIP","Líder de la nación de clones Ostraca"],["UMATE","Isla maldita por Kiprika"],["LIMON","Directora de la Academia Myrelith"],["AMARK","Semidiós de nivel 7 de Luxor"],
+["CAPSICUM","Dios inferior, hijo de Kiprika y Ape"],["ARKONIA","Líder del puerto de Zepi, en Lumis"],["BARRIGAN","Rey de Zepi, engreído y burlón"],["ALDRIC","Creó a Sara en Tharnok"]
 ];
 
 /* ---------- Top 10: [título, [elementos]] ----------
@@ -114,7 +126,10 @@ L.lists=[
 ["Sesiones especiales de campaña",["Nobles Subterráneos","Tharnok","Rascu","Castillo del Gato Mágico","Celebración Héroes","Bestias","Tribunal de Skaldrum","Arborea y la Secta","Academia Myrelith","Bahía Lunar"]],
 ["Armas y objetos legendarios",["Miel","Bastón del Lago","Ram Dao","Morfo","Armazón Basón","Velo Carmesí","Ganús","Estoque de Karim"]],
 ["Escalafón de la OCL",["Reclutas","Activos","Asientos","Círculos","Consejo"]],
-["Formas de gobierno de Apexora",["Dictadura","Teocracia","Tecnocracia","Feudalismo","Gerontocracia","Necrocracia","Kakistocracia","Autocracia"]]
+["Formas de gobierno de Apexora",["Dictadura","Teocracia","Tecnocracia","Feudalismo","Gerontocracia","Necrocracia","Kakistocracia","Autocracia"]],
+["Personajes de Boro",["Sara","Aldric","Beo","Liyam","Liyu","Marcel","Sao","Sistar","Zhorak","Doctor M"]],
+["Alumnos y equipo de la Academia Myrelith",["Icowha","Nova","Echo","Galel","Ibrich","Silith","Trigo","Genaro","Limón","Chudo"]],
+["Lugares sin gobierno central",["Arboris","Tribus Skaldrak","Markivton","Boro","Sinfalía"]]
 ];
 
 /* ---------- Apexora tic tac toe ----------
@@ -149,28 +164,36 @@ L.tt={cr:{
  ocho:["Los Ocho de Negatt","Uno de los ocho experimentos de Tsuji"],
  mujer:["Mujer","Personaje femenino según el lore"],
  hombre:["Hombre","Personaje masculino según el lore"],
- humano:["Humano","Humano según su ficha"]
+ humano:["Humano","Humano según su ficha"],
+ boro:["Boro","Ligado a Boro (nación o facción)"],
+ academia:["Academia Myrelith","Alumno, directora o parte de la Academia Myrelith"],
+ semidios:["Semidiós","Semidiós o dios menor (hijo de un dios)"],
+ elfos:["Programa Elfos","Parte del programa de elfos de Negatt"],
+ bahia:["Sesión Bahía Lunar","Parte de la sesión de Bahía Lunar"],
+ banda:["Banda de Laki","De la banda de Laki en Markivton"],
+ ganor:["Ganorismo","Ganorista o dedicado a Ganore"],
+ sem:["SEM (psiónico)","Posee SEM, también llamado psiónico"]
 },
 fam:{camp:"story",torneo:"story",tsv:"story",hz:"story",hk:"story",inasuno:"story",vas:"story",pandilla:"story",
  umbra:"place",arboris:"place",lumx:"place",skald:"place",skaldrak:"place",sinf:"place",psyb:"place",negatt:"place",lumis:"place",mark:"place",
- deidad:"trait",pj:"trait",lider:"trait",orco:"trait",tec:"trait",orden:"trait",ocho:"trait",mujer:"gen",hombre:"gen",humano:"raza"},
+ deidad:"trait",pj:"trait",lider:"trait",orco:"trait",tec:"trait",orden:"trait",ocho:"trait",boro:"place",academia:"story",semidios:"trait",elfos:"trait",bahia:"story",banda:"story",ganor:"trait",sem:"trait",mujer:"gen",hombre:"gen",humano:"raza"},
 famMax:{story:2,place:3,trait:3,gen:1,raza:1},
 e:[
-["Ape","deidad skald"],["Xora","deidad lumx mujer"],["Ganore","deidad sinf"],["Millot","deidad"],["Jilper","deidad"],["Cumacur","deidad"],["Cabala","deidad"],["Kiprika","deidad","ki"],["Tapiem","deidad"],["Dacama","deidad"],
-["Zarick","pj camp torneo tsv hz hk pandilla umbra arboris lumx lumis orco"],
-["Bane Ironhand","pj camp torneo tsv hz lumis tec hombre humano","bane|forrest"],
+["Ape","deidad skald"],["Xora","deidad lumx mujer"],["Ganore","deidad sinf ganor"],["Millot","deidad"],["Jilper","deidad"],["Cumacur","deidad"],["Cabala","deidad"],["Kiprika","deidad","ki"],["Tapiem","deidad"],["Dacama","deidad"],
+["Zarick","pj camp torneo tsv hz hk pandilla umbra arboris lumx orco"],
+["Bane Ironhand","pj camp torneo tsv hz lumis tec hombre humano bahia","bane|forrest"],
 ["Karim Balteus","pj camp torneo tsv hk skald lumx orden hombre humano","karim"],
-["Vina Miceus","pj camp torneo skald mujer humano","vina"],
+["Vina Miceus","pj camp torneo skald mujer humano vas bahia","vina"],
 ["Seah de Pato","pj camp torneo tsv arboris mujer","seah"],
-["Tomah de la Luz de Xora","pj camp torneo lumx hombre humano","tomah"],
+["Tomah de la Luz de Xora","pj camp torneo lumx hombre humano academia","tomah"],
 ["Pin Kuku","pj camp torneo tsv skaldrak hombre","pin"],
 ["Andreas Light","pj torneo lumx orden tec hombre humano","andreas|leon skyrider"],
 ["Gobz Gobinson","pj sinf psyb tec inasuno vas hombre","gobz"],
-["Valmey Sialí","pj sinf inasuno vas hombre humano","valmey"],
-["Seilá Anamé","pj sinf vas mujer humano","seila"],
-["Lael Anamé","pj sinf inasuno vas hombre humano","lael"],
-["Laki Unmei","pj mark psyb torneo tsv hombre","laki"],
-["Zene","pj psyb mujer humano"],
+["Valmey Sialí","pj sinf inasuno vas hombre humano ganor","valmey"],
+["Seilá Anamé","pj sinf vas mujer humano ganor","seila"],
+["Lael Anamé","pj sinf inasuno vas hombre humano ganor","lael"],
+["Laki Unmei","pj mark psyb torneo tsv hombre banda sem","laki"],
+["Zene","pj psyb mujer humano sem"],
 ["Caelum","pj negatt ocho hombre"],
 ["Mit Caleus","camp torneo hz hk umbra lider hombre humano","caleus|mit"],
 ["Puj","torneo tsv hz umbra lider orco pandilla"],
@@ -184,17 +207,28 @@ e:[
 ["Luminara IV","lumx lider mujer","luminara"],["Solaris","lumx"],["Astra Skyfall","torneo tsv lumx mujer","astra"],
 ["File","lumx mujer humano"],["Tobeas","lumx hombre"],["Rose","lumx orden mujer"],["Mikael","lumx orden"],
 ["Saúl","hk skald orden","saul"],["Calliope","hk mujer"],["RiaRia","hk mujer","romaia"],
-["Robert Dust","mark torneo lumx","robert"],["Martina Clement","mark torneo lumx mujer","martina|martine"],
-["Joshua","mark torneo tsv"],["Garvok","mark torneo"],
+["Robert Dust","mark torneo lumx","robert"],["Martina Clement","mark torneo lumx mujer sem","martina|martine"],
+["Joshua","mark torneo tsv banda"],["Garvok","mark torneo"],
 ["Valeria","psyb lider mujer"],["ZX-51","psyb","zx51|zx 51"],["Krymm","torneo psyb"],
 ["Tsuji","negatt hombre"],["Alnasi","negatt ocho lider hombre"],
 ["Aldebaran","negatt ocho"],["Fudo","negatt ocho"],["Azalange","negatt ocho tsv"],["Themis","negatt ocho"],["Niro","negatt ocho"],["Daisuke","negatt ocho"],
 ["Raulo Casa III","negatt lider","raulo"],
-["Inargo","lumis tec lider"],["Aurora D'arwen","torneo lumis tec","aurora"],["Solara Dawn","torneo tsv lumis tec mujer","solara"],["Vela","torneo tsv lumis mujer"],["Blue","lumis"],
+["Inargo","lumis tec lider"],["Aurora D'arwen","torneo lumis tec","aurora"],["Solara Dawn","torneo tsv lumis tec mujer","solara"],["Vela","torneo tsv lumx mujer"],["Blue","lumis mujer humano"],
 ["Willow Whisper","torneo arboris","willow"],["Kelshir","tsv arboris hombre humano"],
-["Piuk","torneo arboris"],["Asan","torneo arboris"],["Skaldor Frostpeak","torneo skaldrak","skaldor"],["Burun","torneo skald hombre"],["Orx","torneo"],
+["Piuk","torneo arboris"],["Asan","torneo arboris"],["Skaldor Frostpeak","torneo skaldrak","skaldor"],["Burun","torneo skald hombre hk"],["Orx","torneo"],
 ["Tatal","tsv skaldrak"],["Zazap","tsv skaldrak mujer"],["Didih","skaldrak"],["Ruruk","skaldrak"],["Alal","skaldrak lider"],
-["Salín","sinf inasuno hombre","salin"],["Visú","sinf inasuno orco hombre","visu"],["Volmí","sinf vas mujer","volmi"],["Facó Melí","sinf","faco meli|faco"]
+["Salín","sinf inasuno hombre","salin"],["Visú","sinf inasuno orco hombre","visu"],["Volmí","sinf vas mujer","volmi"],["Facó Melí","sinf","faco meli|faco"],
+["Beo de Boro","tsv boro lider","beo"],["Sara","boro"],["Aldric","boro","señor aldric"],["Liyam","boro"],["Liyu","boro"],["Marcel","boro"],["Sao","boro"],["Sistar","boro"],["Zhorak","boro"],["Doctor M","boro","doctor"],
+["Autómata Girax","boro tec","automata"],["Criatura","tsv boro"],
+["Icowha","lumx academia"],["Nova","lumx academia semidios"],["Echo","lumx academia"],["Galel","lumx academia"],["Ibrich Yugos","lumx academia","ibrich"],["Silith","lumx academia"],["Trigo","lumx academia"],["Genaro","lumx academia"],["Limón","lumx academia mujer","limon|directora"],["Chudo","lumx academia"],
+["Amark","lumx semidios"],["Klio","lumx semidios"],["Capsicum","semidios"],["Orion","tsv lumx"],["Teniente Bull","lumx","bull"],["Capitán Fuego","lumx lider","fuego|capitan"],["Ciana","lumx"],
+["Julio Balteus","tsv hk skald hombre","julio"],["Augusto","skald bahia","cartografo"],["Jorven","skald bahia"],["Mansekino","skald bahia"],["Vinko","skald bahia"],["Cratesi","skald orden lider"],
+["Plumarquias","tsv arboris"],["Tilimad","tsv arboris"],["Aelyon","pj arboris"],["Agamuno","arboris lider"],["Hati","arboris"],["Torio","arboris"],["Aranis Durgun","arboris","aranis|durgun"],
+["Lynch","negatt tsv"],["Ricardo","negatt"],["Kaelen Draven","negatt tsv elfos","kaelen"],["Xuelen Draven","negatt tsv elfos","xuelen"],["Diurna Draven","negatt elfos","diurna"],["Albara","negatt"],
+["Nailis","mark tsv"],["Nefri","mark tsv"],["Truman","mark banda"],["Bornie Bale","mark banda","bornie"],["Tom","mark banda"],
+["Voragos","umbra tsv"],["Jup","umbra mujer"],["Fragua","umbra"],["Kru","umbra"],["Sapot","umbra"],
+["Rolac","lumis tsv"],["Abreluz","lumis mujer humano"],["Arkonia","lumis lider"],["Barrigan Zepi VII","lumis lider","barrigan|rey"],["Kael","lumis tec"],["Chunchunmaru","lumis tec","chunchun"],
+["Basón","psyb tec","bason|armazon"],["Beel","vas lider humano"],["Trakjogat","sinf lider"],["Skanuj","skaldrak"],["Astróloga Coco","skaldrak","coco|astrologa"],["Chip","lider hombre humano"]
 ]};
 
 /* ---------- retos extra: mismos formatos que el archivo principal ---------- */
@@ -273,7 +307,53 @@ L.trivia=[
 ["Historia",3,"¿En qué año llegó Tomah al campamento?","1005",["1001","998","1011"],"Entró con mentiras desesperadas."],
 ["Historia",3,"¿En qué año llegó Seah al campamento?","1001",["1005","998","1011"],"La derrotó Vina en un duelo de práctica."],
 ["Historia",2,"¿En qué año se independizó Boro?","333",["290","412","547"],"«Independencia o paso bloqueado al comercio»."],
-["Historia",2,"¿En qué año ocurre la invasión de Vasané-Nalú?","1012",["1011","1008","860"],"La Tribu Zzamua toma la localidad sinfaliense."]
+["Historia",2,"¿En qué año ocurre la invasión de Vasané-Nalú?","1012",["1011","1008","860"],"La Tribu Zzamua toma la localidad sinfaliense."],
+["Mundo", 1, "¿Qué estructura flota mágicamente sobre la capital de Luminarae?", "Luxor", ["Myrelith", "Lumis", "Skaldrum"], "Es una ciudad flotante con forma de peonza."],
+["Mundo", 2, "¿Qué nivel espiritual tienen los semidioses de Luxor?", "Del 4 al 7", ["Del 0 al 3", "Del 1 al 5", "Del 8 al 10"], "Cada nivel tiene su propio piso en Luxor."],
+["Mundo", 2, "En Luminarae, ¿qué pasa con las personas de nivel espiritual 0 y 1?", "Son desterradas o mandadas a labores duras", ["Suben a Luxor", "Gobiernan la capital", "Se vuelven semidioses"], "Los niveles 2 y 3 son ciudadanos plenos; desde el 4 son candidatos a subir a Luxor."],
+["Mundo", 2, "¿Cómo se llama también al SEM?", "Psiónico", ["Magia divina", "Espíritu de bestia", "Tecnología"], "Los tres poderes registrados por ahora son el SEM, los espíritus de bestia y la magia divina."],
+["Mundo", 2, "¿Qué son las Bestias Dormidas?", "Criaturas surgidas de las disputas entre dioses", ["Mascotas de la OCL", "Experimentos de Lumis", "Espíritus de Skaldrum"], "Son lo mismo que las bestias divinas: muy poderosas, vagan por el mundo y pueden destruir pueblos."],
+["Mundo", 1, "¿Qué pueblo de Sinfalía queda al pie de un volcán activo?", "Fuana", ["Inasuno", "Malina", "Naluvia"], "Está en el noroeste de Sinfalía."],
+["Mundo", 1, "¿Cuál es la mayor ciudad de Sinfalía?", "Anamé", ["Inasuno", "Naluvia", "Suminé"], "Está junto al río Line."],
+["Mundo", 2, "¿Qué isla al sur de Naluvia está maldita por Kiprika?", "Umaté", ["Rascu", "Vasané-Nalú", "Pato"], "Hay muchas historias sobre ella."],
+["Mundo", 2, "¿Dónde está la tripulación de Vina, entre ellos Bane Ironhand?", "En Naluvia", ["En Malina", "En Inasuno", "En Fuana"], "Naluvia es un puerto en la costa sur de Sinfalía, sobre la bahía."],
+["Mundo", 2, "¿Qué pueblo es el punto de encuentro previo a Vasané-Nalú?", "Malina", ["Fuana", "Suminé", "Shalá"], "Allí Volmí informa al grupo."],
+["Mundo", 2, "¿Qué nación está formada por clones de su líder, Chip?", "Ostraca", ["Pongí", "Sylvaris", "Disnjav"], "Queda al norte de Sinfalía."],
+["Mundo", 2, "¿Qué territorio queda entre Psybernia y Pongí?", "El Presidio de Krahn", ["Ostraca", "Sylvaris", "Disnjav"], "Es parte del este de Apexora."],
+["Mundo", 2, "¿Qué pueblo de Luminarae Luxor tiene una academia de aspirantes a héroes?", "Myrelith", ["Anamé", "Fuana", "Markivton"], "Tomah es de ese pueblo."],
+["Mundo", 2, "¿Dónde queda el Campamento Sopharum?", "En un valle al norte de Umbra", ["En la costa de Sinfalía", "Sobre Luxor", "En la isla Rascu"], "Es la base de los Guardianes de Apexora."],
+["Mundo", 3, "¿Qué pueblo está en la punta sureste de Sinfalía, junto a un faro y un acantilado?", "Vasané-Nalú", ["Malina", "Naluvia", "Lunalú"], "Está destruido, lleno de miedo e infestado de chacales cambiaformas."],
+["Mundo", 2, "¿Cuántas casas gobiernan Negatt?", "Diez", ["Cuatro", "Siete", "Doce"], "Incluye la isla Rascu y la Ciénaga, origen de los Ocho."],
+["Mundo", 1, "¿Cuál es la enemiga histórica de Luminarae?", "Umbra", ["Lumis", "Boro", "Negatt"], "Umbra fue sede del Torneo Skaldrak Vlarim en el año 1011."],
+["Historia", 2, "¿En qué año se celebró el Torneo Skaldrak Vlarim en Umbra?", "1011", ["1012", "1008", "1000"], "Compitieron Vina, Zarick, Karim y Bane entre 16 participantes."],
+["Historia", 3, "¿En qué año transcurre el día de entrenamiento de la Academia Myrelith?", "900", ["1000", "1008", "1011"], "Estudiantes aspiran a ser héroes de Luxor."],
+["Historia", 2, "¿En qué año ocurre la sesión del Castillo del Gato Mágico?", "1000", ["1008", "1010", "1011"], "Plumarquias y Durgun enfrentan animales en un castillo desolado."],
+["Historia", 2, "¿Qué ocurre en la sesión Bahía Lunar?", "Se pierde un estudiante y el grupo se divide en tres", ["Cae Luxor", "Se abre un portal en un coliseo", "Se juzga a un goblin"], "Termina en una playa con un ritual y surge una bestia marina colosal."],
+["Historia", 2, "¿Quién desembarca con sus soldados en Vasané-Nalú y luego pacta con el grupo?", "El general Beel", ["Valeria", "Puj", "Tsuji"], "Un guerrero misterioso los distrae: era Vina Miceus."],
+["Historia", 3, "¿Qué isla ve el grupo de camino a Naluvia?", "Umaté", ["Rascu", "Fuana", "Lunalú"], "Está maldita por Kiprika."],
+["Historia", 2, "¿Qué le ocurre a Luxor en la historia de Amark?", "Cae derribada por las fuerzas de Umbra", ["Se hunde en el mar", "La destruye un cometa", "Se vuelve invisible"], "Amark se niega a ayudar a los Guardianes contra Umbra y terminan luchando."],
+["Personajes", 2, "¿Cómo se llama el perro de Gobz?", "Rocky", ["Hugo", "Karl", "Visú"], "El amigo que escapó con Gobz se llamaba Hugo."],
+["Personajes", 2, "¿Qué descubrió Rose sobre el Consejo de la OCL?", "Que obligaba a matar inocentes", ["Que Luxor caería", "Que Ape era su dios", "Que Umbra era inocente"], "Rose le enseñó infiltración a Andreas."],
+["Personajes", 2, "¿De qué raza es Gobz Gobinson?", "Goblin", ["Orco", "Elfo", "Humano"], "Mide 1,12 m."],
+["Personajes", 2, "¿Qué hizo Valmey como artista callejero?", "Pintura y violín", ["Canto y laúd", "Danza y flauta", "Tambor y teatro"], "Huyó a los 11 años de su madrastra y vivió entre Shalá y Malina."],
+["Personajes", 2, "¿Por qué es azul la piel de Didih?", "Su cuerpo se adaptó al frío helado", ["Por la lava", "Por la ceniza", "Por un hechizo de Xora"], "Es una skanuj espiritista y sanadora."],
+["Personajes", 2, "¿Cómo llegó Zene a Lumis?", "Cayendo en una nave", ["Por un portal", "Nadando", "Con una caravana"], "Perdió la memoria y luego recordó que venía de Psybernia."],
+["Personajes", 2, "¿Qué es Chunchunmaru?", "Un androide que crece", ["Un perro robot", "Una armadura", "Un semidiós"], "Es un experimento de Inargo que se perdió; los Guardianes lo hallaron en una nave."],
+["Personajes", 2, "¿Quién creó a Sara, en Tharnok?", "El señor Aldric", ["Tsuji", "Inargo", "Beo"], "Ambos participan en la misión de Tharnok, en Boro."],
+["Personajes", 2, "¿Quién lidera la facción Girax?", "Beo de Boro", ["Alnasi", "Aldric", "Beel"], "Girax es la facción más violenta de Boro."],
+["Personajes", 2, "¿Quién lidera la Orden de los Marcados?", "Cratesi", ["Saúl", "Agamuno", "Caleus"], "Veneran a Ape. Karim la abandonó y la caza."],
+["Personajes", 2, "¿Quién lidera la secta de Arboris que persigue a Kelshir?", "Agamuno", ["Cratesi", "Beo", "Trakjogat"], "Tiene alas gigantes y secuestra seres únicos para usar su poder."],
+["Personajes", 2, "¿Quién lidera la facción Sobrio de Sinfalía?", "Trakjogat", ["Agamuno", "Beel", "Salín"], "Gobz pertenece a los Sobrios."],
+["Personajes", 2, "¿Quién es el general de la tribu Zzamua?", "Beel", ["Puj", "Cratesi", "Valeria"], "Impuso el nuevo régimen en El Juicio de Inasuno."],
+["Personajes", 2, "¿Quién es hija de Puj y su ejército atacó a la tribu Skaldrak?", "Jup", ["Ova", "Lyra", "Reggina"], "Aparece en el arco de las Tribus Skaldrak."],
+["Personajes", 2, "¿Quién es Burun Balteus?", "Escriba y navegante, sobrino de Karim", ["Un juez de Inasuno", "El líder de Girax", "Un panadero de Skaldrum"], "Es hijo de Julio Balteus."],
+["Personajes", 3, "¿Qué oficio tiene Ullontras hijo en el Tribunal de Skaldrum?", "Panadero", ["Juez", "Escriba", "Sacerdote"], "Junto al guerrero Axeraide, concientiza al pueblo."],
+["Personajes", 3, "¿Quién cuida de Escin en su vejez?", "Icowha", ["Nova", "Echo", "Galel"], "De joven estudió en la Academia Myrelith."],
+["Personajes", 3, "¿Qué nivel espiritual tiene Nova?", "4", ["7", "2", "0"], "Estudió en la Academia Myrelith y baja a saludar a su amigo Icowha."],
+["Personajes", 3, "¿Quién dirige la Academia Myrelith?", "Limón", ["Echo", "Silith", "Genaro"], "La llaman Directora Limón."],
+["Personajes", 2, "¿Qué arma usa el general Beel?", "Una cimitarra", ["Un estoque", "Un mandoble", "Una lanza"], "Es un navegante apasionado, humilde y pensativo."],
+["Personajes", 3, "¿A qué programa de Negatt pertenece Kaelen Draven?", "Programa Elfos", ["Los Ocho", "Girax", "OCL"], "En el Torneo de los Dos Emperadores es poseído y manipulado."],
+["Mitología", 3, "¿Quién es Capsicum?", "Un dios inferior, hijo de Kiprika y Ape", ["Un semidiós de Luxor", "Una bestia divina", "El guardián de Ganore"], "Es una forma de dios inferior."]
 ];
 
 /* [afirmación, verdadera?, nivel, explicación] */
@@ -336,7 +416,35 @@ L.vof=[
 ["Gobz aprendió forja con un herrero draconiano en Fuana.",true,3,"Se llamaba Facó Melí."],
 ["La Tribu Zzamua proviene de La Urdimbre de Sylvaris.",true,2,"La expulsó la mente colmena."],
 ["La secta «Día del Juicio a los Ignorantes» incentivó la toma de Vasané-Nalú.",true,3,"A cambio de someter a los Moradores."],
-["File disfrazó a Zarick con maquillaje y peluca para infiltrarse en Luminarae.",true,2,"A Karim le aplicó una ilusión de juventud."]
+["File disfrazó a Zarick con maquillaje y peluca para infiltrarse en Luminarae.",true,2,"A Karim le aplicó una ilusión de juventud."],
+["Luxor flota mágicamente sobre la capital de Luminarae.", true, 1, "Es una estructura con forma de peonza."],
+["En Luxor viven semidioses de nivel espiritual 4 a 7.", true, 2, "Cada nivel tiene su piso."],
+["En Luminarae, las personas de nivel espiritual 0 y 1 son ciudadanos plenos.", false, 2, "Son desterradas o mandadas a labores duras; los ciudadanos plenos son los niveles 2 y 3."],
+["Los semidioses de Luxor lo son porque Xora los bendijo.", true, 2, "Su nivel espiritual viene de base o es adquirido."],
+["Las Bestias Dormidas y las bestias divinas son criaturas distintas.", false, 2, "Son lo mismo: surgieron de las disputas entre dioses."],
+["Los Ocho de Negatt recibieron un espíritu de bestia para potenciarlos.", true, 2, "Muchos de esos experimentos fallaron."],
+["Capsicum es hijo de Kiprika y Ape.", true, 3, "Es una forma de dios inferior."],
+["La isla Umaté está maldita por Kiprika.", true, 2, "Es un islote al sur de Naluvia."],
+["Vasané-Nalú está en la punta noroeste de Sinfalía.", false, 2, "Está en la punta sureste, junto a un faro y un acantilado."],
+["Fuana queda al pie de un volcán activo.", true, 1, "Está en el noroeste de Sinfalía."],
+["Anamé es la mayor ciudad de Sinfalía.", true, 1, "Está junto al río Line."],
+["El río Line desemboca en el norte de Sinfalía.", false, 2, "Baja desde el norte y desemboca en la bahía del sur."],
+["Malina es el punto de encuentro previo a Vasané-Nalú.", true, 2, "Allí Volmí informa al grupo."],
+["Ostraca está formada por clones de Chip.", true, 2, "Queda al norte de Sinfalía."],
+["Boro tiene un gobierno central fuerte.", false, 2, "No tiene gobierno central: lo dominan cuatro facciones."],
+["Arboris no tiene gobierno central.", true, 2, "Allí viven la tribu Pato y la secta que persigue a Kelshir."],
+["Lumis queda al este de las montañas Skaldrak.", false, 2, "Lumis está al oeste de las montañas Skaldrak."],
+["Psybernia queda al este de las Tribus Skaldrak.", true, 2, "Es una nación cerrada del centro-este de Apexora."],
+["Vina Miceus se une al grupo en el puerto de Vasané-Nalú.", true, 2, "Aparece como un guerrero misterioso que distrae a los soldados de Beel."],
+["El general Beel pertenece a la tribu Zzamua.", true, 1, "Es un navegante apasionado."],
+["Karim Balteus tiene un hermano llamado Julio.", true, 2, "Julio Balteus es el padre de Burun."],
+["Burun Balteus es hijo de Karim.", false, 2, "Es hijo de Julio y sobrino de Karim."],
+["Seah de Pato es una orca.", true, 1, "Es la orca del Lago Kcud."],
+["Zene llegó a Lumis cayendo en una nave.", true, 2, "Perdió la memoria al llegar."],
+["Chunchunmaru es un experimento de Inargo.", true, 2, "Se perdió y los Guardianes lo hallaron dentro de una nave."],
+["El Campamento Sopharum está en un valle al norte de Umbra.", true, 1, "Es la base de los Guardianes de Apexora."],
+["Mit Caleus nació en Umbra.", true, 2, "Su amigo Solaris lo condenó después a la inmortalidad."],
+["Luminarae es la enemiga histórica de Umbra.", true, 1, "Umbra fue sede del Torneo de 1011."]
 ];
 
 /* [categoría, respuesta, [5 pistas de vaga a específica], reseña] */
@@ -369,7 +477,15 @@ L.quien=[
 ["Nación","Sylvaris",["Soy una necrocracia timocrática.","Me gobierna una mente colmena vegetal.","Mis ancestros incorpóreos dirigen mi gobierno.","Las cenizas de Sinfalía queman mi conexión espiritual.","De aquí fue expulsada la Tribu Zzamua."],"La Urdimbre de Sylvaris."],
 ["Nación","Disnjav",["Soy sinónimo de peligro invisible.","Nadie sabe si es mi aire, mi agua o mi tierra.","Conviene no quedarse mucho tiempo.","Mi vecina del norte es Pongí.","Soy la tierra enferma."],"Asociada a lo tóxico."],
 ["Lugar","Anamé",["Soy el pueblo más poblado de mi nación, con 520 habitantes.","Soy un nexo comercial en un bosque templado.","Mi escuela es la de Leyes y Comercio.","Valmey nació aquí.","Seilá y Lael crecieron en mí."],"Pueblo de Sinfalía."],
-["Lugar","Fuana",["Mis forjas son térmicas.","Estoy en una zona volcánica.","Mi escuela es la de Metalurgia y el Fuego.","Un herrero draconiano trabajaba aquí.","Un goblin aprendió vidrio, alquimia y forja en mí."],"Pueblo de Sinfalía."]
+["Lugar","Fuana",["Mis forjas son térmicas.","Estoy en una zona volcánica.","Mi escuela es la de Metalurgia y el Fuego.","Un herrero draconiano trabajaba aquí.","Un goblin aprendió vidrio, alquimia y forja en mí."],"Pueblo de Sinfalía."],
+["Personaje", "Beel", ["Soy humilde y pensativo.", "Mi pasión es navegar.", "Mi arma es una cimitarra.", "Desembarqué con mis soldados en Vasané-Nalú.", "Soy el general de la tribu Zzamua."], "El general que pactó con el grupo de Vina."],
+["Personaje", "Chip", ["Mi arma es la clonación.", "Lidero mi propia nación.", "Mi nación está al norte de Sinfalía.", "Todos en mi nación son copias mías.", "Soy el líder de Ostraca."], "El líder de la nación de clones."],
+["Personaje", "Kelshir", ["Soy engreído.", "Soy humano y mago.", "Uso clones en combate.", "Huyo de la secta de Arboris.", "Acompañé a un grupo hasta Luminarae."], "El mago de clones."],
+["Personaje", "Didih", ["Soy divertida y cuidadora.", "En el fondo dudo de mi responsabilidad.", "Mi piel es azul por el frío de las montañas.", "Practico espiritismo y curación.", "Soy una skanuj amiga de Tatal, Zazap y Ruruk."], "La sanadora de la tribu Skaldrak."],
+["Personaje", "Zene", ["Perdí la memoria.", "Soy tímida y curiosa.", "Tengo un SEM que aún no practiqué.", "Llegué a Lumis cayendo en una nave.", "Vengo de Psybernia y fui compañera de cautiverio de Laki."], "La que cayó del cielo en Lumis."],
+["Personaje", "Nova", ["Fui niña en la Academia Myrelith.", "Soy amiga de Icowha.", "Soy semidiós de nivel 4.", "Vivo en Luxor.", "Bajé a saludar a mi viejo amigo en la Celebración Héroes."], "La semidiosa de Luxor."],
+["Personaje", "Agamuno", ["Soy humano.", "Tengo alas gigantes.", "Secuestro seres únicos.", "Uso su poder en provecho propio.", "Soy el líder de la secta de Arboris."], "El líder de la secta de Arboris."],
+["Personaje", "Cratesi", ["Soy de Skaldrum.", "Dirijo una academia mercenaria.", "Mi orden venera a Ape.", "Un desertor me caza.", "Soy el líder de la Orden de los Marcados."], "El líder de los Marcados."]
 ];
 
 /* [año, título, descripción] — para el juego de cronología */

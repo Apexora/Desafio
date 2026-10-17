@@ -52,14 +52,10 @@ h1,h2,h3,p{margin:0}
 .pl-main:focus-visible{outline:3px solid var(--acc-text);outline-offset:-3px}
 .pl-name{font-weight:700;overflow-wrap:anywhere}
 .pl-char{grid-column:1;color:var(--muted);font-size:.85rem;overflow-wrap:anywhere}
-.pl-pts{grid-row:1/3;grid-column:2;font-family:var(--display);font-weight:800;font-size:1.5rem;color:var(--acc-text);font-variant-numeric:tabular-nums}
 .pl-lead{font-size:.75rem;color:var(--acc-text);font-weight:700}
 .bump{animation:bump .7s ease}
 @keyframes bump{0%{transform:scale(1)}30%{transform:scale(1.35)}100%{transform:scale(1)}}
 .pl-tools{display:flex;gap:6px;padding:0 10px 10px}
-.mini{border:1px solid var(--line);background:var(--surface2);border-radius:8px;padding:4px 10px;font-size:.85rem;font-weight:700}
-.mini:hover{border-color:var(--acc-text)}
-.pl.all .pl-pts{display:none}
 .empty{color:var(--muted);font-size:.95rem;padding:6px 2px 14px}
 .add{margin-top:16px;display:grid;gap:8px;border-top:1px dashed var(--line);padding-top:16px}
 .add label{font-size:.8rem;color:var(--muted)}
@@ -67,9 +63,6 @@ h1,h2,h3,p{margin:0}
 .fld:focus{outline:3px solid var(--acc-text);outline-offset:1px}
 
 .main{min-width:0;display:flex;flex-direction:column}
-.top{display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center;justify-content:space-between;padding:18px 34px;border-bottom:1px solid var(--line)}
-.brand{all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:1.15rem}
-.brand:focus-visible{outline:3px solid var(--acc-text);outline-offset:4px}
 .nav{display:flex;flex-wrap:wrap;gap:4px}
 .nav button{background:none;border:0;border-bottom:3px solid transparent;padding:6px 12px;font-weight:700;color:var(--muted)}
 .nav button:hover{color:var(--text)}
@@ -219,7 +212,7 @@ dialog .set{margin-bottom:18px}
   .pl-list{display:flex;overflow-x:auto;padding-bottom:6px}
   .pl{min-width:190px;flex:0 0 auto}
   .hero,.dgrid,.cols{grid-template-columns:1fr}
-  .top,.content,.hints{padding-left:18px;padding-right:18px}
+  .content,.hints{padding-left:18px;padding-right:18px}
 }
 @media (max-width:640px){
   .opts,.evs{grid-template-columns:1fr}
@@ -237,8 +230,7 @@ dialog .set{margin-bottom:18px}
 @media (prefers-reduced-motion:reduce){.imgbox img{transition:none}}
 html.embed.embed{--bg:#1a0d0b;--bg2:#2a1420;--surface:#43203f;--surface2:#522a4d;--line:#e8b47f44;--text:#f7ecdf;--muted:#d0b4a8;--acc:#e8b47f;--on-acc:#331c15;--acc-text:#f0c79a;--ape:#b94a6e;--bad:#d9706c;--ember:#d9706c;--display:'Cinzel',Georgia,serif;--body:'Crimson Pro',Georgia,serif}
 html.embed body{background:transparent;font-size:18px}
-html.embed .brand{display:none}
-html.embed .top{padding:12px 24px}
+html.embed .topbtn{display:none}
 html.embed .btn,html.embed .pl,html.embed .panel{border-radius:14px}
 html.embed h1,html.embed h2{text-transform:uppercase;letter-spacing:.04em}
 </style>
@@ -254,10 +246,6 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opac
 .pl{background:linear-gradient(135deg,#43203fcc,#2a1420cc);border:1px solid #ffffff24;border-radius:14px;transition:transform .2s,box-shadow .2s}
 .pl:hover{transform:translateX(4px)}
 .pl.on{box-shadow:inset 5px 0 0 var(--acc),0 0 28px #e8b47f40;border-color:var(--acc)}
-.pl-pts{text-shadow:0 0 14px #e8b47f88}
-.top{background:#1f0f0d99;backdrop-filter:blur(14px);position:sticky;top:0;z-index:5;border-bottom:1px solid #ffffff1c}
-.brand{background:linear-gradient(90deg,#fff,var(--acc));-webkit-background-clip:text;background-clip:text;color:transparent}
-.brand svg{color:var(--acc);filter:drop-shadow(0 0 8px var(--acc))}
 .nav button[aria-current="page"]{color:#fff;border-bottom-color:var(--acc);text-shadow:0 0 12px var(--acc)}
 .btn{background:#ffffff12;border:1px solid #ffffff2e;border-radius:12px;transition:transform .15s,box-shadow .2s,border-color .2s}
 .btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 24px #0006,0 0 18px #e8b47f44}
@@ -327,74 +315,34 @@ dialog{background:linear-gradient(160deg,#43203f,#241018);border:1px solid var(-
 .t10 li.ok{background:linear-gradient(90deg,#6b9e7266,#6b9e7222);border-color:#6b9e72;animation:pop .5s}
 .t10 li.miss{border-color:var(--bad);color:var(--bad)}
 
-#hud{position:fixed;top:calc(78px + env(safe-area-inset-top,0px));right:14px;z-index:8;display:flex;flex-direction:column;gap:8px;align-items:flex-end;pointer-events:none}
-.hp{display:flex;gap:10px;align-items:center;padding:7px 14px;border-radius:99px;background:#241018dd;border:1px solid #ffffff2e;backdrop-filter:blur(10px);font-weight:700;font-size:.9rem;box-shadow:0 6px 24px #0007}
-.lvp b{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#f0c79a,#e8b47f);color:#331c15;font-family:var(--display)}
-.lvp small{display:block;color:var(--muted);font-size:.7rem;line-height:1}.lvp i{display:block;width:120px;height:6px;border-radius:9px;background:#ffffff22;margin-top:4px;overflow:hidden}
-.lvp u{display:block;height:100%;width:0;background:linear-gradient(90deg,#0f9e9a,#f0c79a);transition:width .6s;box-shadow:0 0 10px #f0c79a}
-.bn{position:fixed;left:50%;transform:translateX(-50%);z-index:60;padding:12px 24px;border-radius:16px;font-weight:800;background:linear-gradient(135deg,#43203f,#2a1420);border:1px solid var(--acc);box-shadow:0 0 40px #e8b47f66;white-space:nowrap;max-width:92vw;overflow:hidden;text-overflow:ellipsis}
-.bn.bad{border-color:var(--bad);box-shadow:0 0 30px #d9706c55}.bn.ach{background:linear-gradient(135deg,#43203f,#2a1420)}
-.fl{position:fixed;z-index:55;font:800 2.6rem var(--display);color:var(--acc);text-shadow:0 0 24px #e8b47f,0 3px 0 #000a;pointer-events:none}
-#chest{position:fixed;inset:0;z-index:70;display:grid;place-items:center;background:#120808cc;backdrop-filter:blur(8px)}
-.cbox{text-align:center;padding:36px 44px;border-radius:26px;background:linear-gradient(160deg,#43203f,#241018);border:1px solid var(--acc);box-shadow:0 0 90px #e8b47f55}
-.gift{font-size:6.5rem;cursor:pointer;filter:drop-shadow(0 0 30px #e8b47f);display:inline-block}
-.prize{font:800 3rem var(--display)}
 .opt.gone{opacity:.15;pointer-events:none;text-decoration:line-through}
-@media(max-width:700px){#hud{top:auto;bottom:76px;right:10px;transform:scale(.88);transform-origin:bottom right}.fl{font-size:2rem}}
 </style>
 <style id="gatecss">
-html.locked .app,html.locked #hud,html.locked #mus,html.locked #fx{display:none!important}
+html.locked .app,html.locked #mus,html.locked #fx{display:none!important}
 #gate{display:none}
-html.locked #gate{display:grid;position:fixed;inset:0;z-index:100;place-items:center;overflow:auto;padding:28px 18px;background:radial-gradient(60% 50% at 20% 10%,#43203fcc,transparent 70%),radial-gradient(50% 45% at 85% 90%,#34407f88,transparent 70%),#1a0d0b}
-.gt-in{width:100%;max-width:880px;text-align:center}
-.gt-brand{font-family:var(--display);font-weight:800;font-size:1.1rem;letter-spacing:.04em;color:var(--acc);margin-bottom:10px}
-.gt-in h1{font-family:var(--display);font-weight:800;font-size:clamp(1.8rem,5vw,3rem);margin-bottom:34px;color:var(--text)}
-.gt-grid{display:flex;flex-wrap:wrap;gap:26px 30px;justify-content:center}
-.gt-p{all:unset;box-sizing:border-box;cursor:pointer;display:grid;gap:12px;justify-items:center;width:132px;color:var(--muted);font-weight:700;transition:transform .2s,color .2s}
-.gt-p:hover,.gt-p:focus-visible{transform:translateY(-6px);color:var(--text)}
-.gt-p:focus-visible{outline:3px solid var(--acc);outline-offset:6px;border-radius:14px}
-.gt-p .av{width:132px;height:132px;border-radius:14px;overflow:hidden;border:3px solid transparent;background:var(--surface2);display:grid;place-items:center;font-family:var(--display);font-size:2.6rem;color:var(--acc);transition:border-color .2s}
-.gt-p:hover .av,.gt-p:focus-visible .av{border-color:var(--acc)}
-.gt-p .av img{width:100%;height:100%;object-fit:cover;display:block}
-.gt-p span.n{overflow-wrap:anywhere;font-size:1.05rem}
-.gt-p.add .av{border:2px dashed var(--line);background:none;font-size:3.4rem;color:var(--muted)}
-.gt-card{max-width:420px;margin:0 auto;display:grid;gap:14px;text-align:left}
-.gt-card .av{width:112px;height:112px;border-radius:14px;overflow:hidden;margin:0 auto 4px;background:var(--surface2)}
-.gt-card .av img{width:100%;height:100%;object-fit:cover;display:block}
-.gt-card label{display:grid;gap:5px;font-weight:700;font-size:.9rem;color:var(--muted)}
-.gt-card .fld{font-size:1.05rem}
-.gt-err{color:var(--bad);font-weight:700;min-height:1.3em;font-size:.95rem}
-.gt-avs{display:grid;grid-template-columns:repeat(auto-fill,minmax(68px,1fr));gap:10px;max-height:240px;overflow:auto;padding:4px}
-.gt-avs button{all:unset;box-sizing:border-box;cursor:pointer;aspect-ratio:1;border-radius:12px;overflow:hidden;border:3px solid transparent;background:var(--surface2)}
-.gt-avs button img{width:100%;height:100%;object-fit:cover;display:block}
-.gt-avs button:hover{border-color:var(--muted)}
-.gt-avs button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
-.gt-avs button[aria-pressed="true"]{border-color:var(--acc);box-shadow:0 0 18px #e8b47f66}
-.gt-note{color:var(--muted);font-size:.9rem;max-width:34em;margin:0 auto}
-.gt-note code{background:var(--surface2);padding:1px 6px;border-radius:5px}
-.me{display:grid;grid-template-columns:46px 1fr auto;gap:10px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin-bottom:20px}
-.me img{width:46px;height:46px;border-radius:10px;object-fit:cover;background:var(--surface2)}
-.me b{display:block;overflow-wrap:anywhere}
-.me small{color:var(--muted)}
+html.locked #gate{display:grid;position:fixed;inset:0;z-index:100;place-items:center;background:radial-gradient(60% 50% at 20% 10%,#43203fcc,transparent 70%),radial-gradient(50% 45% at 85% 90%,#34407f88,transparent 70%),#1a0d0b}
+.gt-load{font-family:var(--display);font-weight:600;color:var(--muted)}
 </style>
 <style id="dailycss">
 .app{display:block}
 .rail,.hints{display:none!important}
 .main{max-width:1100px;margin:0 auto;width:100%}
-.top{padding:14px 34px}
-.who{display:flex;align-items:center;gap:12px}
-.who img{width:38px;height:38px;border-radius:10px;object-fit:cover;background:var(--surface2)}
-.who b{display:block;line-height:1.15;overflow-wrap:anywhere}
-.who small{color:var(--muted);font-size:.8rem}
+.topbtn{display:flex;align-items:center;min-height:64px;padding:calc(12px + env(safe-area-inset-top,0px)) 34px 0}
+.portal-back{all:unset;box-sizing:border-box;cursor:pointer;display:inline-flex;align-items:center;gap:10px;padding:12px 22px;border-radius:14px;background:linear-gradient(135deg,#f0c79a,#e8b47f 60%,#a8993a);color:var(--on-acc);font-weight:800;font-size:1rem;box-shadow:0 6px 22px #e8b47f55,inset 0 1px 0 #fff8;transition:transform .15s,box-shadow .2s}
+.portal-back:hover{transform:translateY(-2px);box-shadow:0 10px 28px #e8b47f77,inset 0 1px 0 #fff8}
+.portal-back:active{transform:scale(.97)}
+.portal-back:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.portal-back svg{flex:none}
+@media (max-width:1000px){.topbtn{padding-left:18px;padding-right:18px}}
 .dayband{display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center;justify-content:space-between;background:#ffffff0d;border:1px solid #ffffff25;border-radius:16px;padding:14px 22px;margin:0 0 26px;backdrop-filter:blur(10px)}
 .dayband .big{font-family:var(--display);font-weight:800;font-size:1.25rem}
 .dayband .bar{flex:1;min-width:140px;max-width:300px;height:10px;border-radius:99px;background:#0007;border:1px solid #ffffff30;overflow:hidden}
 .dayband .bar i{display:block;height:100%;background:linear-gradient(90deg,#f0c79a,#e8b47f);box-shadow:0 0 14px #e8b47f}
 .dayband .cd{font-family:var(--display);font-weight:600;color:var(--acc);font-variant-numeric:tabular-nums}
 .mode .gm{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;margin-top:auto;padding-top:10px}
-.mode .flame{font:800 1.2rem var(--display);color:#ffd9a0;text-shadow:0 0 14px #e8803a99}
-.mode .flame small{font:600 .75rem var(--body);color:#e6cfc2;text-shadow:none}
-.mode .flame.off{color:#b79a98;text-shadow:none;filter:grayscale(1)}
+.mode .sinf{font:800 1.05rem var(--display);color:var(--acc);text-shadow:0 0 14px #e8b47f66}
+.mode .sinf.off{color:#b79a98;text-shadow:none}
+.sinfwin{display:inline-flex;align-items:center;padding:6px 14px;border-radius:99px;background:#0006;border:1px solid var(--acc);color:var(--acc);font-weight:800}
 .mode .rec{font-size:.85rem;color:#e6cfc2}
 .mode .gm+em{margin-top:12px}
 .mode.done{cursor:default}
@@ -402,7 +350,6 @@ html.locked #gate{display:grid;position:fixed;inset:0;z-index:100;place-items:ce
 .mode.done.w em{color:#9fd8a6;border-color:#9fd8a6}
 .mode.done.l em{color:var(--bad);border-color:var(--bad)}
 .mode.nolock{opacity:.55}
-.flamechip{display:inline-flex;gap:6px;align-items:center;padding:6px 14px;border-radius:99px;background:#0006;border:1px solid #ffffff2e;font-weight:700}
 .foot{padding:16px 34px 28px;color:var(--muted);font-size:.85rem}
 @media (max-width:1000px){.foot{padding-left:18px;padding-right:18px}}
 /* ===== Apexora tic tac toe ===== */
@@ -440,14 +387,13 @@ html.locked #gate{display:grid;position:fixed;inset:0;z-index:100;place-items:ce
 @media (max-width:560px){.tt-board{gap:6px}.tt-h{padding:6px 3px}.tt-list{grid-template-columns:1fr}}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.3/confetti.browser.min.js"></script>
 <script>try{var k='apx-arr:sala';if(sessionStorage.getItem(k))document.documentElement.classList.add('apx-seen');else sessionStorage.setItem(k,1)}catch(e){}</script>
 <link rel="stylesheet" href="https://apexora.github.io/Portal/apexora-ui.css">
 <link rel="stylesheet" href="apexora-theme.css">
 </head>
 <body>
 <canvas id="fx" aria-hidden="true"></canvas>
-<div id="gate" role="dialog" aria-modal="true" aria-label="Entrar a la sala"></div>
+<div id="gate" role="status" aria-label="Entrando a la sala"><p class="gt-load">Entrando a la sala…</p></div>
 <div class="app">
   <div class="main" id="main"></div>
 </div>
@@ -540,7 +486,7 @@ const TRIVIA=[
 ["Personajes",3,"¿Cómo se llama la armadura robótica de la que depende Gobz Gobinson?","Armazón Basón V.032",["Morfo","Ram Dao","Inargo 7"],"Gobz mide apenas 1,12 m."],
 ["Personajes",3,"¿Qué idioma habla Valeria con sus criaturas?","Lukimora",["Ganús","Umbrio","Zzamuo"],"Laki lo entendió perfectamente dentro de su visión."],
 ["Personajes",3,"¿Cómo se llama el traje simbiótico de Andreas Light que copia habilidades y apariencia?","Morfo",["Armazón Basón","Exotraje de Aurora","Velo Carmesí"],"Funciona mediante una proyección lumínica."],
-["Personajes",3,"¿Quién sostuvo una sección de la grada para salvar al público en Umbra?","Vela, arquitecta de Lumis",["Astra Skyfall","Burun","Lyra Shadowthorn"],"Astra, mientras tanto, absorbía los pulsos con pequeños vórtices."],
+["Personajes",3,"¿Quién sostuvo una sección de la grada para salvar al público en Umbra?","Vela, arquitecta de Luxor",["Astra Skyfall","Burun","Lyra Shadowthorn"],"Astra, mientras tanto, absorbía los pulsos con pequeños vórtices."],
 ["Personajes",3,"¿Quién es el padre no biológico y líder de los Ocho de Negatt?","Alnasi",["Tsuji","Caelum","Fudo"],"Los cría y comanda en nombre de Tsuji."],
 ["Personajes",3,"¿Cómo se llama el guerrero orco de Zudodh Ez, padre de Zarick?","Khagzol «Zodd» Shazolg",["Grakk","Drog","Moktar"],"Murió defendiendo la Caverna Mortuoria."],
 ["Historia", 1, "¿Cuántos participantes tuvo el Torneo de Umbra del año 1011?", "16", ["8", "32", "12"], "Entre ellos, del campamento: Vina, Zarick, Karim y Bane. Otras naciones no presentaron participantes."],
@@ -663,20 +609,20 @@ const $=(s,r=document)=>r.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const uid=()=>Math.random().toString(36).slice(2,9);
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
-const TRIVIA_PTS=[0,10,20,30],VOF_PTS=[0,10,15,20];
 const MODES={
- trivia:{name:"Trivia del Archivo",desc:"Una pregunta con cuatro respuestas: mitología, mundo, personajes e historia.",pts:"10 a 30"},
- quien:{name:"¿Quién soy?",desc:"Las pistas se revelan de a una. Cuantas menos se usen, más se gana.",pts:"10 a 50"},
- vof:{name:"Verdadero o falso",desc:"Una afirmación sobre Apexora. ¿Verdad o mentira?",pts:"10 a 20"},
- crono:{name:"Cronología rota",desc:"Cuatro eventos desordenados. Ordénenlos del más antiguo al más reciente.",pts:"hasta 40"},
- imagen:{name:"Adivina la imagen",desc:"Una imagen borrosa que se aclara de a poco. ¿Qué lugar, personaje o deidad es?",pts:"10 a 30"}
+ trivia:{name:"Trivia del Archivo",desc:"Una pregunta con cuatro respuestas: mitología, mundo, personajes e historia."},
+ quien:{name:"¿Quién soy?",desc:"Las pistas se revelan de a una. Cuantas menos se usen, más se gana."},
+ vof:{name:"Verdadero o falso",desc:"Una afirmación sobre Apexora. ¿Verdad o mentira?"},
+ crono:{name:"Cronología rota",desc:"Cuatro eventos desordenados. Ordénenlos del más antiguo al más reciente."},
+ imagen:{name:"Adivina la imagen",desc:"Una imagen borrosa que se aclara de a poco. ¿Qué lugar, personaje o deidad es?"}
 };
 
 /* ===== estado ===== */
 const KEY="apexora-sala-v1"+(APX_UID?":"+APX_UID:"");
-const defaults=()=>({currency:"Fragmentos",players:[],active:null,
- log:[],custom:[],settings:{timer:30,autoNext:true,sound:true,cheat:false,onlyCustom:false},used:{},daily:{}});
-function load(){try{const r=localStorage.getItem(KEY);if(r){const o=JSON.parse(r),d=defaults();return Object.assign(d,o,{settings:Object.assign(d.settings,o.settings||{})})}}catch(e){}return defaults()}
+const defaults=()=>({custom:[],settings:{timer:30,autoNext:true,sound:true,cheat:false,onlyCustom:false},used:{},daily:{}});
+function load(){try{const r=localStorage.getItem(KEY);if(r){const o=JSON.parse(r),d=defaults(),x=Object.assign(d,o,{settings:Object.assign(d.settings,o.settings||{})});
+ /* limpia lo que dejaron los sistemas viejos (jugadores locales, puntos, rachas) */
+ ["currency","players","active","log"].forEach(k=>delete x[k]);Object.values(x.daily||{}).forEach(g=>{delete g.streak;delete g.best});return x}}catch(e){}return defaults()}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}window.cloudPush&&cloudPush()}
 let S=load();
 let view="home",C=null,tmr=null,pendingYes=null,ringSel=null,lastPts={};
@@ -692,27 +638,20 @@ function beep(f,d){if(window.__beep)window.__beep(f,d)}
 let toastT=null;
 function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove("show"),2400)}
 
-/* ===== jugadores y puntos ===== */
-const cur=()=>S.currency||"Fragmentos";
-const P=id=>S.players.find(p=>p.id===id);
-function targets(){if(S.active==="all")return S.players.map(p=>p.id);return P(S.active)?[S.active]:[]}
-function targetLabel(){if(S.active==="all")return "todo el grupo";const p=P(S.active);return p?p.name:"…"}
-function applyDelta(map,text,kind="score"){
- const applied={};
- for(const p of S.players){if(map[p.id]){const n=Math.max(0,p.pts+map[p.id]);applied[p.id]=n-p.pts;p.pts=n}}
- S.log.unshift({id:uid(),ts:Date.now(),kind,text,deltas:applied});S.log=S.log.slice(0,200);save();
-}
-function award(n,text){if(!S.players.length&&window.ensureP)ensureP();n=Math.round(n*(window.Prog?Prog.mult():1));
- const t=targets();if(!t.length||!n){if(!t.length)toast("Elige a un jugador en el panel izquierdo");return false}
- const m={};t.forEach(id=>m[id]=n);
- applyDelta(m,`${targetLabel()}: ${text}`);beep(880,140);
- toast(`+${n} ${cur().toLowerCase()} para ${targetLabel()}`);if(window.Prog)Prog.win(n);return true;
-}
-function nextPlayer(){
- if(!S.players.length)return;
- const i=S.players.findIndex(p=>p.id===S.active);
- S.active=S.players[(i+1)%S.players.length].id;save();
-}
+/* ===== sinfalitas =====
+   Todo el premio vive en el Portal. Cada juego da como mucho una vez al día y nunca más de SINF_MAX.
+   SINF = lo máximo que da cada juego; RW[modo]() devuelve un factor 0–1 según cómo se jugó (pistas, fallos…). */
+const SINF_MAX=20;
+const SINF={vof:4,trivia:6,imagen:8,quien:10,impostor:10,wordle:10,conex:12,top10:12,crono:12,tateti:20};
+window.RW=window.RW||{};
+RW.trivia=()=>C&&C.hinted?.5:1;
+RW.quien=()=>C?Math.max(.2,(6-Math.min(5,C.clues||1))/5):1;
+RW.imagen=()=>C?[1,.6,.3][C.step||0]:1;
+RW.crono=()=>C?((C.cor==null||C.cor>=4?1:.75)*(C.chint?.7:1)):1;
+function rewardOf(m){const base=Math.min(SINF_MAX,SINF[m]||0),f=Math.min(1,RW[m]?RW[m]():1);return Math.max(1,Math.min(SINF_MAX,Math.round(base*f)))}
+const sinfWord=n=>n===1?"sinfalita":"sinfalitas";
+const sinfTxt=()=>C&&C.sinf?` · +${C.sinf} ${sinfWord(C.sinf)}`:"";
+const premioTxt=()=>{const n=rewardOf(C.mode);return `Premio: ${n} ${sinfWord(n)}`};
 
 /* ===== temporizador ===== */
 function stopTimer(){clearInterval(tmr);tmr=null;if(C)C.running=false}
@@ -763,21 +702,14 @@ function newItem(mode){
   return {evs,order:evs.slice().sort((a,b)=>a.y-b.y)};
  }
 }
-const cluePts=()=>60-10*C.clues;
 const shortQ=s=>s.length>60?s.slice(0,57)+"…":s;
 const LET="ABCD";
 
 function playHead(title){
- const st=streakOf(DG(C.mode));
- return `<div class="playhead"><div class="row"><button class="btn ghost" data-act="home">‹ Juegos</button><h1 class="page" style="margin:0">${esc(title)}</h1></div>
- <div class="flamechip" title="Días seguidos jugando este juego">🔥 ${st} ${st===1?"día":"días"}</div></div>`;
+ return `<div class="playhead"><div class="row"><button class="btn ghost" data-act="home">‹ Juegos</button><h1 class="page" style="margin:0">${esc(title)}</h1></div></div>`;
 }
 function cheatLine(t){return S.settings.cheat&&!C.revealed?`<p class="cheat">Chuleta del DM: ${esc(t)}</p>`:""}
-function awardBtns(label,pts,recommended){
- const dis=!targets().length?"disabled":"";
- return `<div class="ctrls" style="margin-top:20px"><button class="btn ${recommended?"pri":""}" data-act="give" data-n="${pts}" data-t="${esc(label)}" ${dis}>Otorgar +${pts} a ${esc(targetLabel())}</button><button class="btn ${recommended?"":"pri"}" data-act="none">Sin puntos</button></div>`;
-}
-function nextBar(){const st=streakOf(DG(C.mode));return `<div class="ctrls" style="margin-top:20px"><button class="btn pri" data-act="home">Volver a los juegos</button><span class="flamechip">🔥 ${st} ${st===1?"día":"días"} de racha</span><span style="color:var(--muted)">El próximo reto llega a las 00:00</span></div>`}
+function nextBar(){return `<div class="ctrls" style="margin-top:20px"><button class="btn pri" data-act="home">Volver a los juegos</button>${C&&C.sinf?`<span class="sinfwin">+${C.sinf} ${sinfWord(C.sinf)}</span>`:""}<span style="color:var(--muted)">El próximo reto llega a las 00:00</span></div>`}
 
 function stageChoice(){
  const it=C.item,v=C.mode==="vof";
@@ -795,9 +727,9 @@ function stageChoice(){
   const vt=C.timeUp&&correct===null?"⏱ Se acabó el tiempo":correct===null?"Respuesta revelada":correct?"✓ Correcto":"✗ Incorrecto";
   res=`<div class="result"><div class="verdict ${correct===true?"ok":(correct===false||C.timeUp)?"no":""}">${vt}</div><p>${correct!==true?`La respuesta era <b>${esc(it.opts[it.ai])}</b>. `:""}${esc(it.exp||"")}</p>${nextBar()}</div>`;
  }
- return `<div class="stage"><div class="meta">${v?"Verdadero o falso":esc(it.cat)}<span class="gem" aria-label="dificultad ${it.lvl} de 3">${gems}</span><span>${C.pts} ${cur().toLowerCase()}</span></div>
+ return `<div class="stage"><div class="meta">${v?"Verdadero o falso":esc(it.cat)}<span class="gem" aria-label="dificultad ${it.lvl} de 3">${gems}</span><span>${premioTxt()}</span></div>
  <h2 class="q">${esc(it.q)}</h2><div class="opts ${v?"two":""}">${opts}</div>
- <div class="ctrls">${C.revealed?"":`${v?"":`<button class="btn" data-act="hint50" ${C.hinted?"disabled":""}>${C.hinted?"Pista usada":"Pista 50/50 · −50% pts"}</button>`}`}${timerHTML()}</div>
+ <div class="ctrls">${C.revealed?"":`${v?"":`<button class="btn" data-act="hint50" ${C.hinted?"disabled":""}>${C.hinted?"Pista usada":"Pista 50/50 · −50% premio"}</button>`}`}${timerHTML()}</div>
  ${cheatLine(it.opts[it.ai])}${res}</div>`;
 }
 function stageQuien(){
@@ -806,26 +738,11 @@ function stageQuien(){
  let ctr="";
  if(!C.revealed){
   ctr=`<div class="ctrls"><button class="btn" data-act="clue" ${C.clues>=5?"disabled":""}>Otra pista</button>
-  <input class="fld gin" id="gi" placeholder="¿Quién soy?" autocomplete="off" aria-label="Tu respuesta"><button class="btn pri" data-act="guess">Responder (+${cluePts()})</button><button class="btn" data-act="giveup">Rendirme</button></div>`;
+  <input class="fld gin" id="gi" placeholder="¿Quién soy?" autocomplete="off" aria-label="Tu respuesta"><button class="btn pri" data-act="guess">Responder</button><button class="btn" data-act="giveup">Rendirme</button></div>`;
  }else{
   body+=`<div class="answer"><h3>${esc(it.a)}</h3><p>${esc(it.bio)}</p></div>${nextBar()}`;
  }
- return `<div class="stage"><div class="meta">${esc(it.cat)}<span>Pista ${C.clues} de 5</span><span>Vale ${cluePts()} ${cur().toLowerCase()}</span></div>${body}${ctr}${cheatLine(it.a)}</div>`;
-}
-function stageCrono(){
- const it=C.item,list=C.revealed?it.order:it.evs;
- const cards=list.map((e,i)=>{
-  const L=LET[it.evs.indexOf(e)];
-  return C.revealed
-   ?`<div class="ev done"><span class="lt">${i+1}</span><b>${esc(e.t)}</b><span class="yr">Año ${e.y}${e.y===1012?" · presente":""}</span><span style="grid-column:2">${esc(e.d)}</span></div>`
-   :`<div class="ev"><span class="lt">${L}</span><b>${esc(e.t)}</b><span>${esc(e.d)}</span></div>`;
- }).join("");
- let res="";
- if(C.revealed)res=`<div class="result">${C.resolved?nextBar():`<div class="verdict">Este es el orden correcto</div><div class="ctrls" style="margin-top:12px"><button class="btn pri" data-act="give" data-n="40" data-t="Cronología perfecta" ${targets().length?"":"disabled"}>Perfecto +40</button><button class="btn" data-act="give" data-n="20" data-t="Cronología casi perfecta" ${targets().length?"":"disabled"}>Casi +20</button><button class="btn" data-act="none">Sin puntos</button></div>`}</div>`;
- return `<div class="stage"><div class="meta">Cronología rota<span>Del más antiguo al más reciente</span><span>hasta 40 ${cur().toLowerCase()}</span></div>
- <h2 class="q">Ordenen estos cuatro eventos. Digan las letras en voz alta.</h2><div class="evs">${cards}</div>
- <div class="ctrls">${C.revealed?"":`<button class="btn" data-act="start">Iniciar tiempo</button><button class="btn pri" data-act="reveal">Revelar orden</button>`}${timerHTML()}</div>
- ${S.settings.cheat&&!C.revealed?`<p class="cheat">Chuleta del DM: ${it.order.map(e=>LET[it.evs.indexOf(e)]).join(" → ")}</p>`:""}${res}</div>`;
+ return `<div class="stage"><div class="meta">${esc(it.cat)}<span>Pista ${C.clues} de 5</span><span>${premioTxt()}</span></div>${body}${ctr}${cheatLine(it.a)}</div>`;
 }
 function viewPlay(){
  const m=C.mode;
@@ -834,8 +751,7 @@ function viewPlay(){
  return playHead(MODES[m].name)+st;
 }
 
-/* ===== retos diarios: estado, racha y registro ===== */
-const STREAK_NEEDS_WIN=false; /* false: la racha 🔥 cuenta cada día que juegas · true: solo sube si ganas ese día */
+/* ===== retos diarios: estado y registro ===== */
 const GAME_ORDER=["trivia","vof","quien","imagen","crono","wordle","conex","impostor","top10"];
 const GAME_COLOR={trivia:"#e8b47f",quien:"#b94a6e",vof:"#0f9e9a",crono:"#d9706c",imagen:"#34407f",wordle:"#6b9e72",conex:"#a8993a",impostor:"#b94a6e",top10:"#0f9e9a"};
 const GAME_ICON={trivia:"📜",quien:"🎭",vof:"⚖️",crono:"⏳",imagen:"🔮",wordle:"🔤",conex:"🧩",impostor:"🕵️",top10:"🔟"};
@@ -848,17 +764,24 @@ const todayKey=()=>dayKey(new Date());
 const prevKey=k=>{const p=k.split("-").map(Number);return dayKey(new Date(p[0],p[1]-1,p[2]-1))};
 const nextMidnight=()=>{const n=new Date();return new Date(n.getFullYear(),n.getMonth(),n.getDate()+1)};
 function cdText(){const s=Math.max(0,Math.floor((nextMidnight()-new Date())/1000));return [Math.floor(s/3600),Math.floor(s%3600/60),s%60].map(n=>String(n).padStart(2,"0")).join(":")}
-const DG=m=>{S.daily=S.daily||{};return S.daily[m]||(S.daily[m]={last:"",streak:0,best:0,wins:0,losses:0,pending:"",today:null})};
-function streakOf(g){const t=todayKey();return g.last===t||g.last===prevKey(t)?g.streak:0}
+const DG=m=>{S.daily=S.daily||{};return S.daily[m]||(S.daily[m]={last:"",wins:0,losses:0,pending:"",today:null})};
 function finishDaily(m,win,txt,dk){
  const g=DG(m);dk=dk||g.pending||todayKey();
  if(g.last&&g.last>=dk){g.pending="";save();return}
- g.streak=(STREAK_NEEDS_WIN&&!win)?0:(g.last===prevKey(dk)?g.streak+1:1);
- g.best=Math.max(g.best||0,g.streak);g.last=dk;g.pending="";
+ g.last=dk;g.pending="";
  if(win)g.wins++;else g.losses++;
- g.today={d:dk,win:!!win,txt:txt||""};save();
- /* esencias del Portal: una vez por modo y día (el return de arriba evita repetir) */
- try{if(window.APX){window.APX.premiar(win?15:3,0);if(win)window.APX.desbloquearLogro("sala_primer_reto")};window.APX.registrarActividad("sala","reto",{modo:(MODES[m]||{}).name||m,gano:!!win})}catch(e){}
+ /* sinfalitas del Portal: una vez por juego y día (el return de arriba evita repetir) */
+ const n=win&&C&&C.mode===m?rewardOf(m):0;
+ if(C&&C.mode===m)C.sinf=n;
+ g.today={d:dk,win:!!win,txt:txt||"",sinf:n};save();
+ try{
+  const X=window.APX;
+  if(X){
+   if(n&&X.premiar)Promise.resolve(X.premiar(n,0)).catch(()=>{});
+   if(X.registrarActividad)Promise.resolve(X.registrarActividad("sala","reto",{modo:(MODES[m]||{}).name||m,gano:!!win})).catch(()=>{});
+  }
+ }catch(e){}
+ if(n)toast(`+${n} ${sinfWord(n)}`);
 }
 function dailyEnd(win,txt){
  if(!C||C.rec||!C.mode)return false;
@@ -908,7 +831,6 @@ function startDaily(m){
   else{
    C={mode:m,resolved:false,revealed:false,chosen:null,running:false,remaining:S.settings.timer,timeUp:false,clues:1};
    C.item=newItem(m);
-   C.pts=m==="trivia"?TRIVIA_PTS[C.item.lvl]:m==="vof"?VOF_PTS[C.item.lvl]:0;
   }
  }finally{Math.random=oldRandom;pick=oldPick;window.DAILY_ON=false}
  render();window.scrollTo(0,0);
@@ -922,15 +844,17 @@ function viewHome(){
  const t=todayKey(),total=GAME_ORDER.length,done=GAME_ORDER.filter(m=>DG(m).last===t).length;
  const cards=GAME_ORDER.map(m=>{
   const mo=MODES[m];if(!mo)return "";
-  const g=DG(m),played=g.last===t,st=streakOf(g),lb=REC_LABEL[m]||["victoria","victorias","derrota","derrotas"];
+  const g=DG(m),played=g.last===t,lb=REC_LABEL[m]||["victoria","victorias","derrota","derrotas"];
   const nolock=m==="imagen"&&!IMGS.length,won=played&&g.today&&g.today.win;
   const rec=g.wins+" "+(g.wins===1?lb[0]:lb[1])+" · "+g.losses+" "+(g.losses===1?lb[2]:lb[3]);
   const state=played?(won?"✓ Hecho hoy":"✗ Hecho hoy"):nolock?"Sin imágenes aún":"Jugar hoy";
   const cls=["mode"];if(played)cls.push("done",won?"w":"l");if(nolock)cls.push("nolock");
-  const aria=mo.name+". "+(played?"Ya jugado hoy. ":nolock?"No disponible. ":"Disponible hoy. ")+"Racha de "+st+" "+plural(st,"día","días")+". "+rec+".";
-  return `<button class="${cls.join(" ")}" data-act="play" data-m="${m}" style="--c:${GAME_COLOR[m]}" aria-label="${esc(aria)}"><i class="ic">${GAME_ICON[m]}</i><b>${esc(mo.name)}</b><span>${esc(played&&g.today&&g.today.txt?g.today.txt:mo.desc)}</span><div class="gm"><span class="flame ${st?"":"off"}">🔥 ${st}<small> ${plural(st,"día","días")}</small></span><span class="rec">${esc(rec)}</span></div><em>${state}</em></button>`;
+  const mx=Math.min(SINF_MAX,SINF[m]||0),got=g.today&&g.today.sinf;
+  const earn=played?(got?`+${got} ${sinfWord(got)}`:"Sin premio hoy"):`Hasta ${mx} ${sinfWord(mx)}`;
+  const aria=mo.name+". "+(played?"Ya jugado hoy. ":nolock?"No disponible. ":"Disponible hoy. ")+earn+". "+rec+".";
+  return `<button class="${cls.join(" ")}" data-act="play" data-m="${m}" style="--c:${GAME_COLOR[m]}" aria-label="${esc(aria)}"><i class="ic">${GAME_ICON[m]}</i><b>${esc(mo.name)}</b><span>${esc(played&&g.today&&g.today.txt?g.today.txt:mo.desc)}</span><div class="gm"><span class="sinf ${played&&!got?"off":""}">◈ ${earn}</span><span class="rec">${esc(rec)}</span></div><em>${state}</em></button>`;
  }).join("");
- return `<h1 class="page">Sala de Desafíos</h1><p class="sub">Cada día hay un reto nuevo en cada juego y tienes un solo intento. La racha 🔥 sube por cada día seguido que juegas.</p>
+ return `<h1 class="page">Sala de Desafíos</h1><p class="sub">Cada día hay un reto nuevo en cada juego y tienes un solo intento. Cada reto ganado suma unas pocas sinfalitas a tu perfil del Portal.</p>
  <div class="dayband"><div class="big">Hoy llevas ${done} de ${total}</div><div class="bar" role="progressbar" aria-label="Juegos de hoy" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${done}"><i style="width:${done/total*100}%"></i></div><div>Retos nuevos en <span class="cd" id="cd">${cdText()}</span></div></div>
  <div class="modes">${cards}</div>`;
 }
@@ -956,38 +880,29 @@ async function initImagenes(){
 }
 /* ===== Adivina la imagen ===== */
 const imgQ=c=>c==="Personaje"||c==="Deidad"?"¿Quién es?":c==="Lugar"?"¿Qué lugar es?":"¿Qué es?";
-const IMG_PTS=[30,20,10],IMG_BLUR=[26,12,0];
+const IMG_BLUR=[26,12,0];
 function stageImagen(){
  const it=C.item;
  if(!it)return `<div class="stage"><p class="scenetxt">Todavía no hay imágenes para este juego.</p><div class="ctrls"><button class="btn pri" data-act="home">Volver a los juegos</button></div></div>`;
- const step=C.step||0,pts=IMG_PTS[step],blur=C.revealed?0:IMG_BLUR[step];
+ const step=C.step||0,blur=C.revealed?0:IMG_BLUR[step];
  let ctr="";
- if(!C.revealed)ctr=`<div class="ctrls"><button class="btn" data-act="imgstep" ${step>=2?"disabled":""}>Aclarar imagen</button><input class="fld gin" id="gi" placeholder="¿Qué es?" autocomplete="off" aria-label="Tu respuesta"><button class="btn pri" data-act="imgguess">Responder (+${pts})</button><button class="btn" data-act="giveup">Rendirme</button></div>`;
+ if(!C.revealed)ctr=`<div class="ctrls"><button class="btn" data-act="imgstep" ${step>=2?"disabled":""}>Aclarar imagen</button><input class="fld gin" id="gi" placeholder="¿Qué es?" autocomplete="off" aria-label="Tu respuesta"><button class="btn pri" data-act="imgguess">Responder</button><button class="btn" data-act="giveup">Rendirme</button></div>`;
  else ctr=`<div class="answer"><h3>${esc(it.answer)}</h3><p>${esc(it.cat||"")}</p></div>${nextBar()}`;
- return `<div class="stage"><div class="meta">${esc(it.cat||"Imagen")}<span>Nitidez ${step+1} de 3</span><span>Vale ${pts} ${cur().toLowerCase()}</span></div>
+ return `<div class="stage"><div class="meta">${esc(it.cat||"Imagen")}<span>Nitidez ${step+1} de 3</span><span>${premioTxt()}</span></div>
  <h2 class="q">${imgQ(it.cat)}</h2>
  <div class="imgbox"><img src="${esc(it.src)}" alt="${C.revealed?esc(it.answer):"Imagen por adivinar"}" style="filter:blur(${blur}px)"></div>${ctr}${cheatLine(it.answer)}</div>`;
 }
 /* ===== armado ===== */
-function meHTML(){
- const p=window.PROFILE;if(!p)return "";const me=P(S.active);
- return `<div class="who">${p.avatar?`<img src="avatars/${esc(p.avatar)}" alt="" width="38" height="38">`:""}<div><b>${esc(p.name)}</b><small>${me?me.pts:0} ${esc(cur().toLowerCase())}</small></div><button class="mini" data-act="logout">Cambiar perfil</button></div>`;
-}
-/* quien juega es el dueño de la cuenta: un solo jugador, con su nombre */
-function normPlayer(){
- if(!window.PROFILE)return;
- const nm=PROFILE.name||"Jugador",p=S.players[0]||{id:uid(),name:nm,char:"",pts:0};
- if(S.players.length!==1||S.players[0]!==p||S.active!==p.id||p.name!==nm){p.name=nm;S.players=[p];S.active=p.id;save()}
-}
+const PORTAL_URL="/Portal/";
 function renderMain(){
  document.documentElement.dataset.view=view;
  const body=view==="play"&&C?viewPlay():viewHome();
- $("#main").innerHTML=`<header class="top"><button class="brand" data-act="home"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="13" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15 2 L12 10 L17 14 L11 19 L16 28" fill="none" stroke="var(--ember)" stroke-width="2.4" stroke-linejoin="bevel"/></svg>Apexora</button>${meHTML()}</header>
+ $("#main").innerHTML=`<div class="topbtn"><button class="portal-back" data-act="portal"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.5 4 6.5 10l6 6"/></svg>Volver al Portal</button></div>
  <main class="content">${body}</main>
  <footer class="foot">Los retos se renuevan cada día a las 00:00, hora de tu dispositivo.</footer>`;
  if(view==="play"&&C&&!(window.GM&&GM.has(C.mode)))paintTimer();
 }
-function render(){normPlayer();renderMain()}
+function render(){renderMain()}
 
 /* ===== diálogos ===== */
 function dlg(html){const d=$("#dlg");d.innerHTML=html;if(!d.open)d.showModal()}
@@ -1000,7 +915,11 @@ function ask(title,text,yes,label="Confirmar"){
 /* ===== acciones ===== */
 const A={
  close(){closeDlg()},
- logout(){window.FB&&FB.logout()},
+ portal(){
+  const go=()=>{location.href=PORTAL_URL};
+  if(view==="play"&&C&&!C.rec&&DG(C.mode).pending){const m=C.mode;
+   ask("¿Volver al Portal?","Si sales ahora el reto cuenta como derrota y no podrás volver a jugarlo hasta mañana.",()=>{finishDaily(m,false,"Saliste antes de terminar");go()},"Salir y perder");return}
+  go()},
  yes(){const f=pendingYes;pendingYes=null;closeDlg();if(f)f()},
  play(b){startDaily(b.dataset.m)},
  home(){
@@ -1072,10 +991,10 @@ const _b=window.toast;
 (function(){
 const SH=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]),RN=a=>a[Math.floor(Math.random()*a.length)];
 const MODS={
-wordle:{name:"Wordle de Apexora",desc:"Adivina el nombre secreto del mundo en 6 intentos. Verde, ámbar o gris.",pts:"10 a 60 (−20 con pista)"},
-conex:{name:"Conexiones",desc:"16 palabras, 4 grupos ocultos. Agrúpalas sin gastar tus 4 vidas.",pts:"20 a 50"},
-impostor:{name:"Impostor",desc:"Tres comparten algo. Uno no pertenece. Encuentra al intruso en 5 rondas.",pts:"hasta 50"},
-top10:{name:"Top 10",desc:"Nombra los elementos de una lista oculta del lore: dioses, naciones, personajes. Tienes 5 vidas.",pts:"hasta 50"}};
+wordle:{name:"Wordle de Apexora",desc:"Adivina el nombre secreto del mundo en 6 intentos. Verde, ámbar o gris."},
+conex:{name:"Conexiones",desc:"16 palabras, 4 grupos ocultos. Agrúpalas sin gastar tus 4 vidas."},
+impostor:{name:"Impostor",desc:"Tres comparten algo. Uno no pertenece. Encuentra al intruso en 5 rondas."},
+top10:{name:"Top 10",desc:"Nombra los elementos de una lista oculta del lore: dioses, naciones, personajes. Tienes 5 vidas."}};
 Object.assign(MODES,MODS);
 const WORDS=LORE.words;
 const CATS=LORE.cats;
@@ -1084,26 +1003,26 @@ const IMP=LORE.imp;
 const NZ=s=>String(s).normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9 ]/g,"").trim();
 const LISTS=LORE.lists;
 let lt=-1;
-function tend(){const f=G.f.filter(Boolean).length,t=G.l[1].length,p=Math.max(0,Math.round(f/t*50)-5*(G.hn||0));G.over=true;G.win=f===t;G.pts=p;G.txt=`Encontraste ${f} de ${t}.`;if(p)award(p,"Top 10: "+G.l[0]);dailyEnd(G.win,G.txt)}
+function tend(){const f=G.f.filter(Boolean).length,t=G.l[1].length;G.over=true;G.win=f===t;G.txt=`Encontraste ${f} de ${t}.`;dailyEnd(G.win,G.txt)}
 let G={};
 const KR=["QWERTYUIOP","ASDFGHJKL","ZXCVBNM"];
 function ev(g,w){const r=Array(w.length).fill("no"),u={};for(let i=0;i<w.length;i++)if(g[i]===w[i])r[i]="ok";else u[w[i]]=(u[w[i]]||0)+1;for(let i=0;i<w.length;i++)if(r[i]!=="ok"&&u[g[i]]>0){r[i]="pr";u[g[i]]--}return r}
-function fin(win,pts,txt){G.over=true;G.win=win;G.txt=txt;G.pts=pts;if(win)award(pts,txt);dailyEnd(win,txt)}
-function res(){if(!G.over)return"";return `<div class="result"><div class="verdict ${G.win||G.pts?"ok":"no"}">${G.win?"¡Victoria! +"+G.pts:G.pts?"Terminaste con +"+G.pts:"Derrota"}</div><p>${esc(G.txt)}</p>${nextBar()}</div>`}
+function fin(win,txt){G.over=true;G.win=win;G.txt=txt;dailyEnd(win,txt)}
+function res(){if(!G.over)return"";return `<div class="result"><div class="verdict ${G.win?"ok":"no"}">${G.win?"¡Victoria!"+sinfTxt():"Derrota"}</div><p>${esc(G.txt)}</p>${nextBar()}</div>`}
 const V={
-wordle(){const w=G.w[0],L=w.length;let h=`<div class="stage"><p class="meta"><span class="gem">${L} letras</span>${G.hint?`<span>Pista: ${esc(G.w[1])}</span>`:G.over?"":`<button class="btn" data-act="gh">Pedir pista (−20 pts)</button>`}</p><div class="wr">`;
+wordle(){const w=G.w[0],L=w.length;let h=`<div class="stage"><p class="meta"><span class="gem">${L} letras</span>${G.hint?`<span>Pista: ${esc(G.w[1])}</span>`:G.over?"":`<button class="btn" data-act="gh">Pedir pista · menos premio</button>`}</p><div class="wr">`;
  for(let r=0;r<6;r++){h+="<div>";for(let i=0;i<L;i++){const g=G.rows[r];let c="",t="";if(g){t=g[i];c=G.ev[r][i]}else if(r===G.rows.length&&!G.over){t=G.cur[i]||"";c=t?"f":""}h+=`<span class="wc ${c}">${t}</span>`}h+="</div>"}
  h+=`</div><div class="kb">${KR.map((k,i)=>`<div>${i==2?'<button data-act="gk" data-k="ENTER">⏎</button>':""}${[...k].map(c=>`<button class="${G.ks[c]||""}" data-act="gk" data-k="${c}">${c}</button>`).join("")}${i==2?'<button data-act="gk" data-k="BACK">⌫</button>':""}</div>`).join("")}</div>${res()}</div>`;return h},
 conex(){let h=`<div class="stage"><p class="meta"><span>Selecciona 4 palabras relacionadas</span></p>`;
  G.solved.forEach(i=>{const g=G.p[i];h+=`<div class="cxs" style="background:${GC[i]}">${esc(g[0])}<small>${esc(g[1].split(",").join(" · "))}</small></div>`});
  h+=`<div class="cxg">${G.items.filter(t=>!G.solved.includes(t.g)).map(t=>`<button class="gt ${G.sel.includes(t.t)?"on":""}" data-act="gt" data-t="${esc(t.t)}" ${G.over?"disabled":""}>${esc(t.t)}</button>`).join("")}</div>
  <div class="lives" aria-label="Vidas">${"♥".repeat(4-G.mist)}${"♡".repeat(G.mist)}</div>${G.msg?`<p>${G.msg}</p>`:""}
- ${G.over?"":`<div class="ctrls" style="margin-top:8px"><button class="btn pri" data-act="gsub" ${G.sel.length<4?"disabled":""}>Comprobar</button><button class="btn" data-act="gshuf">Mezclar</button><button class="btn" data-act="gcxh" ${G.hint?"disabled":""}>Pista: nombre de un grupo · −10</button></div>`}${res()}</div>`;return h},
+ ${G.over?"":`<div class="ctrls" style="margin-top:8px"><button class="btn pri" data-act="gsub" ${G.sel.length<4?"disabled":""}>Comprobar</button><button class="btn" data-act="gshuf">Mezclar</button><button class="btn" data-act="gcxh" ${G.hint?"disabled":""}>Pista: nombre de un grupo · menos premio</button></div>`}${res()}</div>`;return h},
 impostor(){const q=G.q[G.i];let h=`<div class="stage"><p class="meta"><span>Ronda ${G.i+1} de 5</span><span class="gem">Aciertos: ${G.sc}</span></p><div class="q">${esc(q[0])}</div><div class="opts">`;
  q[4].forEach((o,k)=>{const c=G.pk==null?"":k===q[2]?"right":k===G.pk?"wrong":"dim";h+=`<button class="opt ${c} ${G.hid===k?"gone":""}" data-act="gi" data-k="${k}" ${G.pk!=null?"disabled":""}><span class="lt">${"ABCD"[k]}</span>${esc(o)}</button>`});
- h+="</div>";if(G.pk==null)h+=`<div class="ctrls"><button class="btn" data-act="gih" ${G.hq?"disabled":""}>Pista: descartar una opción · mitad de puntos</button></div>`;if(G.pk!=null&&!G.over)h+=`<p class="twist">${esc(q[3])}</p><div class="ctrls"><button class="btn pri" data-act="gnx">${G.i<4?"Siguiente ›":"Ver resultado"}</button></div>`;return h+res()+"</div>"},
+ h+="</div>";if(G.pk==null)h+=`<div class="ctrls"><button class="btn" data-act="gih" ${G.hq?"disabled":""}>Pista: descartar una opción · menos premio</button></div>`;if(G.pk!=null&&!G.over)h+=`<p class="twist">${esc(q[3])}</p><div class="ctrls"><button class="btn pri" data-act="gnx">${G.i<4?"Siguiente ›":"Ver resultado"}</button></div>`;return h+res()+"</div>"},
 top10(){let h=`<div class="stage"><p class="meta"><span>${esc(G.l[0])}</span><span class="gem">${G.f.filter(Boolean).length} de ${G.l[1].length}</span></p><div class="lives" aria-label="Vidas">${"♥".repeat(5-G.mist)}${"♡".repeat(G.mist)}</div>`;
- if(!G.over)h+=`<div class="ctrls"><input class="fld gin" id="gt10" placeholder="Escribe un nombre…" autocomplete="off" aria-label="Tu respuesta"><button class="btn pri" data-act="gtry">Probar</button><button class="btn" data-act="ghint" ${(G.hn||0)>=3?"disabled":""}>Pista: primera letra · −5</button><button class="btn" data-act="gend">Rendirme</button></div>${G.msg?`<p>${G.msg}</p>`:""}`;
+ if(!G.over)h+=`<div class="ctrls"><input class="fld gin" id="gt10" placeholder="Escribe un nombre…" autocomplete="off" aria-label="Tu respuesta"><button class="btn pri" data-act="gtry">Probar</button><button class="btn" data-act="ghint" ${(G.hn||0)>=3?"disabled":""}>Pista: primera letra · menos premio</button><button class="btn" data-act="gend">Rendirme</button></div>${G.msg?`<p>${G.msg}</p>`:""}`;
  h+=`<ol class="t10">${G.l[1].map((n,i)=>`<li class="${G.f[i]?"ok":G.over?"miss":""}"><span>${i+1}</span>${G.f[i]||G.over?esc(n):G.hs&&G.hs[i]?esc(n[0])+" · · ·":"· · ·"}</li>`).join("")}</ol>`;return h+res()+"</div>"}};
 /* conexiones e impostor se arman cada día con las categorías del lore (lore-data.js) */
 const compat=(a,b)=>a!==b&&!a.no.includes(b.id)&&!b.no.includes(a.id)&&!a.m.some(x=>b.m.includes(x));
@@ -1133,24 +1052,29 @@ conex(){const p=mkConex();G={p,items:SH(p.flatMap((g,i)=>g[1].split(",").map(t=>
 impostor(){G={q:mkImp(),i:0,sc:0,pk:null}},
 top10(){const l=rotPick("top10",LISTS)[0];G={l,f:l[1].map(()=>null),mist:0,msg:""}}};
 window.GM={has:m=>!!INIT[m],start(m){stopTimer();view="play";C={mode:m};INIT[m]();render();window.scrollTo(0,0)},view:m=>V[m]()};
+/* cuánto del premio máximo se lleva según cómo se jugó (pistas, fallos, intentos) */
+RW.wordle=()=>G&&G.rows?Math.max(.4,1-.1*(G.rows.length-1))*(G.hint?.7:1):1;
+RW.conex=()=>G?Math.max(.4,1-.15*(G.mist||0))*(G.hint?.8:1):1;
+RW.impostor=()=>G?Math.max(.4,(G.sc||0)/5-.1*(G.hqs||0)):1;
+RW.top10=()=>G?Math.max(.4,1-.1*(G.hn||0)):1;
 function wsub(){const w=G.w[0];if(G.cur.length!==w.length){toast("Faltan letras");return}const r=ev(G.cur,w);G.rows.push(G.cur);G.ev.push(r);[...G.cur].forEach((c,i)=>{const o=G.ks[c];if(r[i]==="ok"||(r[i]==="pr"&&o!=="ok")||!o)G.ks[c]=r[i]});
- const n=G.rows.length;G.cur="";if(r.every(x=>x==="ok"))fin(true,Math.max(10,70-10*n-(G.hint?20:0)),`Era ${w}. ¡En ${n} intento${n>1?"s":""}!`);else if(n>=6)fin(false,0,`La palabra era ${w}.`)}
+ const n=G.rows.length;G.cur="";if(r.every(x=>x==="ok"))fin(true,`Era ${w}. ¡En ${n} intento${n>1?"s":""}!`);else if(n>=6)fin(false,`La palabra era ${w}.`)}
 function key(k){if(G.over)return;if(k==="ENTER")wsub();else if(k==="BACK")G.cur=G.cur.slice(0,-1);else if(G.cur.length<G.w[0].length)G.cur+=k;render()}
 Object.assign(A,{gnew(){GM.start(C.mode)},gk(b){key(b.dataset.k)},
 gt(b){if(G.over)return;const t=b.dataset.t,i=G.sel.indexOf(t);if(i>=0)G.sel.splice(i,1);else if(G.sel.length<4)G.sel.push(t);G.msg="";render()},
 gshuf(){G.items=SH(G.items);render()},
 gsub(){const gs=G.sel.map(t=>G.items.find(x=>x.t===t).g),top=Math.max(...[0,1,2,3].map(g=>gs.filter(x=>x===g).length));
- if(top===4){G.solved.push(gs[0]);G.sel=[];G.msg="";if(G.solved.length===4)fin(true,Math.max(10,50-10*G.mist-(G.hint?10:0)),"Encontraste los cuatro grupos.")}
- else{G.mist++;G.msg=top===3?"¡Casi! Tres de esas van juntas.":"Esa combinación no es.";G.sel=[];if(G.mist>=4){G.solved=[0,1,2,3];fin(false,0,"Te quedaste sin vidas. Estos eran los grupos.")}}render()},
-gi(b){if(G.pk!=null||G.hid===+b.dataset.k)return;const k=+b.dataset.k;G.pk=k;if(k===G.q[G.i][2]){G.sc++;G.pt=(G.pt||0)+(G.hq?5:10)}render()},
-gnx(){if(G.i>=4){G.pk=null;fin(G.sc>=3,G.pt||0,`Encontraste ${G.sc} de 5 impostores.`)}else{G.i++;G.pk=null;G.hid=null;G.hq=0}render()},
+ if(top===4){G.solved.push(gs[0]);G.sel=[];G.msg="";if(G.solved.length===4)fin(true,"Encontraste los cuatro grupos.")}
+ else{G.mist++;G.msg=top===3?"¡Casi! Tres de esas van juntas.":"Esa combinación no es.";G.sel=[];if(G.mist>=4){G.solved=[0,1,2,3];fin(false,"Te quedaste sin vidas. Estos eran los grupos.")}}render()},
+gi(b){if(G.pk!=null||G.hid===+b.dataset.k)return;const k=+b.dataset.k;G.pk=k;if(k===G.q[G.i][2])G.sc++;render()},
+gnx(){if(G.i>=4){G.pk=null;fin(G.sc>=3,`Encontraste ${G.sc} de 5 impostores.`)}else{G.i++;G.pk=null;G.hid=null;G.hq=0}render()},
 gh(){G.hint=1;render()},
 gtry(){const el=$("#gt10"),g=NZ(el?el.value:"");if(g.length<2)return;const i=G.l[1].findIndex(n=>{const t=NZ(n);return t===g||t.split(" ").some(x=>x.length>=3&&x===g)||(g.length>=4&&t.includes(g))});
  if(i<0){G.mist++;G.msg="Esa no está en la lista.";sfx("bad");if(G.mist>=5)tend()}else if(G.f[i])G.msg="Ya la tenías.";else{G.f[i]=G.l[1][i];G.msg="";sfx("coin");if(G.f.every(Boolean))tend()}
  render();const e=$("#gt10");if(e)e.focus()},
 gend(){tend();render()},
-gcxh(){if(G.hint||G.over)return;const un=[0,1,2,3].filter(i=>!G.solved.includes(i)),g=RN(un);G.hint=1;G.msg="Pista: uno de los grupos es «"+G.p[g][0]+"» (−10).";render()},
-gih(){if(G.pk!=null||G.hq)return;const q=G.q[G.i];G.hid=RN([0,1,2,3].filter(k=>k!==q[2]));G.hq=1;render()},
+gcxh(){if(G.hint||G.over)return;const un=[0,1,2,3].filter(i=>!G.solved.includes(i)),g=RN(un);G.hint=1;G.msg="Pista: uno de los grupos es «"+G.p[g][0]+"» (menos premio).";render()},
+gih(){if(G.pk!=null||G.hq)return;const q=G.q[G.i];G.hid=RN([0,1,2,3].filter(k=>k!==q[2]));G.hq=1;G.hqs=(G.hqs||0)+1;render()},
 ghint(){if(G.over||(G.hn||0)>=3)return;const m=G.l[1].map((_,i)=>i).filter(i=>!G.f[i]&&!(G.hs&&G.hs[i]));if(!m.length)return;G.hs=G.hs||{};G.hs[RN(m)]=1;G.hn=(G.hn||0)+1;render();const e=$("#gt10");if(e)e.focus()}});
 document.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.id==="gt10"){e.preventDefault();A.gtry()}});
 addEventListener("keydown",e=>{if(view!=="play"||!C||!GM.has(C.mode)||$("#dlg").open||e.ctrlKey||e.metaKey||e.altKey)return;const t=e.target.tagName;if(["INPUT","TEXTAREA","SELECT"].includes(t))return;
@@ -1165,7 +1089,7 @@ addEventListener("keydown",e=>{if(view!=="play"||!C||!GM.has(C.mode)||$("#dlg").
    Si fallas pierdes el turno. Cada nombre se usa una sola vez.
    Para ampliar el juego edita TT_E (personajes) y TT_CR (condiciones). */
 (function(){
-const TT_WIN=50,TT_HINT=5,TT_MISS=5,TT_MIN=10,TT_BOT=.8,TT_MAXHINT=3,TT_MINANS=2; /* puntos, penalizaciones, acierto del bot, pistas */
+const TT_HINT=2,TT_MISS=1,TT_BOT=.8,TT_MAXHINT=3,TT_MINANS=2; /* sinfalitas que resta cada pista y cada fallo · acierto del bot · pistas máximas · respuestas mínimas por casilla */
 const LINES=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
 /* condiciones: id -> [nombre corto, explicación al pasar el cursor] */
 const TT_CR=LORE.tt.cr;
@@ -1181,10 +1105,14 @@ function comb(a,k){return k===0?[[]]:a.flatMap((x,i)=>comb(a.slice(i+1),k-1).map
 /* ¿se pueden llenar las 9 casillas con 9 personajes distintos? (así nunca hay un tablero imposible) */
 function perfect(cells){const own={};const tr=(i,seen)=>{for(const e of cells[i]){if(seen.has(e))continue;seen.add(e);if(own[e]==null||tr(own[e],seen)){own[e]=i;return true}}return false};
  for(let i=0;i<cells.length;i++)if(!tr(i,new Set()))return false;return true}
-/* tableros: se arman con las condiciones del lore. La condición principal rota
-   día a día (todas tienen su turno); el resto sale del azar de la fecha. */
+/* tableros: TODA casilla (fila × columna) tiene siempre al menos TT_MINANS respuestas posibles.
+   Primero se eligen las tres filas; las columnas salen solo de las condiciones que cumplen ese mínimo
+   con las tres filas, así que nunca puede aparecer un cruce vacío o con una sola opción.
+   La condición principal rota día a día (todas tienen su turno); el resto sale del azar de la fecha. */
 const FAMX=LORE.tt.fam,FMAX=LORE.tt.famMax,TT_SUM=16;
 function famOK(ids){const n={};for(const i of ids){const f=FAMX[i];n[f]=(n[f]||0)+1;if(n[f]>(FMAX[f]||3))return false}return true}
+const okPair=(a,b)=>a!==b&&ans(a,b).length>=TT_MINANS;
+/* verificación final de un tablero: 9 casillas, cada una con TT_MINANS o más respuestas, y llenables con 9 nombres distintos */
 function tryBoard(R,C,minSum){
  const cells=[];let sum=0;
  for(const r of R)for(const c of C){const a=ans(r,c);if(a.length<TT_MINANS)return null;cells.push(a);sum+=a.length}
@@ -1201,28 +1129,37 @@ function wsample(ids,k){
  }
  return o;
 }
+const colsFor=R=>IDS.filter(c=>!R.includes(c)&&R.every(r=>okPair(r,c)));
 function pickBoard(){
  const prim=window.DAILY_ON?rotPick("tt",IDS)[0]:IDS[Math.floor(Math.random()*IDS.length)];
  const order=[prim,...sh(IDS.filter(x=>x!==prim))];
  for(const first of order){
   const others=IDS.filter(x=>x!==first);
   for(const minSum of [TT_SUM,12,9]){
-   for(let t=0;t<700;t++){
-    const s=wsample(others,5);
-    if(!famOK([first,...s]))continue;
-    const b=tryBoard([first,s[0],s[1]],[s[2],s[3],s[4]],minSum);
-    if(b)return b;
+   for(let t=0;t<300;t++){
+    const R=[first,...wsample(others,2)],cand=colsFor(R);
+    if(cand.length<3)continue;
+    const Cc=wsample(cand,3);
+    if(!famOK([...R,...Cc]))continue;
+    const b=tryBoard(R,Cc,minSum);if(b)return b;
    }
   }
  }
- for(let t=0;t<20000;t++){const s=sh(IDS).slice(0,6),b=tryBoard(s.slice(0,3),s.slice(3),0);if(b)return b}
-
- for(let t=0;t<200000;t++){const s=sh(IDS).slice(0,6),b=tryBoard(s.slice(0,3),s.slice(3),0);if(b)return b}
- return {R:IDS.slice(0,3),C:IDS.slice(3,6)};
+ /* último recurso: búsqueda completa. Sigue exigiendo el mínimo en cada casilla; nunca devuelve un tablero sin verificar */
+ const all=sh(IDS);
+ for(let i=0;i<all.length;i++)for(let j=i+1;j<all.length;j++)for(let k=j+1;k<all.length;k++){
+  const R=[all[i],all[j],all[k]],cand=colsFor(R);
+  for(let a=0;a<cand.length;a++)for(let b=a+1;b<cand.length;b++)for(let c=b+1;c<cand.length;c++){
+   const bd=tryBoard(R,[cand[a],cand[b],cand[c]],0);if(bd)return bd;
+  }
+ }
+ return null;
 }
 let G={};
+RW.tateti=()=>G&&G.b?Math.max(.3,(20-TT_HINT*G.hn-TT_MISS*G.miss)/20):1;
 function init(){
  const b=pickBoard();
+ if(!b)throw new Error("Apexora tic tac toe: no hay un tablero con al menos "+TT_MINANS+" respuestas en cada casilla");
  G={R:sh(b.R),C:sh(b.C),b:Array(9).fill(null),used:new Set(),turn:"p",sel:null,q:"",msg:"",mk:"",hn:0,miss:0,hint:{},over:false,line:[],tok:Math.random()};
 }
 const rl=i=>CR[G.R[Math.floor(i/3)]][0],cl=i=>CR[G.C[i%3]][0];
@@ -1233,9 +1170,7 @@ const avail=i=>ans(G.R[Math.floor(i/3)],G.C[i%3]).filter(e=>!G.used.has(e));
 const lineWin=(w,cell)=>LINES.some(l=>l.includes(cell)&&l.every(j=>j===cell||(G.b[j]&&G.b[j].w===w)));
 function finish(res,line){
  G.over=true;G.res=res;G.line=line||[];
- const pts=res==="win"?Math.max(TT_MIN,TT_WIN-TT_HINT*G.hn-TT_MISS*G.miss):0;G.pts=pts;
  G.txt=res==="win"?`Completaste una línea de tres. Fallos: ${G.miss} · pistas: ${G.hn}.`:res==="lose"?"El bot completó una línea de tres.":"No quedan personajes que encajen en las casillas libres.";
- if(res==="win")award(pts,"Apexora tic tac toe");
  dailyEnd(res==="win",res==="win"?"Victoria contra el bot":res==="draw"?"Empate con el bot":"Perdiste contra el bot");
 }
 function endCheck(){
@@ -1270,13 +1205,13 @@ function listHTML(){
 function focusQ(){setTimeout(()=>{const q=$("#tt-q");if(q){q.focus();try{q.setSelectionRange(q.value.length,q.value.length)}catch(e){}}},0)}
 function res(){
  if(!G.over)return"";
- const v=G.res==="win"?`<div class="verdict ok">¡Victoria! +${G.pts}</div>`:G.res==="lose"?`<div class="verdict no">Derrota</div>`:`<div class="tt-verdict">Empate</div>`;
+ const v=G.res==="win"?`<div class="verdict ok">¡Victoria!${sinfTxt()}</div>`:G.res==="lose"?`<div class="verdict no">Derrota</div>`:`<div class="tt-verdict">Empate</div>`;
  const pos=G.b.map((x,i)=>x?"":`<li><b>${esc(cellName(i))}</b>: ${esc(ans(G.R[Math.floor(i/3)],G.C[i%3]).filter(e=>!G.used.has(e)).map(e=>E[e][0]).join(", ")||"sin respuestas libres")}</li>`).join("");
  return`<div class="result">${v}<p>${esc(G.txt)}</p>${pos?`<details class="tt-ans"><summary>Ver las respuestas que quedaron libres</summary><ul>${pos}</ul></details>`:""}${nextBar()}</div>`;
 }
 function V(){
  let h=`<div class="stage tt"><p class="tt-how">Toca una casilla y nombra a un personaje o dios que cumpla <b>las dos</b> condiciones: la de su fila y la de su columna. Si fallas, pierdes el turno, y cada nombre se usa una sola vez. Tú eres ✕ y empiezas; gana quien una tres casillas en línea.</p>
- <p class="meta"><span class="gem">${G.over?"Partida terminada":G.turn==="p"?"Tu turno · ✕":"Turno del bot · ○"}</span><span>Fallos: ${G.miss}</span><span>Pistas: ${G.hn} de ${TT_MAXHINT}</span></p>
+ <p class="meta"><span class="gem">${G.over?"Partida terminada":G.turn==="p"?"Tu turno · ✕":"Turno del bot · ○"}</span><span>Fallos: ${G.miss}</span><span>Pistas: ${G.hn} de ${TT_MAXHINT}</span><span>${premioTxt()}</span></p>
  <div class="tt-board" role="group" aria-label="Tablero de tres en línea"><div></div>${G.C.map(c=>`<div class="tt-h" title="${esc(CR[c][1])}">${esc(CR[c][0])}</div>`).join("")}`;
  for(let r=0;r<3;r++){
   h+=`<div class="tt-h row" title="${esc(CR[G.R[r]][1])}">${esc(CR[G.R[r]][0])}</div>`;
@@ -1289,7 +1224,7 @@ function V(){
  h+=`</div>`;
  if(G.sel!=null&&!G.over&&G.turn==="p"){
   h+=`<div class="tt-pick"><p class="tt-ph">Casilla: <b>${esc(rl(G.sel))}</b> × <b>${esc(cl(G.sel))}</b></p>
-  <div class="ctrls" style="margin-top:0"><input class="fld gin" id="tt-q" value="${esc(G.q)}" placeholder="Escribe un personaje o dios…" autocomplete="off" aria-label="Nombre del personaje"><button class="btn" data-act="tthint" ${G.hn>=TT_MAXHINT||G.hint[G.sel]?"disabled":""}>Pista · −${TT_HINT}</button><button class="btn ghost" data-act="ttcancel">Cancelar</button></div>
+  <div class="ctrls" style="margin-top:0"><input class="fld gin" id="tt-q" value="${esc(G.q)}" placeholder="Escribe un personaje o dios…" autocomplete="off" aria-label="Nombre del personaje"><button class="btn" data-act="tthint" ${G.hn>=TT_MAXHINT||G.hint[G.sel]?"disabled":""}>Pista · −${TT_HINT} ${sinfWord(TT_HINT)}</button><button class="btn ghost" data-act="ttcancel">Cancelar</button></div>
   ${G.hint[G.sel]?`<p class="tt-hint">${esc(G.hint[G.sel])}</p>`:""}<ul class="tt-list" id="tt-list">${listHTML()}</ul></div>`;
  }
  h+=`<p class="tt-msg ${G.mk}" role="status" aria-live="polite">${esc(G.msg)}${!G.over&&G.turn==="b"?" El bot está pensando…":""}</p>`;
@@ -1324,7 +1259,7 @@ document.addEventListener("keydown",e=>{
  if(/^[1-9]$/.test(e.key))A.ttcell({dataset:{i:+e.key-1}});
 });
 /* se suma al sistema de juegos diarios de la sala */
-Object.assign(MODES,{tateti:{name:"Apexora tic tac toe",desc:"Tres en línea contra el bot: reclama cada casilla nombrando a un personaje o dios que encaje en su fila y su columna.",pts:"hasta "+TT_WIN}});
+Object.assign(MODES,{tateti:{name:"Apexora tic tac toe",desc:"Tres en línea contra el bot: reclama cada casilla nombrando a un personaje o dios que encaje en su fila y su columna."}});
 if(!GAME_ORDER.includes("tateti"))GAME_ORDER.push("tateti");
 GAME_COLOR.tateti="#8e6bd1";GAME_ICON.tateti="⭕";REC_LABEL.tateti=["victoria","victorias","sin ganar","sin ganar"];
 const GM0=window.GM;
@@ -1335,16 +1270,15 @@ window.GM={has:m=>m==="tateti"||GM0.has(m),
 </script>
 <script>
 (function(){
-window.ensureP=()=>{S.players.push({id:uid(),name:(window.PROFILE&&PROFILE.name)||"Aventurero",char:"",pts:0});S.active=S.players[0].id;save()};
 const nz=s=>String(s).normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9 ]/g,"").trim();
 function ok(v,a){const g=nz(v),t=nz(a);return g.length>=3&&(g===t||t.split(" ").includes(g)||g.includes(t)||(g.length>=4&&t.includes(g)))}
 const gv=()=>($("#gi")||{}).value||"";
 Object.assign(A,{
-choose(b){if(C.revealed)return;const i=+b.dataset.i;C.chosen=i;stopTimer();C.revealed=true;C.resolved=true;if(i===C.item.ai)award(C.pts,shortQ(C.item.q));render()},
-guess(){if(ok(gv(),C.item.a)){award(cluePts(),"¿Quién soy? "+C.item.a+" (pista "+C.clues+")");C.revealed=C.resolved=true;render()}else{sfx("bad");if(C.clues<5){C.clues++;toast("No es esa. Se revela otra pista y el premio baja a "+cluePts()+".");render()}else{C.lost=1;C.revealed=C.resolved=true;toast("No era esa.");render()}}},
-imgguess(){if(ok(gv(),C.item.answer)){award(IMG_PTS[C.step||0],"Adivina la imagen: "+C.item.answer);C.revealed=C.resolved=true;render()}else{toast("No es esa. Aclara la imagen.");sfx("bad")}},
+choose(b){if(C.revealed)return;const i=+b.dataset.i;C.chosen=i;stopTimer();C.revealed=true;C.resolved=true;render()},
+guess(){if(ok(gv(),C.item.a)){C.revealed=C.resolved=true;render()}else{sfx("bad");if(C.clues<5){C.clues++;toast("No es esa. Se revela otra pista y el premio baja.");render()}else{C.lost=1;C.revealed=C.resolved=true;toast("No era esa.");render()}}},
+imgguess(){if(ok(gv(),C.item.answer)){C.revealed=C.resolved=true;render()}else{toast("No es esa. Aclara la imagen.");sfx("bad")}},
 cpick(b){C.pk.push(+b.dataset.i);render()},cundo(){C.pk.pop();render()},
-ccheck(){const it=C.item;C.cor=it.order.filter((e,n)=>it.evs[C.pk[n]]===e).length;C.revealed=C.resolved=true;if(C.cor)award(Math.max(5,C.cor*10-(C.chint?10:0)),"Cronología: "+it.track);render()}});
+ccheck(){const it=C.item;C.cor=it.order.filter((e,n)=>it.evs[C.pk[n]]===e).length;C.revealed=C.resolved=true;render()}});
 document.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.id==="gi"){e.preventDefault();A[C.mode==="imagen"?"imgguess":"guess"]()}});
 /* Cronología: eventos tomados de la web del mundo (cronología, historias y personajes) */
 CRONO.push({y:1011,t:"Torneo de Umbra",d:"Los del campamento acuden; termina con la bomba de Andreas y la liberación de Astra."});
@@ -1355,6 +1289,8 @@ seq("Vida de Zarick",[["Un romance prohibido","Evelyn de Luminarae y el orco Zod
 seq("Vida de Karim Balteus",[["Lo abandonan","A los cuatro años, en un centro de adoración a Ape."],["Lo adopta Saúl","La Orden de los Marcados lo entrena."],["Nace el Bailarín del Estoque","Un estilo fluido y propio que lo hace legendario."],["Deserta de la Orden","A sus 36 años, consumido por la muerte de camaradas."],["Vive en VenuVenu","Conoce a RiaRia y tiene a su hija Calliope."],["Arrasan su pueblo","Mata a 29 de los 30 atacantes."],["Caleus lo admite","Entra al campamento de Sopharum."],["Cae en Umbra","Defiende a Zarick durante el caos del torneo."]]),
 seq("El Torneo de Umbra",[["Viaje a la capital","El campamento llega a Umbra y se topa con Puj."],["Primera ronda","Zarick humilla a Solara; Bane derrota a Astra."],["Segunda ronda","Bane empata con Lyra y gana; Karim humilla a Ova."],["La noche en la enfermería","Burun revisa los implantes de Bane."],["La final","Bane y Karim se miden en la arena."],["Aparece Orx","Un portal se abre y el coliseo se resquebraja."],["Cae Karim","Recibe el golpe destinado a Zarick."],["Las estatuas","Luminarae honra a Karim y a Astra."]]),
 seq("Destinos Entrelazados",[["Iniciación de Bane","Los merodeadores lo envían a recuperar un objeto robado."],["La cueva","Bane toma la batería y se enfrenta a un orco."],["La explosión","Zarick lo carga a Lumis para salvarlo."],["Zarick, a prisión","La IA de la ciudad lo encierra."],["La fuga","Bane dobla los barrotes con sus nuevos brazos."],["Las alcantarillas","Esquivan a los guardias bajo la ciudad."],["Aparece Caleus","El líder de Sopharum les ordena seguirlo."]])];
+TR.push(seq("Vasané-Nalú",[["La carta de Valmey","Valmey convoca al grupo desde Inasuno."],["Encuentro en Malina","Volmí informa al grupo antes de llegar a Vasané-Nalú."],["Los chacales cambiaformas","El pueblo destruido está infestado de chacales cambiaformas."],["El puerto","Rescatan a unos niños y el general Beel desembarca con sus soldados."],["Vina se une","Un guerrero misterioso los distrae: era Vina Miceus, y zarpan juntos."],["Pacto con Beel","Se encuentran con Beel y pactan cooperar rumbo a Naluvia."],["La isla Umaté","En el camino ven la isla maldita por Kiprika."]]));
+TR.push(seq("Bahía Lunar",[["Un estudiante desaparece","Se perdió un estudiante en el pueblo aislado."],["El grupo se divide","El grupo de Vina se separa en tres."],["La playa del ritual","El grupo termina en una playa donde se hace un ritual."],["La oferta","Les ofrecen unirse; dicen que no e intentan escapar."],["La bestia marina","Surge una bestia marina colosal."]]));
 TR.push(seq("Campañas de Apexora",[["Umbra","Torneo Skaldrak Vlarim: del campamento compiten Vina, Zarick, Karim y Bane."],["Luminarae","Infiltración con File y disfraces para llegar a los altos mandos."],["Luxor","Semidioses los salvan de la reina Luminara IV."],["Lumis","Caen en el taller de Blue, visitante de otro planeta."],["Torneo de los Dos Emperadores","Conclusión de los Guardianes de Apexora, en Skaldrum."],["Bahía Lunar","Vina y su grupo investigan la desaparición de un estudiante."],["Vasané-Nalú","Seila, Gobz y Lael acuden a la carta de Valmey."]]));
 const UK="apexora-crono-u"+(APX_UID?":"+APX_UID:"");let U={};try{U=JSON.parse(localStorage.getItem(UK)||"{}")}catch(e){}
 function mkCrono(){const cc=(typeof cust==="function"?cust("crono"):[]).map(c=>c.x||c).filter(c=>c&&c.t&&c.y!=null);
@@ -1366,8 +1302,8 @@ function mkCrono(){const cc=(typeof cust==="function"?cust("crono"):[]).map(c=>c
  C.pk=[];return{track:tr.name,hasY:!!tr.y,evs:sh,order}}
 const _ni=newItem;window.newItem=m=>m==="crono"?mkCrono():_ni(m);
 window.stageCrono=function(){const it=C.item,pk=C.pk||(C.pk=[]),card=(e,c,l,x)=>`<div class="ev ${c}"><span class="lt">${l}</span><b>${esc(e.t)}</b>${x||`<span>${esc(e.d)}</span>`}</div>`;
- let h=`<div class="stage"><div class="meta">Cronología rota<span>${esc(it.track)}</span><span>Del más antiguo al más reciente</span><span>hasta 40 ${cur().toLowerCase()}</span></div><h2 class="q">Toca los eventos en el orden en que ocurrieron.</h2>${C.chint?`<p class="twist">El primero fue «${esc(it.order[0].t)}».</p>`:""}`;
- if(!C.revealed)h+=`<div class="evs">${it.evs.map((e,i)=>pk.includes(i)?"":`<button class="ev evb" data-act="cpick" data-i="${i}"><span class="lt">${LET[i]}</span><b>${esc(e.t)}</b><span>${esc(e.d)}</span></button>`).join("")}</div><p class="meta" style="margin-top:22px">Tu orden</p><div class="evs">${[0,1,2,3].map(n=>pk[n]!=null?card(it.evs[pk[n]],"done",n+1):`<div class="ev slot"><span class="lt">${n+1}</span><span>…</span></div>`).join("")}</div><div class="ctrls"><button class="btn" data-act="chint" ${C.chint?"disabled":""}>Pista: ¿cuál fue primero? · −10</button><button class="btn" data-act="cundo" ${pk.length?"":"disabled"}>Deshacer</button><button class="btn pri" data-act="ccheck" ${pk.length<4?"disabled":""}>Comprobar</button></div>`;
+ let h=`<div class="stage"><div class="meta">Cronología rota<span>${esc(it.track)}</span><span>Del más antiguo al más reciente</span><span>${premioTxt()}</span></div><h2 class="q">Toca los eventos en el orden en que ocurrieron.</h2>${C.chint?`<p class="twist">El primero fue «${esc(it.order[0].t)}».</p>`:""}`;
+ if(!C.revealed)h+=`<div class="evs">${it.evs.map((e,i)=>pk.includes(i)?"":`<button class="ev evb" data-act="cpick" data-i="${i}"><span class="lt">${LET[i]}</span><b>${esc(e.t)}</b><span>${esc(e.d)}</span></button>`).join("")}</div><p class="meta" style="margin-top:22px">Tu orden</p><div class="evs">${[0,1,2,3].map(n=>pk[n]!=null?card(it.evs[pk[n]],"done",n+1):`<div class="ev slot"><span class="lt">${n+1}</span><span>…</span></div>`).join("")}</div><div class="ctrls"><button class="btn" data-act="chint" ${C.chint?"disabled":""}>Pista: ¿cuál fue primero? · menos premio</button><button class="btn" data-act="cundo" ${pk.length?"":"disabled"}>Deshacer</button><button class="btn pri" data-act="ccheck" ${pk.length<4?"disabled":""}>Comprobar</button></div>`;
  else h+=`<div class="evs">${it.order.map((e,n)=>{const g=it.evs[pk[n]]===e;return card(e,g?"done":"bad",n+1,`<span class="yr">${it.hasY?"Año "+e.y+(e.y===1012?" · presente":""):"Paso "+(n+1)}${g?" ✓":" ✗ pusiste: "+esc(it.evs[pk[n]].t)}</span><span style="grid-column:2">${esc(e.d)}</span>`)}).join("")}</div><div class="result"><div class="verdict ${C.cor>=3?"ok":"no"}">${C.cor} de 4 en su lugar</div>${nextBar()}</div>`;
  return h+"</div>"};
 MODES.crono.desc="Ordena cuatro hechos del lore, de la cronología, los personajes y las historias de Apexora.";
@@ -1375,16 +1311,7 @@ MODES.crono.desc="Ordena cuatro hechos del lore, de la cronología, los personaj
 </script>
 <script>
 (function(){
-const RM=matchMedia("(prefers-reduced-motion:reduce)").matches,K="apexora-prog"+(APX_UID?":"+APX_UID:"");
-let P={xp:0,streak:0,best:0,wins:0,ach:{},day:"",dstreak:0,t:0},T=null;
-try{Object.assign(P,JSON.parse(localStorage.getItem(K)||"{}"))}catch(e){}
-const sv=()=>{try{localStorage.setItem(K,JSON.stringify(P))}catch(e){}window.cloudPush&&cloudPush()};
-const LV=x=>Math.floor(Math.sqrt(x/40))+1,FL=l=>40*(l-1)*(l-1);
-const RANK=["Aprendiz del Archivo","Explorador de Umbra","Cronista de Apexora","Guardián de Sopharum","Maestro del Lore","Leyenda de Luxor","Hijo de Espacio"];
-const rank=l=>RANK[Math.min(RANK.length-1,Math.floor((l-1)/2))];
-const mult=()=>1+Math.min(1,Math.floor(P.streak/3)*.25);
-const pop=el=>{if(el&&!RM)el.animate([{transform:"scale(1)"},{transform:"scale(1.3)"},{transform:"scale(1)"}],{duration:350})};
-const cf=o=>{if(!RM&&window.confetti)confetti(Object.assign({colors:["#e8b47f","#f0c79a","#b94a6e","#0f9e9a","#d9706c"],zIndex:50},o))};
+let T=null;
 /* ---------- audio de calidad con Tone.js (si no carga, queda el motor anterior) ---------- */
 const oldSfx=window.sfx,SC=["C5","D5","E5","G5","A5","C6","D6","E6","G6","A6"];
 const now=()=>Tone.now();
@@ -1401,56 +1328,22 @@ function build(){if(T||!window.Tone)return;
  Tone.Transport.bpm.value=96}
 const FX={
 click:()=>T.syn.triggerAttackRelease("E6","64n",now(),.15),
-good:()=>{const i=Math.min(P.streak,7);[0,2,4].forEach((d,j)=>T.syn.triggerAttackRelease(SC[Math.min(i+d,9)],"16n",now()+j*.07,.7))},
+good:()=>[0,2,4].forEach((d,j)=>T.syn.triggerAttackRelease(SC[2+d],"16n",now()+j*.07,.7)),
 bad:()=>{T.low.triggerAttackRelease("A1","8n",now());T.low.triggerAttackRelease("E1","4n",now()+.12)},
 tick:()=>T.syn.triggerAttackRelease("A6","64n",now(),.3),
 over:()=>["G4","E4","C4","G3"].forEach((n,j)=>T.low.triggerAttackRelease(n,"8n",now()+j*.16)),
 roll:()=>{for(let j=0;j<8;j++)T.syn.triggerAttackRelease(400+Math.random()*900,"64n",now()+j*.05,.3)},
 fan:()=>["C5","G5","C6"].forEach((n,j)=>T.bell.triggerAttackRelease(n,"8n",now()+j*.06,.5)),
-coin:()=>{T.bell.triggerAttackRelease("B6","16n",now(),.5);T.bell.triggerAttackRelease("E7","8n",now()+.08,.5)},
-lvl:()=>["C5","E5","G5","C6","E6","G6","C7"].forEach((n,j)=>T.bell.triggerAttackRelease(n,"8n",now()+j*.07,.6)),
-chest:()=>{for(let j=0;j<14;j++)T.bell.triggerAttackRelease(SC[Math.floor(Math.random()*10)],"16n",now()+j*.05,.4)},
-ach:()=>["G5","C6","E6"].forEach((n,j)=>T.bell.triggerAttackRelease(n,"8n",now()+j*.09,.5))};
-const FB={lvl:"fan",chest:"coin",ach:"coin"};
-window.sfx=k=>{try{if(!S.settings.sound)return;if(T&&FX[k])FX[k]();else oldSfx(FB[k]||k)}catch(e){}};
+coin:()=>{T.bell.triggerAttackRelease("B6","16n",now(),.5);T.bell.triggerAttackRelease("E7","8n",now()+.08,.5)}};
+window.sfx=k=>{try{if(!S.settings.sound)return;if(T&&FX[k])FX[k]();else oldSfx(k)}catch(e){}};
 document.addEventListener("pointerdown",()=>{if(window.Tone){build();Tone.start()}},{capture:true});
 const mb=$("#mus"),oc=mb.onclick;let on=false;
 mb.onclick=()=>{if(!T){oc&&oc();return}on=!on;mb.classList.toggle("on",on);mb.textContent=on?"🎶":"🎵";on?Tone.Transport.start():Tone.Transport.pause();sfx("click")};
-/* ---------- HUD, banners y feedback ---------- */
-const hd=document.createElement("div");hd.id="hud";hd.innerHTML='<div class="hp lvp"><b id="hl"></b><div><small id="hr"></small><i><u id="hx"></u></i></div></div><div class="hp" id="hs"></div><div class="hp" id="hc"></div>';document.body.appendChild(hd);
-function hud(){const l=LV(P.xp),a=FL(l),b=FL(l+1);$("#hl").textContent=l;$("#hr").textContent=rank(l);$("#hx").style.width=((P.xp-a)/(b-a)*100)+"%";
- $("#hs").innerHTML=P.streak?`⚡ <b>${P.streak}</b> ×${+mult().toFixed(2)}`:`📅 Día ${P.dstreak}`;$("#hc").innerHTML=`🎁 en <b>${5-P.wins%5}</b>`;if(T)Tone.Transport.bpm.rampTo(96+Math.min(P.streak,10)*3,.8)}
-let bq=0;
-function banner(h,c=""){const e=document.createElement("div");e.className="bn "+c;e.innerHTML=h;e.style.top=(70+bq*58)+"px";bq++;document.body.appendChild(e);
- if(!RM)e.animate([{transform:"translate(-50%,-30px) scale(.8)",opacity:0},{transform:"translate(-50%,0) scale(1)",opacity:1}],{duration:380,easing:"cubic-bezier(.2,1.4,.4,1)",fill:"forwards"});
- setTimeout(()=>{e.remove();bq--},2800)}
-function flo(n){const s=$(".stage"),r=(s||document.body).getBoundingClientRect(),e=document.createElement("div");e.className="fl";e.textContent="+"+n+(P.streak>=3?" ⚡":"");e.style.left=(r.left+r.width/2)+"px";e.style.top=Math.max(120,r.top+Math.min(r.height/2,300))+"px";document.body.appendChild(e);
- const a=e.animate([{transform:"translate(-50%,0) scale(.4)",opacity:0},{transform:"translate(-50%,-30px) scale(1.4)",opacity:1,offset:.3},{transform:"translate(-50%,-130px) scale(1)",opacity:0}],{duration:RM?600:1300,easing:"ease-out"});a.onfinish=()=>e.remove()}
-function levelUp(l){banner(`⭐ ¡NIVEL ${l}! <b>${rank(l)}</b>`);sfx("lvl");cf({particleCount:220,spread:130,origin:{y:.3}})}
-const AC=[["first","🏅","Primera victoria",()=>P.wins>=1],["s5","⚡","5 aciertos seguidos",()=>P.streak>=5],["s10","🌟","10 aciertos seguidos",()=>P.streak>=10],["w25","📚","25 aciertos",()=>P.wins>=25],["l5","⭐","Nivel 5",()=>LV(P.xp)>=5],["d3","📅","3 días seguidos",()=>P.dstreak>=3]];
-function ach(){AC.forEach(a=>{if(!P.ach[a[0]]&&a[3]()){P.ach[a[0]]=1;setTimeout(()=>{banner(`${a[1]} Logro: <b>${a[2]}</b>`,"ach");sfx("ach")},900)}})}
-/* cofre sorpresa cada 5 aciertos: recompensa variable */
-function chest(){const ov=document.createElement("div");ov.id="chest";ov.innerHTML='<div class="cbox"><div class="gift" role="button" tabindex="0">🎁</div><p id="cm">¡Cofre sorpresa! Tócalo</p></div>';document.body.appendChild(ov);
- const g=ov.querySelector(".gift"),w=!RM&&g.animate([{transform:"rotate(-9deg) scale(1)"},{transform:"rotate(9deg) scale(1.08)"}],{duration:170,iterations:Infinity,direction:"alternate"});sfx("coin");let done=0;
- const open=()=>{if(done)return;done=1;w&&w.cancel();const r=Math.random(),pr=r<.5?[10,"Común","#e6cfc2"]:r<.8?[20,"Raro","#0f9e9a"]:r<.95?[40,"Épico","#b94a6e"]:[100,"LEGENDARIO","#f0c79a"];
-  if(!S.players.length)ensureP();const m={};targets().forEach(id=>m[id]=pr[0]);applyDelta(m,`${targetLabel()}: cofre sorpresa`,"score");P.xp+=pr[0];
-  g.outerHTML=`<div class="prize" style="color:${pr[2]};text-shadow:0 0 30px ${pr[2]}">+${pr[0]}</div>`;$("#cm").innerHTML=`<b style="color:${pr[2]}">${pr[1]}</b><br><button class="btn pri" id="cc" style="margin-top:14px">Continuar</button>`;
-  sfx("chest");cf({particleCount:pr[0]*4+60,spread:120,origin:{y:.5}});$("#cc").onclick=()=>{ov.remove();render()};hud();sv()};
- g.onclick=open;g.onkeydown=e=>{if(e.key==="Enter"||e.key===" ")open()}}
-window.Prog={mult,win(n){const l0=LV(P.xp);P.streak++;P.best=Math.max(P.best,P.streak);P.wins++;P.t=Date.now();P.xp+=n;flo(n);cf({particleCount:30+Math.min(P.streak,10)*10,spread:70,origin:{y:.65}});
- if([3,5,8,10,15,20].includes(P.streak))banner(`⚡ ¡${P.streak} aciertos seguidos! ×${+mult().toFixed(2)}`);const l1=LV(P.xp);if(l1>l0)levelUp(l1);hud();pop($("#hs"));ach();sv();if(P.wins%5===0)setTimeout(chest,1500)},
- lose(){if(Date.now()-P.t<600)return;if(P.streak>=3)banner("💔 Se cortaron tus "+P.streak+" aciertos seguidos","bad");P.streak=0;hud();sv();const m=$("#main");if(m&&!RM)m.animate([{transform:"translateX(0)"},{transform:"translateX(-9px)"},{transform:"translateX(9px)"},{transform:"translateX(-5px)"},{transform:"translateX(0)"}],{duration:320})}};
-const seen=new WeakSet();
-new MutationObserver(()=>{document.querySelectorAll(".opt.wrong,.verdict.no").forEach(el=>{if(!seen.has(el)){seen.add(el);Prog.lose()}})}).observe($("#main"),{subtree:true,childList:true,attributes:true,attributeFilter:["class"]});
 /* pistas */
 const oc2=A.choose;
 Object.assign(A,{choose(b){if(C.hide&&C.hide.includes(+b.dataset.i))return;oc2(b)},
- hint50(){if(C.revealed||C.hinted||C.mode!=="trivia")return;const it=C.item;C.hide=[0,1,2,3].filter(i=>i!==it.ai).sort(()=>Math.random()-.5).slice(0,2);C.hinted=1;C.pts=Math.max(5,Math.round(C.pts/10)*5);render()},
+ hint50(){if(C.revealed||C.hinted||C.mode!=="trivia")return;const it=C.item;C.hide=[0,1,2,3].filter(i=>i!==it.ai).sort(()=>Math.random()-.5).slice(0,2);C.hinted=1;render()},
  chint(){C.chint=1;render()}});
-/* racha diaria */
-const td=dayKey(new Date());
-if(P.day!==td){const y=prevKey(td);P.dstreak=P.day===y?P.dstreak+1:1;P.day=td;const b=10*Math.min(P.dstreak,7);P.xp+=b;sv();setTimeout(()=>{banner(`📅 Día ${P.dstreak} seguido en la sala · <b>+${b} XP</b>`);ach()},900)}
-hud();
 })();
 </script>
 <script>
@@ -1474,112 +1367,53 @@ hud();
 })();
 </script>
 <script type="module">
-/* ===== Login con Firebase (misma cuenta/proyecto que tus otras páginas) ===== */
+/* ===== Sesión · el perfil y el login viven en el Portal. Aquí solo se comprueba la cuenta y se guarda el progreso de los retos ===== */
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import {getFirestore,collection,getDocs,doc,getDoc,setDoc} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {getAuth,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {getFirestore,doc,getDoc,setDoc} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-/* >>> PEGA AQUÍ la config de tu proyecto (Firebase Console > Configuración del proyecto > Tus apps) <<< */
 const FIREBASE_CONFIG={
  apiKey:"AIzaSyAsw466_wzsiLtbjw6FXZ1_O3HQ_AkVyU8",
  authDomain:"album-apexora.firebaseapp.com",
  projectId:"album-apexora",
  appId:"1:17231648284:web:20edb8477453f50473f1d9"
 };
-const AV_DIR="avatars/";                 // carpeta con los avatares (1x1), se muestran junto al nombre
-const COL_PROFILES="apexora_profiles",COL_DATA="apexora_data";
-
-const $g=s=>document.querySelector(s),gate=$g("#gate");
-const E=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const COL_DATA="apexora_data",DOMINIO="@apexora-sala.app",PORTAL="/Portal/";
 const unlock=()=>document.documentElement.classList.remove("locked");
 const lock=()=>document.documentElement.classList.add("locked");
-const shell=h=>{gate.innerHTML=`<div class="gt-in"><div class="gt-brand">APEXORA</div>${h}</div>`};
-const ERR={
- "auth/invalid-credential":"Contraseña incorrecta.","auth/wrong-password":"Contraseña incorrecta.","auth/user-not-found":"Ese perfil ya no existe.",
- "auth/too-many-requests":"Demasiados intentos. Espera un momento.","auth/email-already-in-use":"Ya existe un perfil con ese nombre.",
- "auth/weak-password":"La contraseña debe tener al menos 6 caracteres.","auth/network-request-failed":"Sin conexión. Revisa internet.",
- "permission-denied":"Firestore rechazó la operación. Revisa las reglas (ver firestore.rules.example)."};
-const msg=e=>ERR[e&&e.code]||ERR[(e&&e.code||"").replace("firestore/","")]||("Error: "+(e&&e.message||e));
+const toPortal=()=>{location.href=PORTAL+"?volver="+encodeURIComponent(location.href)};
+/* restos de los sistemas viejos (perfil local con avatar, XP y niveles) */
+try{Object.keys(localStorage).filter(k=>/^apexora-(prog|profile)/.test(k)).forEach(k=>localStorage.removeItem(k))}catch(e){}
 
-if(/TU_API_KEY|TU_PROYECTO/.test(JSON.stringify(FIREBASE_CONFIG))){
- shell(`<h1>Falta configurar Firebase</h1><p class="gt-note">Abre <code>index.html</code>, busca <code>FIREBASE_CONFIG</code> y pega la configuración de tu proyecto de Firebase.</p>`);
-}else{
- let app,auth,db;
- try{app=initializeApp(FIREBASE_CONFIG);auth=getAuth(app);db=getFirestore(app)}catch(e){shell(`<h1>No se pudo iniciar Firebase</h1><p class="gt-note">${E(e.message)}</p>`)}
- if(auth)boot(auth,db);
-}
+let auth,db;
+try{const app=initializeApp(FIREBASE_CONFIG);auth=getAuth(app);db=getFirestore(app)}
+catch(e){const g=document.querySelector("#gate");if(g)g.innerHTML='<p class="gt-load">No se pudo conectar. Recarga la página.</p>'}
+if(auth)boot(auth,db);
 
 function boot(auth,db){
- let profiles=[];
- const cached=()=>{try{return JSON.parse(localStorage.getItem("apexora-profile:"+APX_UID)||"null")}catch(e){return null}};
- async function loadProfiles(){
-  const snap=await getDocs(collection(db,COL_PROFILES));
-  profiles=snap.docs.map(d=>Object.assign({uid:d.id},d.data())).sort((a,b)=>(a.created||0)-(b.created||0));
- }
- const avImg=f=>f?`<img src="${E(AV_DIR+f)}" alt="">`:"";
-
- function viewPick(err){
-  shell(`<h1>¿Quién juega?</h1><div class="gt-grid">${profiles.map((p,i)=>`<button class="gt-p" data-g="pick" data-i="${i}"><span class="av">${p.avatar?avImg(p.avatar):E(p.name[0]||"?")}</span><span class="n">${E(p.name)}</span></button>`).join("")}</div><p class="gt-err" role="alert" style="margin-top:22px">${E(err||"")}</p>`);
- }
- function viewPass(i,err){
-  const p=profiles[i];
-  shell(`<form class="gt-card" data-g="login" data-i="${i}"><div class="av">${p.avatar?avImg(p.avatar):""}</div><h1 style="font-size:1.6rem;margin:0 0 6px;text-align:center">${E(p.name)}</h1>
-  <label>Contraseña<input class="fld" type="password" id="gpw" autocomplete="current-password" required></label><div class="gt-err" role="alert">${E(err||"")}</div>
-  <button class="btn pri" type="submit">Entrar</button><button class="btn ghost" type="button" data-g="back">‹ Otros perfiles</button></form>`);
-  const el=$g("#gpw");if(el)el.focus();
- }
- async function showPicker(err){
-  shell(`<h1>Cargando perfiles…</h1>`);
-  try{await loadProfiles()}catch(e){shell(`<h1>No se pudieron cargar los perfiles</h1><p class="gt-err">${E(msg(e))}</p><button class="btn pri" data-g="back">Reintentar</button>`);return}
-  if(!profiles.length){shell(`<h1>Todavía no hay perfiles</h1><p class="gt-note">Cuando exista tu perfil, aparecerá aquí para que entres con tu contraseña.</p>`);return}
-  viewPick(err);
- }
- /* al entrar: baja los datos de la nube si son más nuevos y reinicia con el perfil activo */
- async function enter(user,prof){
-  const uid=user.uid;
+ /* primera vez en este dispositivo o cuenta distinta: baja el progreso de la nube y reinicia con ese usuario */
+ async function pull(uid){
   try{
    const d=await getDoc(doc(db,COL_DATA,uid));
    if(d.exists()){const x=d.data(),lts=+localStorage.getItem("apexora-ts:"+uid)||0;
     if((x.ts||0)>lts){
      if(x.s)localStorage.setItem("apexora-sala-v1:"+uid,x.s);
-     if(x.p)localStorage.setItem("apexora-prog:"+uid,x.p);
      if(x.u)localStorage.setItem("apexora-crono-u:"+uid,x.u);
      localStorage.setItem("apexora-ts:"+uid,String(x.ts));
     }}
   }catch(e){}
-  localStorage.setItem("apexora-profile:"+uid,JSON.stringify({name:prof.name,avatar:prof.avatar||""}));
-  localStorage.setItem("apexora-uid",uid);
-  location.reload();
  }
- gate.addEventListener("click",async e=>{
-  const b=e.target.closest("[data-g]");if(!b||b.tagName==="FORM")return;const a=b.dataset.g;
-  if(a==="pick")viewPass(+b.dataset.i);
-  else if(a==="back")showPicker();
- });
- gate.addEventListener("submit",async e=>{
-  const f=e.target.closest("form[data-g]");if(!f)return;e.preventDefault();
-  const btn=f.querySelector("button[type=submit]"),err=f.querySelector(".gt-err");btn.disabled=true;entering=true;
-  try{
-   const p=profiles[+f.dataset.i],c=await signInWithEmailAndPassword(auth,p.login,$g("#gpw").value);
-   await enter(c.user,p);
-  }catch(x){entering=false;err.textContent=msg(x);btn.disabled=false}
- });
- window.FB={async logout(){try{await signOut(auth)}catch(e){}localStorage.removeItem("apexora-uid");location.reload()}};
  let t;
  window.cloudPush=()=>{const u=auth.currentUser;if(!u)return;clearTimeout(t);t=setTimeout(async()=>{
   try{const g=k=>localStorage.getItem(k+":"+u.uid)||"",ts=Date.now();localStorage.setItem("apexora-ts:"+u.uid,String(ts));
-   await setDoc(doc(db,COL_DATA,u.uid),{s:g("apexora-sala-v1"),p:g("apexora-prog"),u:g("apexora-crono-u"),ts})}catch(e){}},1500)};
- let first=true,entering=false;
- onAuthStateChanged(auth,u=>{
-  if(entering)return;
-  if(u&&u.email&&u.email.endsWith("@apexora-sala.app")&&APX_UID!==u.uid){localStorage.setItem("apexora-uid",u.uid);location.reload();return}
-  if(u&&APX_UID===u.uid){
-   window.PROFILE=cached()||{name:"Jugador",avatar:""};
+   await setDoc(doc(db,COL_DATA,u.uid),{s:g("apexora-sala-v1"),u:g("apexora-crono-u"),ts})}catch(e){}},1500)};
+ let first=true;
+ onAuthStateChanged(auth,async u=>{
+  if(u&&u.email&&u.email.endsWith(DOMINIO)){
+   if(APX_UID!==u.uid){await pull(u.uid);localStorage.setItem("apexora-uid",u.uid);location.reload();return}
    unlock();if(first&&window.render)render();first=false;
-   getDoc(doc(db,COL_PROFILES,u.uid)).then(s=>{if(s.exists()){const d=s.data();window.PROFILE={name:d.name,avatar:d.avatar||""};localStorage.setItem("apexora-profile:"+u.uid,JSON.stringify(window.PROFILE));window.render&&render()}}).catch(()=>{});
   }else{
-   localStorage.removeItem("apexora-uid");lock();first=false;
-   location.href="/Portal/?volver="+encodeURIComponent(location.href);   /* login único: se entra por el Portal */
+   localStorage.removeItem("apexora-uid");lock();first=false;toPortal();   /* login único: se entra por el Portal */
   }
  });
 }

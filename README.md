@@ -17,3 +17,9 @@ Todo el contenido nuevo sale del lore y va en **`lore-data.js`**:
 - `LORE.trivia`, `LORE.vof`, `LORE.quien`, `LORE.crono` → retos extra de esos juegos.
 
 Trivia, V o F, ¿Quién soy?, Cronología y las imágenes siguen en `index.html` / `imagenes/imagenes.json`.
+
+## Perfil y sinfalitas
+- El perfil y el login viven en el **Portal**; esta página solo comprueba la cuenta (si no hay sesión, manda al Portal). No hay avatares, barra superior, rachas ni XP/niveles/cofres.
+- Cada juego da sinfalitas al terminar, **una vez al día y nunca más de 20** (`SINF_MAX`). Los máximos por juego están en la tabla `SINF` de `index.html`; el factor por pistas/fallos en `RW`. Se entregan con `window.APX.premiar(n, 0)`.
+- El botón «Volver al Portal» está arriba a la izquierda; el HUD del Portal se ubica con `--apx-hud-top` / `--apx-hud-bottom` en `apexora-theme.css`.
+- Tic tac toe: cada casilla (fila × columna) tiene siempre al menos 2 respuestas posibles (`TT_MINANS`); el generador nunca devuelve un tablero sin verificar.
