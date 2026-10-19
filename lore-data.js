@@ -74,8 +74,7 @@ L.imp=[
 ["¿Quién NO pertenece a la Orden de los Caballeros de Luxor?",["Andreas","Rose","Mikael","Karim"],3,"Karim fue criado por otra orden: la de los Marcados."],
 ["¿Qué nación NO es un lugar sin gobierno central?",["Arboris","Markivton","Tribus Skaldrak","Skaldrum"],3,"Skaldrum lo gobierna el emperador Oci con su reina Lurim; las otras no tienen gobierno central."],
 ["¿Quién NO pertenece a la Academia Myrelith?",["Echo","Galel","Silith","Zarick"],3,"Zarick es un semi-orco de Umbra, del campamento Sopharum."],
-["¿Quién NO es semidiós?",["Oci","Amark semidios","Klio","Zarick"],3,"Zarick es semi-orco. Oci, Amark y Klio son semidioses."],
-["¿Quién NO pertenece a la facción Girax de Boro?",["Beo","Autómata Girax","Girax","Beel"],3,"Beel es el general de la tribu Zzamua, de Sylvaris."]
+["¿Quién NO es semidiós?",["Oci","Amark semidios","Klio","Zarick"],3,"Zarick es semi-orco. Oci, Amark y Klio son semidioses."]
 ];
 
 /* ---------- Wordle: [PALABRA, pista] — solo A–Z, de 4 a 8 letras ---------- */
